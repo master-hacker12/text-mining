@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="EP.Semantix.Token">
+    <Position X="3.25" Y="1" Width="2" />
+    <Members>
+      <Method Name="GetMorphClassInDictionary" Hidden="true" />
+      <Method Name="GetNormalCaseText" Hidden="true" />
+      <Method Name="GetReferent" Hidden="true" />
+      <Method Name="GetReferents" Hidden="true" />
+      <Method Name="GetSourceText" Hidden="true" />
+      <Property Name="InnerBool" Hidden="true" />
+      <Method Name="IsChar" Hidden="true" />
+      <Property Name="IsCommaAnd" Hidden="true" />
+      <Property Name="IsHiphen" Hidden="true" />
+      <Property Name="IsLetters" Hidden="true" />
+      <Property Name="IsNumber" Hidden="true" />
+      <Property Name="IsReferent" Hidden="true" />
+      <Method Name="IsValue" Hidden="true" />
+      <Field Name="Kit" Hidden="true" />
+      <Property Name="NotNounPhrase" Hidden="true" />
+      <Method Name="SetAttr" Hidden="true" />
+      <Method Name="Token" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Property Name="WhitespacesAfterCount" Hidden="true" />
+      <Property Name="WhitespacesBeforeCount" Hidden="true" />
+    </Members>
+    <AssociationLine Name="Previous" Type="EP.Semantix.Token" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.25" Y="2.312" />
+        <Point X="3" Y="2.312" />
+        <Point X="3" Y="2.875" />
+        <Point X="3.25" Y="2.875" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.079" Y="0.154" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Next" Type="EP.Semantix.Token" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.25" Y="2.3" />
+        <Point X="5.5" Y="2.3" />
+        <Point X="5.5" Y="2.891" />
+        <Point X="5.25" Y="2.891" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="Chars" />
+      <Property Name="Previous" />
+      <Property Name="Next" />
+      <Property Name="Morph" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EP.Semantix.MorphCollection">
+    <Position X="6.5" Y="1" Width="1.75" />
+    <Members>
+      <Method Name="AddItem" Hidden="true" />
+      <Method Name="Check" Hidden="true" />
+      <Method Name="CheckAccord" Hidden="true" />
+      <Method Name="Clone" Hidden="true" />
+      <Method Name="ContainsAttr" Hidden="true" />
+      <Method Name="FindItem" Hidden="true" />
+      <Method Name="InsertItem" Hidden="true" />
+      <Method Name="MorphCollection" Hidden="true" />
+      <Method Name="RemoveItem" Hidden="true" />
+      <Method Name="RemoveItems" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <AssociationLine Name="Items" Type="EP.Text.MorphBaseInfo" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="7.303" Y="3.252" />
+        <Point X="7.303" Y="4" />
+        <Point X="6.5" Y="4" />
+        <Point X="6.5" Y="5.063" />
+        <Point X="6.75" Y="5.063" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-2.378" Y="1.162" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsCollectionAssociation>
+      <Property Name="Items" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="EP.Text.MorphBaseInfo">
+    <Position X="6.75" Y="4.25" Width="2" />
+    <Members>
+      <Method Name="Clone" Hidden="true" />
+      <Method Name="ContainsAttr" Hidden="true" />
+      <Method Name="CopyTo" Hidden="true" />
+      <Method Name="MorphBaseInfo" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EP.Semantix.MetaToken">
+    <Position X="3.75" Y="5" Width="1.75" />
+    <Members>
+      <Method Name="Check" Hidden="true" />
+      <Property Name="IsNewlineAfter" Hidden="true" />
+      <Property Name="IsNewlineBefore" Hidden="true" />
+      <Property Name="IsWhitespaceAfter" Hidden="true" />
+      <Property Name="IsWhitespaceBefore" Hidden="true" />
+      <Method Name="MetaToken" Hidden="true" />
+      <Property Name="TokensCount" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Property Name="WhitespacesAfterCount" Hidden="true" />
+      <Property Name="WhitespacesBeforeCount" Hidden="true" />
+    </Members>
+    <TypeIdentifier />
+  </Class>
+  <Class Name="EP.Semantix.TextToken">
+    <Position X="0.5" Y="5" Width="1.75" />
+    <Members>
+      <Method Name="CheckValue" Hidden="true" />
+      <Method Name="GetNormalCaseText" Hidden="true" />
+      <Method Name="GetSourceTextTokens" Hidden="true" />
+      <Field Name="InvariantPrefixLength" Hidden="true" />
+      <Method Name="IsValue" Hidden="true" />
+      <Field Name="MaxLength" Hidden="true" />
+      <Field Name="Source" Hidden="true" />
+      <Method Name="TextToken" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <TypeIdentifier />
+  </Class>
+  <Class Name="EP.Semantix.NumberToken">
+    <Position X="1" Y="7.5" Width="1.75" />
+    <Members>
+      <Method Name="GetNormalCaseText" Hidden="true" />
+      <Property Name="IsNumber" Hidden="true" />
+      <Field Name="m_Nums" Hidden="true" />
+      <Method Name="NumberToken" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Method Name="TryParse" Hidden="true" />
+      <Method Name="TryParseAge" Hidden="true" />
+      <Method Name="TryParseAnniversary" Hidden="true" />
+      <Method Name="TryParseRoman" Hidden="true" />
+      <Method Name="TryParseRomanBack" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="EP.Semantix.NumberToken.SpellingType" Collapsed="true">
+        <TypeIdentifier />
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier />
+  </Class>
+  <Class Name="EP.Semantix.ReferentToken">
+    <Position X="6.25" Y="7.5" Width="1.5" />
+    <Members>
+      <Field Name="Data" Hidden="true" />
+      <Property Name="IsReferent" Hidden="true" />
+      <Field Name="MiscAttrs" Hidden="true" />
+      <Method Name="ReferentToken" Hidden="true" />
+      <Method Name="SaveToLocalOntology" Hidden="true" />
+      <Method Name="SetDefaultLocalOnto" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Field Name="Referent" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="EP.Referent" Collapsed="true">
+    <Position X="6.25" Y="9" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="EP.Semantix.BracketSequenceToken">
+    <Position X="4" Y="9.5" Width="2" />
+    <Members>
+      <Method Name="BracketSequenceToken" Hidden="true" />
+      <Method Name="GetNormalCaseText" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <AssociationLine Name="Internal" Type="EP.Semantix.BracketSequenceToken">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.036" Y="0.32" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier />
+    <ShowAsCollectionAssociation>
+      <Field Name="Internal" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="EP.Semantix.NounPhraseToken">
+    <Position X="1.25" Y="9.5" Width="2.25" />
+    <Members>
+      <Method Name="GetNormalCaseText" Hidden="true" />
+      <Method Name="GetNormalCaseTextWithoutAdjective" Hidden="true" />
+      <Method Name="NounPhraseToken" Hidden="true" />
+      <Method Name="RemoveLastNounWord" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Method Name="TryParse" Hidden="true" />
+    </Members>
+    <NestedTypes>
+      <Enum Name="EP.Semantix.NounPhraseToken.ParseTyp" Collapsed="true">
+        <TypeIdentifier />
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier />
+  </Class>
+  <Struct Name="EP.Text.CharsInfo">
+    <Position X="0.5" Y="1" Width="1.75" />
+    <Members>
+      <Method Name="Equals" Hidden="true" />
+      <Method Name="GetHashCode" Hidden="true" />
+      <Method Name="op_Inequality" Hidden="true" />
+      <Method Name="op_BitwiseAnd" Hidden="true" />
+      <Method Name="op_BitwiseOr" Hidden="true" />
+      <Method Name="op_Equality" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <TypeIdentifier />
+  </Struct>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>

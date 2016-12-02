@@ -33,6 +33,50 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EP.Analyzer.Biblio, Version=1.0.6171.25781, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Biblio.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Business, Version=1.0.6171.25771, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Business.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Date, Version=1.0.6171.25762, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Date.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Decree, Version=1.0.6171.25768, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Decree.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Location, Version=1.0.6171.25766, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Location.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Misc, Version=1.0.6171.25762, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Misc.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Organization, Version=1.0.6171.25767, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Organization.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Person, Version=1.0.6171.25767, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Person.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Semantic, Version=1.0.6171.25763, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Semantic.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Analyzer.Technical, Version=1.0.6171.25768, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Technical.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Core, Version=1.0.6171.25761, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\EP.Sdk\EP.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -78,6 +122,44 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Properties\EP.Sdk.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="EP.Sdk\EP.Sdk.csproj">
+      <Project>{635573f4-6aa9-479d-a0a5-2294cb26e79f}</Project>
+      <Name>EP.Sdk</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>4</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Word">
+      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>4</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

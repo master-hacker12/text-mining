@@ -28,20 +28,93 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            this.addFiles = new System.Windows.Forms.Button();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.addFolder = new System.Windows.Forms.Button();
+            this.deleteOfList = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // addFiles
+            // 
+            this.addFiles.Location = new System.Drawing.Point(60, 35);
+            this.addFiles.Name = "addFiles";
+            this.addFiles.Size = new System.Drawing.Size(101, 23);
+            this.addFiles.TabIndex = 0;
+            this.addFiles.Text = "Добавить файл";
+            this.addFiles.UseVisualStyleBackColor = true;
+            this.addFiles.Click += new System.EventHandler(this.addFiles_Click);
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(38, 83);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(288, 212);
+            this.listBox1.TabIndex = 1;
+            this.listBox1.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            // 
+            // addFolder
+            // 
+            this.addFolder.Location = new System.Drawing.Point(192, 35);
+            this.addFolder.Name = "addFolder";
+            this.addFolder.Size = new System.Drawing.Size(101, 23);
+            this.addFolder.TabIndex = 2;
+            this.addFolder.Text = "Добавить папку";
+            this.addFolder.UseVisualStyleBackColor = true;
+            this.addFolder.Click += new System.EventHandler(this.addFolder_Click);
+            // 
+            // deleteOfList
+            // 
+            this.deleteOfList.Location = new System.Drawing.Point(374, 110);
+            this.deleteOfList.Name = "deleteOfList";
+            this.deleteOfList.Size = new System.Drawing.Size(125, 23);
+            this.deleteOfList.TabIndex = 3;
+            this.deleteOfList.Text = "Удалить из списка";
+            this.deleteOfList.UseVisualStyleBackColor = true;
+            this.deleteOfList.Click += new System.EventHandler(this.deleteOfList_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(374, 155);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(125, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = "Очистить список";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(767, 484);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.deleteOfList);
+            this.Controls.Add(this.addFolder);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.addFiles);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Button addFiles;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.Button addFolder;
+        private System.Windows.Forms.Button deleteOfList;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button button1;
     }
 }
 

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="EP.Semantix.NumberToken">
+    <Position X="0.75" Y="3.25" Width="2.75" />
+    <Members>
+      <Method Name="GetNormalCaseText" Hidden="true" />
+      <Field Name="m_Nums" Hidden="true" />
+      <Method Name="NumberToken" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Method Name="TryParse" Hidden="true" />
+      <Method Name="TryParseAge" Hidden="true" />
+      <Method Name="TryParseAnniversary" Hidden="true" />
+      <Method Name="TryParseRoman" Hidden="true" />
+      <Method Name="TryParseRomanBack" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="EP.Semantix.NumberToken.SpellingType">
+        <TypeIdentifier />
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier />
+  </Class>
+  <Class Name="EP.Semantix.NumberHelper">
+    <Position X="0.75" Y="0.5" Width="5.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="EP.Semantix.NumberExToken">
+    <Position X="4.5" Y="3.25" Width="3.75" />
+    <Members>
+      <Field Name="AltRestMoney" Hidden="true" />
+      <Method Name="ConvertToString" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+      <Method Name="TryAttachPostfixOnly" Hidden="true" />
+      <Method Name="TryParseFloatNumber" Hidden="true" />
+      <Method Name="TryParseNumberWithPostfix" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="EP.Semantix.NumberExToken.ExTyps">
+        <TypeIdentifier />
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier />
+  </Class>
+  <Class Name="EP.MoneyReferent">
+    <Position X="0.75" Y="6.75" Width="2.75" />
+    <Members>
+      <Field Name="ATTR_ALTREST" Hidden="true" />
+      <Field Name="ATTR_ALTVALUE" Hidden="true" />
+      <Field Name="ATTR_CURRENCY" Hidden="true" />
+      <Field Name="ATTR_REST" Hidden="true" />
+      <Field Name="ATTR_VALUE" Hidden="true" />
+      <Method Name="CanBeEquals" Hidden="true" />
+      <Method Name="MoneyReferent" Hidden="true" />
+      <Field Name="OBJ_TYPENAME" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <TypeIdentifier />
+  </Class>
+  <Font Name="Tahoma" Size="8.25" />
+</ClassDiagram>
