@@ -35,6 +35,11 @@
             this.deleteOfList = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
+            this.analizeDocument = new System.Windows.Forms.Button();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // addFiles
@@ -90,20 +95,57 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // analizeDocument
+            // 
+            this.analizeDocument.Location = new System.Drawing.Point(374, 200);
+            this.analizeDocument.Name = "analizeDocument";
+            this.analizeDocument.Size = new System.Drawing.Size(125, 23);
+            this.analizeDocument.TabIndex = 5;
+            this.analizeDocument.Text = "Анализ документа";
+            this.analizeDocument.UseVisualStyleBackColor = true;
+            this.analizeDocument.Click += new System.EventHandler(this.analizeDocument_Click);
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel1,
+            this.toolStripComboBox1});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(694, 25);
+            this.toolStrip1.TabIndex = 6;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripComboBox1
+            // 
+            this.toolStripComboBox1.Name = "toolStripComboBox1";
+            this.toolStripComboBox1.Size = new System.Drawing.Size(121, 25);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(160, 22);
+            this.toolStripLabel1.Text = "Тип анализируемого текста";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(767, 484);
+            this.ClientSize = new System.Drawing.Size(694, 443);
+            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.analizeDocument);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.deleteOfList);
             this.Controls.Add(this.addFolder);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.addFiles);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Графематический анализ текста ";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -115,6 +157,10 @@
         private System.Windows.Forms.Button deleteOfList;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button analizeDocument;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
     }
 }
 

@@ -10,7 +10,7 @@
 
 namespace text_mining.Properties
 {
-
+using System;
 
     /// <summary>
     ///   Класс ресурсов со строгим типом для поиска локализованных строк и пр.
