@@ -29,6 +29,7 @@ namespace text_mining
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
@@ -36,13 +37,15 @@ namespace text_mining
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabelMessage = new System.Windows.Forms.ToolStripLabel();
-            this.textControl1 = new text_mining.TextControl();
             this.textBoxInform = new System.Windows.Forms.TextBox();
+            this.textControl1 = new text_mining.TextControl();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -119,14 +122,6 @@ namespace text_mining
             this.toolStripLabelMessage.Size = new System.Drawing.Size(81, 22);
             this.toolStripLabelMessage.Text = "Задайте текст";
             // 
-            // textControl1
-            // 
-            this.textControl1.Location = new System.Drawing.Point(7, 29);
-            this.textControl1.Margin = new System.Windows.Forms.Padding(4);
-            this.textControl1.Name = "textControl1";
-            this.textControl1.Size = new System.Drawing.Size(183, 351);
-            this.textControl1.TabIndex = 2;
-            // 
             // textBoxInform
             // 
             this.textBoxInform.Location = new System.Drawing.Point(204, 374);
@@ -134,6 +129,14 @@ namespace text_mining
             this.textBoxInform.Name = "textBoxInform";
             this.textBoxInform.Size = new System.Drawing.Size(430, 102);
             this.textBoxInform.TabIndex = 3;
+            // 
+            // textControl1
+            // 
+            this.textControl1.Location = new System.Drawing.Point(7, 29);
+            this.textControl1.Margin = new System.Windows.Forms.Padding(4);
+            this.textControl1.Name = "textControl1";
+            this.textControl1.Size = new System.Drawing.Size(183, 351);
+            this.textControl1.TabIndex = 2;
             // 
             // Form2
             // 
@@ -153,6 +156,7 @@ namespace text_mining
             this.tabPage2.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -169,5 +173,6 @@ namespace text_mining
         private System.Windows.Forms.ToolStripLabel toolStripLabelMessage;
         private TextControl textControl1;
         private System.Windows.Forms.TextBox textBoxInform;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }

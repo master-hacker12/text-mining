@@ -23,11 +23,68 @@ namespace text_mining
         public Form1()
         {
             InitializeComponent();
-           
+            toolStripComboBox1.Items.Add("Выделение именованных сущностей");
+            toolStripComboBox1.Items.Add("Семантический анализ");
+            toolStripComboBox1.Items.Add("Бизнес-объекты");
+            toolStripComboBox1.Items.Add("Это заголовок статьи");
+            TextType = TextTypes.Ner;
         }
 
         Processor processor = null;
         Form2 f2 = null;
+        #region Типы анализируемого текста
+        /// <summary>
+        /// Типы анализируемого текста
+        /// </summary>
+        enum TextTypes
+        {
+            /// <summary>
+            /// Семантический анализ
+            /// </summary>
+            Semantic,
+            /// <summary>
+            /// Named entity recognition (выделение именованных сущностей)
+            /// </summary>
+            Ner,
+            /// <summary>
+            /// Бизнес-объекты
+            /// </summary>
+            BusinessObjects,
+            /// <summary>
+            /// Текст - это заголовок статьи
+            /// </summary>
+            TitleOfArticle
+        }
+
+        TextTypes TextType
+        {
+            get
+            {
+                switch (toolStripComboBox1.SelectedIndex)
+                {
+                    case 0: return TextTypes.Ner;
+                    case 1: return TextTypes.Semantic;
+                    case 2: return TextTypes.BusinessObjects;
+                    case 3: return TextTypes.TitleOfArticle;
+                }
+                return TextTypes.Ner;
+            }
+            set
+            {
+                switch (value)
+                {
+                    case TextTypes.Ner: toolStripComboBox1.SelectedIndex = 0; break;
+                    case TextTypes.Semantic: toolStripComboBox1.SelectedIndex = 1; break;
+                    case TextTypes.BusinessObjects: toolStripComboBox1.SelectedIndex = 2; break;
+                    case TextTypes.TitleOfArticle: toolStripComboBox1.SelectedIndex = 3; break;
+                }
+            }
+        }
+
+        #endregion
+
+
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -127,8 +184,22 @@ namespace text_mining
             string str = range.Text;
             document.Close();
             app.Quit();
+
+            processor = new Processor(TextType == TextTypes.TitleOfArticle ? TitlePageAnalyzer.ANALYZER_NAME : // "TITLEPAGE"
+                (TextType == TextTypes.BusinessObjects ? BusinessAnalyzer.ANALYZER_NAME : // "BUSINESS" 
+                (TextType == TextTypes.Semantic ? SemanticAnalyzer.ANALYZER_NAME : // "SEMANTIC"
+                "")));
             f2 = new Form2();
-            f2.Visible = true;
+            bool result = f2.ProcessAnalize(ref str, ref processor);
+            if (result)
+                f2.Visible = true;
+            else
+            {
+                f2.Visible = false;
+                f2 = null;
+                return;
+            }
+            
 
         }
     }

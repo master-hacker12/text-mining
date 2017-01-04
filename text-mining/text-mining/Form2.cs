@@ -20,9 +20,27 @@ namespace text_mining
             InitializeComponent();
         }
 
+
+        bool m_HideHighlighting;
+        int m_MaxTextLengthForShowing = 2000000;
+        public bool ProcessAnalize(ref string txt, ref Processor processor)
+        {
+            try
+            {
+
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка анализа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
         private void Form2_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
