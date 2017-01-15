@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using EP.Semantix;
 using EP;
 using EP.Text;
+using System.IO;
 
 namespace text_mining
 {
@@ -24,6 +25,20 @@ namespace text_mining
         bool m_HideHighlighting;
         int m_MaxTextLengthForShowing = 2000000;
         int m_IgnoreTreeChanging = 0;
+        bool dsp = false;
+        
+        bool isDsp (string document)
+        {
+           string[] str = document.Split('\n');
+            for (int i = 0; i<str.Length; i++)
+            {
+                if ((str[i] == "ДСП") || (str[i] == "Для служебного пользования"))
+                    return true;
+            }
+
+            return false;
+        }
+
         public bool ProcessAnalize(ref string txt, ref Processor processor)
         {
             if (txt != null && txt.Length > m_MaxTextLengthForShowing)
@@ -39,6 +54,7 @@ namespace text_mining
             }
             // подписываемся на событие "бегунка"
             processor.Progress += new ProgressChangedEventHandler(processor_Progress);
+           dsp = isDsp(txt);
             try
             {
                 textBoxInform.Text = null;
@@ -62,6 +78,7 @@ namespace text_mining
                 }
                 BindingList<EntityWrapper> entities = new BindingList<EntityWrapper>();
                 foreach (var e in result.Entities) entities.Add(new EntityWrapper(e));
+               
                 // выводим в таблице
                 bindingSource1.DataSource = entities;
                 if (entities.Count > 0)
@@ -69,6 +86,10 @@ namespace text_mining
 
                 // рисуем дерево токенов
                 DrawTokens(result.FirstToken);
+
+
+                if (dsp)
+                    toolStripLabelMessage.Text += ". Данный документ возможно имеет гриф <Для служебного пользования> ";
                 return true;
             }
             catch (Exception ex)
@@ -210,7 +231,25 @@ namespace text_mining
             }
             return res;
         }
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+     
+
+        void processor_Progress(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.ProgressPercentage >= 0)
+                toolStripProgressBar1.Value = e.ProgressPercentage;
+            else
+            {
+                // если < 0, то это просто информационное сообщение
+            }
+
+            if (e.UserState != null)
+            {
+                toolStripLabelMessage.Text = e.UserState.ToString();
+                toolStrip1.Update();
+            }
+        }
+
+        private void treeView1_AfterSelect_1(object sender, TreeViewEventArgs e)
         {
             if (m_IgnoreTreeChanging > 0) return;
             if (treeView1.SelectedNode == null) return;
@@ -236,25 +275,6 @@ namespace text_mining
             }
             textBoxInform.Text = txt.ToString();
         }
-
-
-        void processor_Progress(object sender, ProgressChangedEventArgs e)
-        {
-            if (e.ProgressPercentage >= 0)
-                toolStripProgressBar1.Value = e.ProgressPercentage;
-            else
-            {
-                // если < 0, то это просто информационное сообщение
-            }
-
-            if (e.UserState != null)
-            {
-                toolStripLabelMessage.Text = e.UserState.ToString();
-                toolStrip1.Update();
-            }
-        }
-
-
         private void Form2_Load(object sender, EventArgs e)
         {
            
@@ -270,6 +290,9 @@ namespace text_mining
 
         }
 
-       
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

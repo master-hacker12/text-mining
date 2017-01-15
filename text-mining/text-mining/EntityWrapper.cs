@@ -17,6 +17,7 @@ namespace text_mining
             {
                 Source = r;
             }
+        
 
             public Referent Source;
 

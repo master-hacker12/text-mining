@@ -194,6 +194,9 @@ namespace text_mining
          
                 f2.Visible = true;
             bool result = f2.ProcessAnalize(ref str, ref processor);
+            if (!result)
+                f2.Visible = false;
+            f2 = null;
            
             
 
