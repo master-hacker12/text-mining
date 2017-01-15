@@ -39,10 +39,11 @@ namespace text_mining
             this.toolStripLabelMessage = new System.Windows.Forms.ToolStripLabel();
             this.textBoxInform = new System.Windows.Forms.TextBox();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.textControl1 = new text_mining.TextControl();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.typeNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.captionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -98,7 +99,7 @@ namespace text_mining
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(429, 320);
+            this.tabPage2.Size = new System.Drawing.Size(556, 326);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Токены";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -110,12 +111,13 @@ namespace text_mining
             this.treeView1.Location = new System.Drawing.Point(3, 3);
             this.treeView1.Margin = new System.Windows.Forms.Padding(4);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(423, 314);
+            this.treeView1.Size = new System.Drawing.Size(550, 320);
             this.treeView1.TabIndex = 1;
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripProgressBar1,
             this.toolStripLabelMessage});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -144,6 +146,12 @@ namespace text_mining
             this.imageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // toolStripProgressBar1
+            // 
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+            this.toolStripProgressBar1.Size = new System.Drawing.Size(200, 22);
+            this.toolStripProgressBar1.Visible = false;
+            // 
             // textControl1
             // 
             this.textControl1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -153,11 +161,6 @@ namespace text_mining
             this.textControl1.Size = new System.Drawing.Size(205, 480);
             this.textControl1.TabIndex = 4;
             this.textControl1.Load += new System.EventHandler(this.textControl1_Load);
-            // 
-            // bindingSource1
-            // 
-            this.bindingSource1.DataSource = typeof(text_mining.EntityWrapper);
-            this.bindingSource1.CurrentChanged += new System.EventHandler(this.bindingSource1_CurrentChanged_1);
             // 
             // typeNameDataGridViewTextBoxColumn1
             // 
@@ -174,6 +177,11 @@ namespace text_mining
             this.captionDataGridViewTextBoxColumn1.Name = "captionDataGridViewTextBoxColumn1";
             this.captionDataGridViewTextBoxColumn1.ReadOnly = true;
             this.captionDataGridViewTextBoxColumn1.Width = 278;
+            // 
+            // bindingSource1
+            // 
+            this.bindingSource1.DataSource = typeof(text_mining.EntityWrapper);
+            this.bindingSource1.CurrentChanged += new System.EventHandler(this.bindingSource1_CurrentChanged_1);
             // 
             // Form2
             // 
@@ -214,5 +222,6 @@ namespace text_mining
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.DataGridViewTextBoxColumn typeNameDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn captionDataGridViewTextBoxColumn1;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
     }
 }

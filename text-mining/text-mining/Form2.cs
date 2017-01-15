@@ -37,6 +37,8 @@ namespace text_mining
                 // вариант из контрола
                 txt = textControl1.Text;
             }
+            // подписываемся на событие "бегунка"
+            processor.Progress += new ProgressChangedEventHandler(processor_Progress);
             try
             {
                 textBoxInform.Text = null;
@@ -233,6 +235,23 @@ namespace text_mining
                 txt.AppendFormat("\r\n{0}: {1}", nt.Value, nt.Typ);
             }
             textBoxInform.Text = txt.ToString();
+        }
+
+
+        void processor_Progress(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.ProgressPercentage >= 0)
+                toolStripProgressBar1.Value = e.ProgressPercentage;
+            else
+            {
+                // если < 0, то это просто информационное сообщение
+            }
+
+            if (e.UserState != null)
+            {
+                toolStripLabelMessage.Text = e.UserState.ToString();
+                toolStrip1.Update();
+            }
         }
 
 
