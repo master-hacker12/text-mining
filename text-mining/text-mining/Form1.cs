@@ -190,15 +190,11 @@ namespace text_mining
                 (TextType == TextTypes.Semantic ? SemanticAnalyzer.ANALYZER_NAME : // "SEMANTIC"
                 "")));
             f2 = new Form2();
-            bool result = f2.ProcessAnalize(ref str, ref processor);
-            if (result)
+
+         
                 f2.Visible = true;
-            else
-            {
-                f2.Visible = false;
-                f2 = null;
-                return;
-            }
+            bool result = f2.ProcessAnalize(ref str, ref processor);
+           
             
 
         }

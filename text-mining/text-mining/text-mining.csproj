@@ -112,7 +112,9 @@
     <Compile Include="TextControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TextControl.Designer.cs" />
+    <Compile Include="TextControl.Designer.cs">
+      <DependentUpon>TextControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -131,6 +133,7 @@
     <EmbeddedResource Include="TextControl.resx">
       <DependentUpon>TextControl.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\EntityWrapper.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

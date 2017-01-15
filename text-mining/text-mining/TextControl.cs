@@ -18,7 +18,7 @@ namespace text_mining
         public TextControl()
         {
             InitializeComponent();
-            txtContent.BackColor = Color.FromKnownColor(KnownColor.Window);
+            textControl1.BackColor = Color.FromKnownColor(KnownColor.Window);
         }
         protected override void OnFontChanged(EventArgs e)
         {
@@ -32,8 +32,8 @@ namespace text_mining
         [DefaultValue(false)]
         public bool ReadOnly
         {
-            get { return txtContent.ReadOnly; }
-            set { txtContent.ReadOnly = value; }
+            get { return textControl1.ReadOnly; }
+            set { textControl1.ReadOnly = value; }
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace text_mining
         [DefaultValue("")]
         public override string Text
         {
-            get { return txtContent.Text; }
+            get { return textControl1.Text; }
             set
             {
                 m_GreenHighlights.Clear();
@@ -63,7 +63,7 @@ namespace text_mining
         {
             if (m_TextChangedIgnore == 0)
             {
-                internalText.Text = txtContent.Text;
+                internalText.Text = textControl1.Text;
                 if (TextChanged != null)
                     TextChanged(this, EventArgs.Empty);
             }
@@ -125,7 +125,7 @@ namespace text_mining
             CorrectGreenHighlighting();
             if (editNormalFont == null)
                 editNormalFont = internalText.Font;
-            txtContent.BackColor = Color.FromKnownColor(KnownColor.Window);
+            textControl1.BackColor = Color.FromKnownColor(KnownColor.Window);
 
             // начинаем подсветку ...
             internalText.SuspendLayout();
@@ -166,7 +166,7 @@ namespace text_mining
             m_TextChangedIgnore++;
             // к сожалению, приходится извращаться через внутренний компонент,
             // поскольку txtContent слишком мигает во время прорисовки ...
-            txtContent.Rtf = internalText.Rtf;
+            textControl1.Rtf = internalText.Rtf;
 
             m_TextChangedIgnore--;
 
@@ -174,12 +174,12 @@ namespace text_mining
             {
                 // делаем так, чтобы первый красный фрагмент попал в область видимости
                 int pos = redPeaces[0].Pos;
-                int pos1 = pos + 200; if (pos1 >= txtContent.Text.Length) pos1 = txtContent.Text.Length - 1;
-                txtContent.SelectionStart = pos1;
-                txtContent.SelectionLength = 0;
-                txtContent.SelectionStart = pos;
-                txtContent.SelectionLength = 0;
-                txtContent.HideSelection = false;
+                int pos1 = pos + 200; if (pos1 >= textControl1.Text.Length) pos1 = textControl1.Text.Length - 1;
+                textControl1.SelectionStart = pos1;
+                textControl1.SelectionLength = 0;
+                textControl1.SelectionStart = pos;
+                textControl1.SelectionLength = 0;
+                textControl1.HideSelection = false;
             }
         }
     }

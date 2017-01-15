@@ -29,19 +29,19 @@ namespace text_mining
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TextControl));
-            this.txtContent = new System.Windows.Forms.RichTextBox();
+            this.textControl1 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
-            // txtContent
+            // textControl1
             // 
-            resources.ApplyResources(this.txtContent, "txtContent");
-            this.txtContent.Name = "txtContent";
-            this.txtContent.TextChanged += new System.EventHandler(this.txtContent_TextChanged);
+            resources.ApplyResources(this.textControl1, "textControl1");
+            this.textControl1.Name = "textControl1";
+            this.textControl1.TextChanged += new System.EventHandler(this.txtContent_TextChanged);
             // 
             // TextControl
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
-            this.Controls.Add(this.txtContent);
+            this.Controls.Add(this.textControl1);
             resources.ApplyResources(this, "$this");
             this.Name = "TextControl";
             this.ResumeLayout(false);
@@ -50,7 +50,7 @@ namespace text_mining
 
         #endregion
 
-        private System.Windows.Forms.RichTextBox txtContent;
+        private System.Windows.Forms.RichTextBox textControl1;
 
     }
 }
