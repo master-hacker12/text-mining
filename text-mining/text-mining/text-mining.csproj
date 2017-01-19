@@ -12,6 +12,21 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -32,54 +47,48 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\Icon1.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EP.Analyzer.Biblio, Version=1.0.6171.25781, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Biblio.dll</HintPath>
+    <Reference Include="EP.Analyzer.Biblio">
+      <HintPath>EP.Sdk\EP.Analyzer.Biblio.dll</HintPath>
     </Reference>
-    <Reference Include="EP.Analyzer.Business, Version=1.0.6171.25771, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Business.dll</HintPath>
+    <Reference Include="EP.Analyzer.Business">
+      <HintPath>EP.Sdk\EP.Analyzer.Business.dll</HintPath>
     </Reference>
-    <Reference Include="EP.Analyzer.Date, Version=1.0.6171.25762, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Date.dll</HintPath>
+    <Reference Include="EP.Analyzer.Date">
+      <HintPath>EP.Sdk\EP.Analyzer.Date.dll</HintPath>
     </Reference>
-    <Reference Include="EP.Analyzer.Decree, Version=1.0.6171.25768, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Decree.dll</HintPath>
+    <Reference Include="EP.Analyzer.Decree">
+      <HintPath>EP.Sdk\EP.Analyzer.Decree.dll</HintPath>
     </Reference>
-    <Reference Include="EP.Analyzer.Location, Version=1.0.6171.25766, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Location.dll</HintPath>
+    <Reference Include="EP.Analyzer.Location">
+      <HintPath>EP.Sdk\EP.Analyzer.Location.dll</HintPath>
     </Reference>
-    <Reference Include="EP.Analyzer.Misc, Version=1.0.6171.25762, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Misc.dll</HintPath>
+    <Reference Include="EP.Analyzer.Misc">
+      <HintPath>EP.Sdk\EP.Analyzer.Misc.dll</HintPath>
     </Reference>
-    <Reference Include="EP.Analyzer.Organization, Version=1.0.6171.25767, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Organization.dll</HintPath>
+    <Reference Include="EP.Analyzer.Organization">
+      <HintPath>EP.Sdk\EP.Analyzer.Organization.dll</HintPath>
     </Reference>
-    <Reference Include="EP.Analyzer.Person, Version=1.0.6171.25767, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Person.dll</HintPath>
+    <Reference Include="EP.Analyzer.Person">
+      <HintPath>EP.Sdk\EP.Analyzer.Person.dll</HintPath>
     </Reference>
-    <Reference Include="EP.Analyzer.Semantic, Version=1.0.6171.25763, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Semantic.dll</HintPath>
+    <Reference Include="EP.Analyzer.Semantic">
+      <HintPath>EP.Sdk\EP.Analyzer.Semantic.dll</HintPath>
     </Reference>
-    <Reference Include="EP.Analyzer.Technical, Version=1.0.6171.25768, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\EP.Sdk\EP.Analyzer.Technical.dll</HintPath>
+    <Reference Include="EP.Analyzer.Technical">
+      <HintPath>EP.Sdk\EP.Analyzer.Technical.dll</HintPath>
     </Reference>
-    <Reference Include="EP.Core, Version=1.0.6171.25761, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\EP.Sdk\EP.Core.dll</HintPath>
+    <Reference Include="EP.Core">
+      <HintPath>EP.Sdk\EP.Core.dll</HintPath>
     </Reference>
-    <Reference Include="EP.Morphology, Version=1.0.6171.25756, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\EP.Sdk\EP.Morphology.dll</HintPath>
+    <Reference Include="EP.Explanatory">
+      <HintPath>EP.Sdk\EP.Explanatory.dll</HintPath>
+    </Reference>
+    <Reference Include="EP.Morphology">
+      <HintPath>EP.Sdk\EP.Morphology.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -109,6 +118,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
     <Compile Include="TextControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -130,9 +144,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Resource1.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="TextControl.resx">
       <DependentUpon>TextControl.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="Properties\DataSources\EntityWrapper.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -151,12 +171,7 @@
     <Content Include="Properties\EP.Sdk.csproj">
       <SubType>Designer</SubType>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="EP.Sdk\EP.Sdk.csproj">
-      <Project>{635573f4-6aa9-479d-a0a5-2294cb26e79f}</Project>
-      <Name>EP.Sdk</Name>
-    </ProjectReference>
+    <None Include="Resources\Icon1.ico" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
@@ -186,6 +201,18 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

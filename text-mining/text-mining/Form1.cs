@@ -53,7 +53,14 @@ namespace text_mining
             /// <summary>
             /// Текст - это заголовок статьи
             /// </summary>
-            TitleOfArticle
+            TitleOfArticle,
+
+            Technical,
+            Biblio,
+            Date,
+            Decree,
+            Organization,
+            Misc,
         }
 
         TextTypes TextType
@@ -188,7 +195,10 @@ namespace text_mining
             processor = new Processor(TextType == TextTypes.TitleOfArticle ? TitlePageAnalyzer.ANALYZER_NAME : // "TITLEPAGE"
                 (TextType == TextTypes.BusinessObjects ? BusinessAnalyzer.ANALYZER_NAME : // "BUSINESS" 
                 (TextType == TextTypes.Semantic ? SemanticAnalyzer.ANALYZER_NAME : // "SEMANTIC"
-                "")));
+                TextType == TextTypes.Organization ? OrganizationAnalyzer.ANALYZER_NAME : "")));
+
+
+
             f2 = new Form2();
 
          

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.addFiles = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.addFolder = new System.Windows.Forms.Button();
@@ -139,6 +140,7 @@
             this.Controls.Add(this.addFolder);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.addFiles);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Графематический анализ текста ";
             this.Load += new System.EventHandler(this.Form1_Load);

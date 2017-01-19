@@ -26,6 +26,7 @@ namespace text_mining
         int m_MaxTextLengthForShowing = 2000000;
         int m_IgnoreTreeChanging = 0;
         bool dsp = false;
+        string time = DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString();
         
         bool isDsp (string document)
         {
@@ -86,8 +87,6 @@ namespace text_mining
 
                 // рисуем дерево токенов
                 DrawTokens(result.FirstToken);
-
-
                 if (dsp)
                     toolStripLabelMessage.Text += ". Данный документ возможно имеет гриф <Для служебного пользования> ";
                 return true;
