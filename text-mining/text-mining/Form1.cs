@@ -23,79 +23,29 @@ namespace text_mining
         public Form1()
         {
             InitializeComponent();
-            toolStripComboBox1.Items.Add("Выделение именованных сущностей");
-            toolStripComboBox1.Items.Add("Семантический анализ");
-            toolStripComboBox1.Items.Add("Бизнес-объекты");
-            toolStripComboBox1.Items.Add("Это заголовок статьи");
-            TextType = TextTypes.Ner;
+            timer1.Enabled = true;
+            label1.Text = " Анализаторы по умолчанию";
+            label1.Text += '\n';
+            Processor p = new Processor();
+            int i = 0;
+            foreach (Analyzer a in p.Analyzers)
+            {
+                i++;
+                label1.Text += i.ToString() + '.';
+                label1.Text += a.ToString();
+                label1.Text += '\n';
+            }
+
         }
 
         Processor processor = null;
         Form2 f2 = null;
-        #region Типы анализируемого текста
-        /// <summary>
-        /// Типы анализируемого текста
-        /// </summary>
-        enum TextTypes
-        {
-            /// <summary>
-            /// Семантический анализ
-            /// </summary>
-            Semantic,
-            /// <summary>
-            /// Named entity recognition (выделение именованных сущностей)
-            /// </summary>
-            Ner,
-            /// <summary>
-            /// Бизнес-объекты
-            /// </summary>
-            BusinessObjects,
-            /// <summary>
-            /// Текст - это заголовок статьи
-            /// </summary>
-            TitleOfArticle,
-
-            Technical,
-            Biblio,
-            Date,
-            Decree,
-            Organization,
-            Misc,
-        }
-
-        TextTypes TextType
-        {
-            get
-            {
-                switch (toolStripComboBox1.SelectedIndex)
-                {
-                    case 0: return TextTypes.Ner;
-                    case 1: return TextTypes.Semantic;
-                    case 2: return TextTypes.BusinessObjects;
-                    case 3: return TextTypes.TitleOfArticle;
-                }
-                return TextTypes.Ner;
-            }
-            set
-            {
-                switch (value)
-                {
-                    case TextTypes.Ner: toolStripComboBox1.SelectedIndex = 0; break;
-                    case TextTypes.Semantic: toolStripComboBox1.SelectedIndex = 1; break;
-                    case TextTypes.BusinessObjects: toolStripComboBox1.SelectedIndex = 2; break;
-                    case TextTypes.TitleOfArticle: toolStripComboBox1.SelectedIndex = 3; break;
-                }
-            }
-        }
-
-        #endregion
-
-
 
 
         private void Form1_Load(object sender, EventArgs e)
         {
             EP.Text.Morphology.UnloadLanguages(MorphLang.EN);
+            EP.Text.Morphology.UnloadLanguages(MorphLang.UA);
             deleteOfList.Enabled = false;
             analizeDocument.Enabled = false;
             
@@ -157,12 +107,37 @@ namespace text_mining
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (listBox1.Items.Count == 0)
-                timer1.Enabled = false;
+
             if (listBox1.SelectedIndex == -1)
             {
                 deleteOfList.Enabled = false;
                 analizeDocument.Enabled = false;
+            }
+
+            if (checkBox1.Checked)
+            {
+                checkBox2.Enabled = false;
+                checkBox3.Enabled = false;
+                checkBox4.Enabled = false;
+                checkBox2.Checked = false;
+                checkBox3.Checked = false;
+                checkBox4.Checked = false;
+            }
+            else
+            {
+                checkBox2.Enabled = true;
+                checkBox3.Enabled = true;
+                checkBox4.Enabled = true;
+            }
+
+            if (checkBox2.Checked || checkBox3.Checked || checkBox4.Checked)
+            {
+                checkBox1.Checked = false;
+                checkBox1.Enabled = false;
+            }
+            if (!checkBox2.Checked && !checkBox3.Checked && !checkBox4.Checked)
+            {
+                checkBox1.Enabled = true;
             }
         }
 
@@ -185,6 +160,12 @@ namespace text_mining
                 return;
             }
 
+             if (!checkBox1.Checked && !checkBox2.Checked && !checkBox3.Checked && !checkBox4.Checked)
+            {
+                MessageBox.Show("Выберете способ анализа", "Ошибка анализа", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             Word.Application app = new Word.Application();
             var document = app.Documents.Open(listBox1.SelectedItem,Visible: false);
             var range = document.Content;
@@ -192,13 +173,32 @@ namespace text_mining
             document.Close();
             app.Quit();
 
-            processor = new Processor(TextType == TextTypes.TitleOfArticle ? TitlePageAnalyzer.ANALYZER_NAME : // "TITLEPAGE"
-                (TextType == TextTypes.BusinessObjects ? BusinessAnalyzer.ANALYZER_NAME : // "BUSINESS" 
-                (TextType == TextTypes.Semantic ? SemanticAnalyzer.ANALYZER_NAME : // "SEMANTIC"
-                TextType == TextTypes.Organization ? OrganizationAnalyzer.ANALYZER_NAME : "")));
+            if (checkBox1.Checked)
+                processor = new Processor();
+            else
+            {
+                string type = null;
+                if (checkBox2.Checked)
+                    type = "SEMANTIC";
+                if (checkBox3.Checked)
+                    type = "BUSINESS";
+                if (checkBox4.Checked)
+                    type = "TITLEPAGE";
+                if (checkBox2.Checked && checkBox3.Checked)
+                    type = "SEMANTIC,BUSINESS";
+                if (checkBox2.Checked && checkBox4.Checked)
+                    type = "SEMANTIC,TITLEPAGE";
+                if (checkBox3.Checked && checkBox4.Checked)
+                    type = "BUSINESS,TITLEPAGE";
+                if (checkBox2.Checked && checkBox3.Checked && checkBox4.Checked)
+                    type = "SEMANTIC,BUSINESS,TITLEPAGE";
+                processor = new Processor(type);
+            }
 
-
-
+                //processor = new Processor(TextType == TextTypes.TitleOfArticle ? TitlePageAnalyzer.ANALYZER_NAME : // "TITLEPAGE"
+                //    (TextType == TextTypes.BusinessObjects ? BusinessAnalyzer.ANALYZER_NAME : // "BUSINESS" 
+                //    (TextType == TextTypes.Semantic ? SemanticAnalyzer.ANALYZER_NAME : "")));
+       
             f2 = new Form2();
 
          

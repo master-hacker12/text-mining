@@ -19,6 +19,8 @@ namespace text_mining
         public Form2()
         {
             InitializeComponent();
+            toolStripLabel1.Text = null;
+            timer1.Enabled = true;
         }
 
 
@@ -26,7 +28,7 @@ namespace text_mining
         int m_MaxTextLengthForShowing = 2000000;
         int m_IgnoreTreeChanging = 0;
         bool dsp = false;
-        string time = DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString();
+        
         
         bool isDsp (string document)
         {
@@ -38,6 +40,11 @@ namespace text_mining
             }
 
             return false;
+        }
+
+        string NowTime () // Текущая дата и время
+        {
+            return DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString();
         }
 
         public bool ProcessAnalize(ref string txt, ref Processor processor)
@@ -292,6 +299,11 @@ namespace text_mining
         private void button1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            toolStripLabel1.Text = NowTime();
         }
     }
 }

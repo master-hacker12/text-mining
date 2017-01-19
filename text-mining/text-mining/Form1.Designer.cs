@@ -37,10 +37,13 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button1 = new System.Windows.Forms.Button();
             this.analizeDocument = new System.Windows.Forms.Button();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStrip1.SuspendLayout();
+            this.label1 = new System.Windows.Forms.Label();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // addFiles
@@ -74,7 +77,7 @@
             // 
             // deleteOfList
             // 
-            this.deleteOfList.Location = new System.Drawing.Point(374, 110);
+            this.deleteOfList.Location = new System.Drawing.Point(367, 203);
             this.deleteOfList.Name = "deleteOfList";
             this.deleteOfList.Size = new System.Drawing.Size(125, 23);
             this.deleteOfList.TabIndex = 3;
@@ -88,7 +91,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(374, 155);
+            this.button1.Location = new System.Drawing.Point(367, 248);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(125, 23);
             this.button1.TabIndex = 4;
@@ -98,7 +101,7 @@
             // 
             // analizeDocument
             // 
-            this.analizeDocument.Location = new System.Drawing.Point(374, 200);
+            this.analizeDocument.Location = new System.Drawing.Point(367, 293);
             this.analizeDocument.Name = "analizeDocument";
             this.analizeDocument.Size = new System.Drawing.Size(125, 23);
             this.analizeDocument.TabIndex = 5;
@@ -106,34 +109,75 @@
             this.analizeDocument.UseVisualStyleBackColor = true;
             this.analizeDocument.Click += new System.EventHandler(this.analizeDocument_Click);
             // 
-            // toolStrip1
+            // label1
             // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
-            this.toolStripComboBox1});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(694, 25);
-            this.toolStrip1.TabIndex = 6;
-            this.toolStrip1.Text = "toolStrip1";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(551, 35);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "label1";
             // 
-            // toolStripLabel1
+            // checkBox1
             // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(160, 22);
-            this.toolStripLabel1.Text = "Тип анализируемого текста";
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(35, 32);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(99, 17);
+            this.checkBox1.TabIndex = 8;
+            this.checkBox1.Text = "По умолчанию";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // toolStripComboBox1
+            // checkBox2
             // 
-            this.toolStripComboBox1.Name = "toolStripComboBox1";
-            this.toolStripComboBox1.Size = new System.Drawing.Size(230, 25);
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.Location = new System.Drawing.Point(35, 56);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(144, 17);
+            this.checkBox2.TabIndex = 9;
+            this.checkBox2.Text = "Семантический анализ";
+            this.checkBox2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(35, 80);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(110, 17);
+            this.checkBox3.TabIndex = 10;
+            this.checkBox3.Text = "Бизнес-объекты";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(35, 104);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(137, 17);
+            this.checkBox4.TabIndex = 11;
+            this.checkBox4.Text = "Это заголовок статьи";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.checkBox4);
+            this.groupBox1.Controls.Add(this.checkBox2);
+            this.groupBox1.Controls.Add(this.checkBox3);
+            this.groupBox1.Location = new System.Drawing.Point(332, 35);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(213, 165);
+            this.groupBox1.TabIndex = 12;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Способ анализа текста";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(694, 443);
-            this.Controls.Add(this.toolStrip1);
+            this.ClientSize = new System.Drawing.Size(860, 443);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.analizeDocument);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.deleteOfList);
@@ -144,8 +188,8 @@
             this.Name = "Form1";
             this.Text = "Графематический анализ текста ";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -160,9 +204,12 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button analizeDocument;
-        private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
-        private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox checkBox3;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 
