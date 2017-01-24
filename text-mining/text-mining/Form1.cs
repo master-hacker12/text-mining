@@ -24,7 +24,7 @@ namespace text_mining
         {
             InitializeComponent();
             timer1.Enabled = true;
-            label1.Text = " Анализаторы по умолчанию";
+            label1.Text = " Обычные анализаторы (по умолчанию)";
             label1.Text += '\n';
             Processor p = new Processor();
             int i = 0;
@@ -114,31 +114,6 @@ namespace text_mining
                 analizeDocument.Enabled = false;
             }
 
-            if (checkBox1.Checked)
-            {
-                checkBox2.Enabled = false;
-                checkBox3.Enabled = false;
-                checkBox4.Enabled = false;
-                checkBox2.Checked = false;
-                checkBox3.Checked = false;
-                checkBox4.Checked = false;
-            }
-            else
-            {
-                checkBox2.Enabled = true;
-                checkBox3.Enabled = true;
-                checkBox4.Enabled = true;
-            }
-
-            if (checkBox2.Checked || checkBox3.Checked || checkBox4.Checked)
-            {
-                checkBox1.Checked = false;
-                checkBox1.Enabled = false;
-            }
-            if (!checkBox2.Checked && !checkBox3.Checked && !checkBox4.Checked)
-            {
-                checkBox1.Enabled = true;
-            }
         }
 
         private void deleteOfList_Click(object sender, EventArgs e)
@@ -160,12 +135,6 @@ namespace text_mining
                 return;
             }
 
-             if (!checkBox1.Checked && !checkBox2.Checked && !checkBox3.Checked && !checkBox4.Checked)
-            {
-                MessageBox.Show("Выберете способ анализа", "Ошибка анализа", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             Word.Application app = new Word.Application();
             var document = app.Documents.Open(listBox1.SelectedItem,Visible: false);
             var range = document.Content;
@@ -173,7 +142,7 @@ namespace text_mining
             document.Close();
             app.Quit();
 
-            if (checkBox1.Checked)
+            if (!checkBox2.Checked && !checkBox3.Checked && !checkBox4.Checked)
                 processor = new Processor();
             else
             {
