@@ -45,6 +45,7 @@ namespace text_mining
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.button2 = new System.Windows.Forms.Button();
             this.textControl1 = new text_mining.TextControl();
             this.typeNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.captionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -161,11 +162,11 @@ namespace text_mining
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(739, 408);
+            this.button1.Location = new System.Drawing.Point(729, 386);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(119, 37);
             this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
+            this.button1.Text = "Сохранить результаты";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -193,6 +194,16 @@ namespace text_mining
             this.timer1.Enabled = true;
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(729, 429);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(119, 37);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Импорт других результатов";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // textControl1
             // 
@@ -230,6 +241,7 @@ namespace text_mining
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(848, 550);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textControl1);
@@ -274,5 +286,6 @@ namespace text_mining
         private System.Windows.Forms.ToolStrip toolStrip2;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button button2;
     }
 }

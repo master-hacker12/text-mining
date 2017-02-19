@@ -11,6 +11,8 @@ using EP.Semantix;
 using EP;
 using EP.Text;
 using System.IO;
+using System.Xml.Serialization;
+using System.Xml;
 
 namespace text_mining
 {
@@ -28,8 +30,10 @@ namespace text_mining
         int m_MaxTextLengthForShowing = 2000000;
         int m_IgnoreTreeChanging = 0;
         bool dsp = false;
-        
-        
+        string starttext;
+        AnalysisResult export;
+        Processor pr = null;
+
         bool isDsp (string document)
         {
            string[] str = document.Split('\n');
@@ -49,6 +53,7 @@ namespace text_mining
 
         public bool ProcessAnalize(ref string txt, ref Processor processor)
         {
+            
             if (txt != null && txt.Length > m_MaxTextLengthForShowing)
                 textControl1.Text = txt.Substring(0, m_MaxTextLengthForShowing) +
                     "\r\n...\r\nТекст обрезан, так как компонент RichTextBox не отображает длинные тексты";
@@ -68,7 +73,8 @@ namespace text_mining
                 textBoxInform.Text = null;
                 Cursor = Cursors.WaitCursor;
                 AnalysisResult result = processor.Process(new SourceOfAnalysis(txt));
-
+                pr = processor;
+                export = result;
                 if (txt != null && txt.Length > m_MaxTextLengthForShowing)
                 {
                     MessageBox.Show(string.Format("Внимание, текст слишком длинный ({0}Kb),\r\n" +
@@ -106,6 +112,7 @@ namespace text_mining
             finally
             {
                 Cursor = Cursors.Default;
+                starttext = txt;
             }
         }
 
@@ -197,8 +204,11 @@ namespace text_mining
         }
         TreeNode _addNode(Token t, TreeNodeCollection tnc)
         {
+
             if (t == null) return null;
             string txt = null; int ind = 0;
+            MoneyReferent money = t.GetReferent() as MoneyReferent;
+            NumberExToken num = NumberHelper.TryParseNumberWithPostfix(t);
             if (t is ReferentToken)
             {
                 ind = 3;
@@ -212,6 +222,31 @@ namespace text_mining
             else if (t is TextToken)
             {
                 ind = 1;
+                txt = t.ToString();
+            }
+            else if  (money!=null )
+            {
+                ind = 4;
+                txt = money.ToString();
+            }
+            else if (num!=null)
+            {
+                ind = 5;
+                double sumLengthMeter = 0;
+                if ((num.ExTyp == NumberExToken.ExTyps.Kilometer ||
+                        num.ExTyp == NumberExToken.ExTyps.Meter ||
+                        num.ExTyp == NumberExToken.ExTyps.Santimeter ||
+                        num.ExTyp == NumberExToken.ExTyps.Millimeter) &&
+                        num.ExTyp2 == NumberExToken.ExTyps.Undefined)
+                {
+                    NumberExToken.ExTyps normTyp = NumberExToken.ExTyps.Meter;
+                    double normVal = num.NormalizeValue(ref normTyp);
+                    if (normTyp == NumberExToken.ExTyps.Meter)
+                        sumLengthMeter += normVal;
+                }
+                // обязательно нужно перемещаться на конец метатокена, чтобы не делались
+                // привязки с середины. Например, пусть "-20м", если взять просто следующий, то получим "20м" противоположное по знаку число.
+                t = num.EndToken;
                 txt = t.ToString();
             }
             else
@@ -296,14 +331,141 @@ namespace text_mining
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public string getNameFile(string file)
         {
+            string f = null;
+            for (int i = 0; i < file.Length; i++)
+            {
+                if (file[i] == '.')
+                {
+                    f = file.Substring(0, i);
+                    break;
+                }
+            }
+            return f;
+        }
+        private void button1_Click(object sender, EventArgs e) //сериализация реультатов (экспорт)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "Файлы XML (*.xml) | *.xml";
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+
+                string filetxt = getNameFile(sfd.FileName) + ".txt";
+
+                File.WriteAllText(filetxt, textControl1.Text);
+                XmlWriterSettings settings = new XmlWriterSettings()
+                {
+                    Indent = true,
+                    OmitXmlDeclaration = true,
+
+                };
+                XmlWriter textWritter = XmlWriter.Create(sfd.FileName, settings);
+
+                textWritter.WriteStartDocument();
+
+                textWritter.WriteStartElement("xml");
+
+                textWritter.WriteStartElement("processors");
+                
+               foreach(var p in pr.Analyzers)
+                {
+                    textWritter.WriteStartElement("processor");
+                    textWritter.WriteValue(p.ToString());
+                    textWritter.WriteEndElement();
+                }
+
+
+                textWritter.WriteEndElement();
+
+
+                textWritter.WriteStartElement("Entities");
+                textWritter.WriteAttributeString("Language", "Ru");
+                int i = 1;
+                foreach (var ec in export.Entities)
+                {
+                    try
+                    {
+                        textWritter.WriteStartElement("Object");
+                        textWritter.WriteAttributeString("Count", i.ToString());
+                        textWritter.WriteAttributeString("Type_object", ec.InstanceOf.Caption);
+                        textWritter.WriteValue(ec.ToString());
+                        textWritter.WriteStartElement("Value_Simple_Attributte");
+                        string x = "";
+                        foreach (var v in ec.Slots)
+                        {
+                            if (!v.IsInternal)
+                                if (!(v.Value is Referent))
+                                    x += v.ToString();
+
+
+                        }
+
+                        textWritter.WriteValue(x.ToString());
+
+                        textWritter.WriteEndElement();
+
+                        textWritter.WriteStartElement("Value_Link_Attributte");
+
+                        bool b = false;
+                        x = "";
+                        foreach (var v in ec.Slots)
+                            if (!v.IsInternal && (v.Value is Referent))
+                            {
+
+                                x += v.ToString();
+                            }
+                        textWritter.WriteValue(x.ToString());
+                        textWritter.WriteEndElement();
+                        textWritter.WriteStartElement("Part_text");
+                        x = "";
+                        foreach (var v in CurrentEntity.Occurrence)
+                            x += v.ToString();
+                        textWritter.WriteValue(x.ToString());
+                        textWritter.WriteEndElement();
+                        textWritter.WriteEndElement();
+                        i++;
+                    }
+                    catch (Exception eeeee)
+                    {
+                        string m = eeeee.Message;
+                    }
+                }
+
+                i = 1;
+                textWritter.WriteEndElement();
+
+                textWritter.WriteStartElement("Tokens");
+                for (Token t = export.FirstToken; t != null; t = t.Next)
+                {
+                    textWritter.WriteStartElement("Token");
+                    textWritter.WriteAttributeString("Count", i.ToString());
+                    textWritter.WriteAttributeString("BeginChar", t.BeginChar.ToString());
+
+                    textWritter.WriteAttributeString("EndChar", t.EndChar.ToString());
+                    textWritter.WriteValue(t.ToString());
+                    textWritter.WriteEndElement();
+                    i++;
+                }
+                textWritter.WriteEndElement();
+
+                textWritter.WriteEndElement();
+                textWritter.Close();
+
+
+            }
 
         }
+       
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             toolStripLabel1.Text = NowTime();
+        }
+
+        private void button2_Click(object sender, EventArgs e) //десериализация результатов (импорт)
+        {
+
         }
     }
 }
