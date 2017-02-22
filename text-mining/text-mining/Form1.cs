@@ -55,7 +55,7 @@ namespace text_mining
         {
             OpenFileDialog OPF = new OpenFileDialog();
             OPF.Multiselect = true;
-            OPF.Filter = "Документы Word (*.doc*)|*.doc*|PDF files (*.pdf)|*.pdf";
+            OPF.Filter = "Документы Word (*.doc*)|*.doc*";
             if (OPF.ShowDialog()==DialogResult.OK)
             {
                 for (int i = 0;i<OPF.FileNames.Length;i++)
@@ -179,6 +179,14 @@ namespace text_mining
            
             
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form2 f2 = new Form2();
+            f2.Visible = true;
+            f2.importResult();
+          
         }
     }
 }

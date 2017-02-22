@@ -367,12 +367,15 @@ namespace text_mining
                 textWritter.WriteStartElement("xml");
 
                 textWritter.WriteStartElement("processors");
+                int i = 1;
                 
                foreach(var p in pr.Analyzers)
                 {
                     textWritter.WriteStartElement("processor");
+                    textWritter.WriteAttributeString("id",i.ToString() );
                     textWritter.WriteValue(p.ToString());
                     textWritter.WriteEndElement();
+                    i++;
                 }
 
 
@@ -381,13 +384,13 @@ namespace text_mining
 
                 textWritter.WriteStartElement("Entities");
                 textWritter.WriteAttributeString("Language", "Ru");
-                int i = 1;
+                 i = 1;
                 foreach (var ec in export.Entities)
                 {
                     try
                     {
                         textWritter.WriteStartElement("Object");
-                        textWritter.WriteAttributeString("Count", i.ToString());
+                        textWritter.WriteAttributeString("id", i.ToString());
                         textWritter.WriteAttributeString("Type_object", ec.InstanceOf.Caption);
                         textWritter.WriteValue(ec.ToString());
                         textWritter.WriteStartElement("Value_Simple_Attributte");
@@ -439,7 +442,7 @@ namespace text_mining
                 for (Token t = export.FirstToken; t != null; t = t.Next)
                 {
                     textWritter.WriteStartElement("Token");
-                    textWritter.WriteAttributeString("Count", i.ToString());
+                    textWritter.WriteAttributeString("id", i.ToString());
                     textWritter.WriteAttributeString("BeginChar", t.BeginChar.ToString());
 
                     textWritter.WriteAttributeString("EndChar", t.EndChar.ToString());
@@ -462,10 +465,128 @@ namespace text_mining
         {
             toolStripLabel1.Text = NowTime();
         }
+        public void importResult ()
+        {
+            MessageBox.Show("Xml файл должен иметь такое же имя как и имя файла исходного текста", "Вниманиие!!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            OpenFileDialog OPF = new OpenFileDialog();
+            OPF.Filter = "Документы xml (*.xml)|*.xml";
+            if (OPF.ShowDialog() == DialogResult.OK)
+            {
+                if (!File.Exists(getNameFile(OPF.FileName) + ".txt"))
+                {
+                    MessageBox.Show("Отстутствует исходный файл" + getNameFile(OPF.FileName) + ".txt", "Ошибка файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                string[] type = new string[16];
+                string text = null;
+                try
+                {
+
+                    text = File.ReadAllText(getNameFile(OPF.FileName) + ".txt");
+                    if ((text == null) || (text == "  "))
+                    {
+                        MessageBox.Show("Исходный текст отстуствует", "Ошибка файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    XmlTextReader reader = new XmlTextReader(OPF.FileName);
+                    bool find = false;
+                    while (reader.Read())
+                    {
+                        if (reader.Name == "processors")
+                        {
+                            find = true;
+                            reader.Close();
+                            reader = null;
+                            break;
+                        }
+                    }
+                    if (!find)
+                    {
+                        MessageBox.Show("Отстуствует информация об способах анализа текста", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    int i = 0;
+                    reader = new XmlTextReader(OPF.FileName);
+                    find = false;
+                    while (reader.Read())
+                    {
+                        if ((reader.Name == "processors") && (!find))
+                        {
+                            find = true;
+                        }
+
+                        if (reader.NodeType == XmlNodeType.Text)
+                        {
+                            type[i] = reader.Value;
+                            i++;
+                        }
+
+                        if (reader.Name == "Entities")
+                            break;
+
+                    }
+
+                    reader.Close();
+                }
+                catch (Exception exp)
+                {
+                    MessageBox.Show(exp.Message, "Ошибка файла", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                bool semnatic = false;
+                bool business = false;
+                bool title = false;
+                for (int i = 12; i < 16; i++)
+                {
+                    if (type[i] == null)
+                        break;
+
+                    switch (type[i])
+                    {
+                        case "Бизнес-объекты (BUSINESS)": { business = true; break; };
+                        case "Семантический анализ (SEMANTIC)": { semnatic = true; break; };
+                        case "Титульный лист (TITLEPAGE)": { title = true; break; };
+                    }
+                }
+                Processor import = null;
+                string analizator = null;
+                if ((!semnatic) && (!business) && (!title))
+                {
+                    import = new Processor();
+                }
+                else
+                {
+                    if (semnatic)
+                        analizator = "SEMANTIC";
+                    if (business)
+                        analizator = "BUSINESS";
+                    if (title)
+                        analizator = "TITLEPAGE";
+                    if (semnatic && business)
+                        analizator = "SEMANTIC,BUSINESS";
+                    if (semnatic && title)
+                        analizator = "SEMANTIC,TITLEPAGE";
+                    if (business && title)
+                        analizator = "BUSINESS,TITLEPAGE";
+                    if (semnatic && business && title)
+                        analizator = "SEMANTIC,BUSINESS,TITLEPAGE";
+                    import = new Processor(analizator);
+                }
+                bool result = ProcessAnalize(ref text, ref import);
+                if (!result)
+                {
+                    MessageBox.Show("Импорт завершился не успешно", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.Close();
+
+                }
+
+            }
+        }
 
         private void button2_Click(object sender, EventArgs e) //десериализация результатов (импорт)
         {
-
+            importResult();
         }
     }
 }
