@@ -103,6 +103,13 @@
             Факт исправления переходов на новую строку
             </summary>
         </member>
+        <member name="F:EP.SourceOfAnalysis.CorrectionDict">
+            <summary>
+            Словарь корректировки типовых ошибок.
+            Ключ - ошибочное написание, Значение - правильное.
+            Ключи и значения должны быть в верхнем регистре и без Ё.
+            </summary>
+        </member>
         <member name="M:EP.SourceOfAnalysis.DoTransliteralCorrection(System.Text.StringBuilder,System.Text.StringBuilder)">
             <summary>
             Произвести транслитеральную коррекцию
@@ -205,6 +212,13 @@
             <summary>
             Это попробовать только тип (постфикс) без самого числа.
             Например, куб.м.
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Semantix.NumberHelper.IsMoneyChar(EP.Semantix.Token)">
+            <summary>
+            Если этообозначение денежной единицы (н-р, $), то возвращает код валюты
             </summary>
             <param name="t"></param>
             <returns></returns>
@@ -817,6 +831,11 @@
             Поддержка анализа биграммной зависимости токенов в тексте
             </summary>
         </member>
+        <member name="F:EP.Semantix.StatisticCollection.WordInfo.HasBeforePersonAttr">
+            <summary>
+            Есть ли перед атрибут персон (вычисляется только в процессе отработки соотв. анализатора на его 1-м проходе) 
+            </summary>
+        </member>
         <member name="F:EP.Semantix.StatisticCollection.WordInfo.NotCapitalBeforeCount">
             <summary>
             Количество слов перед этим, которые не тексты или в нижнем регистре
@@ -1040,6 +1059,12 @@
         <member name="T:EP.Semantix.AnalysisKit">
             <summary>
             Внутренний аналитический контейнер данных
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.AnalysisKit.CorrectedTokens">
+            <summary>
+            Токены, подправленные по корректировочному словарю (SourceOfAnalysis.CorrectionDict).
+            Здесь Value - исходый токен
             </summary>
         </member>
         <member name="M:EP.Semantix.AnalysisKit.EmbedToken(EP.Semantix.MetaToken)">
@@ -2108,6 +2133,23 @@
             бахр [rest of string was truncated]&quot;;.
              </summary>
         </member>
+        <member name="P:EP.Semantix.Properties.Resources.MoneyEN">
+             <summary>
+               Looks up a localized string similar to Australian dollar;us dollar;AUD;100 cents;cent
+            AZN;AZN;AZN;100 qapiks;gepik
+            Albanian Lek;Lek;ALL;100 kindrek;qindarka
+            Algerian Dinar;Dinar;DZD;100 centimes;santim
+            Angolan Kwanzaa;Kwanzaa;AOA;100;centime
+            Antillean Guilder;ang;ANG;100 cents;cent
+            Argentine peso;peso;ARS;100 centavos;centavos
+            AMD;AMD;AMD;100 Lum;Lum
+            Afghan Afghani;Afghani;AFN;100 pools;pool
+            Bahamian dollar;dollar;BSD;100 cents;cent
+            Bangladeshi Taka;Taka;BDT;100 paise;PICES
+            Bahraini Dinar;Dinar;DZD;1000 Fils;Fils
+            the Belarusian ruble;rubles;EUR; [rest of string was truncated]&quot;;.
+             </summary>
+        </member>
         <member name="P:EP.Semantix.Properties.Resources.MoneyUA">
              <summary>
                Looks up a localized string similar to австралійський долар;долар;AUD;100 центів;цент 
@@ -2269,12 +2311,13 @@
             Выделение именных групп (существительсно с согласованными прилагательными (если они есть).
             </summary>
         </member>
-        <member name="M:EP.Semantix.NounPhraseHelper.TryParse(EP.Semantix.Token,EP.Semantix.NounPhraseParseAttr)">
+        <member name="M:EP.Semantix.NounPhraseHelper.TryParse(EP.Semantix.Token,EP.Semantix.NounPhraseParseAttr,System.Int32)">
             <summary>
             Попробовать создать именную группу с указанного токена
             </summary>
             <param name="t">начальный токен</param>
             <param name="typ">параметры (можно битовую маску)</param>
+            <param name="maxCharPos">максимальная позиция в тексте, до которой выделять, если 0, то без ограничений</param>
             <returns>именная группа или null</returns>
         </member>
         <member name="T:EP.Semantix.NounPhraseParseAttr">
@@ -2378,6 +2421,13 @@
             </summary>
             <param name="t">токен начала предложения</param>
             <returns></returns>
+        </member>
+        <member name="M:EP.Semantix.MiscHelper.FindEndOfSentence(EP.Semantix.Token)">
+            <summary>
+            Переместиться на конец предложения
+            </summary>
+            <param name="t">токен, с которого идёт поиск</param>
+            <returns>последний токен предложения (не обязательно точка!)</returns>
         </member>
         <member name="M:EP.Semantix.MiscHelper.CheckNumberPrefix(EP.Semantix.Token)">
             <summary>
@@ -2505,6 +2555,13 @@
             <param name="attrs">атрибуты преобразования текста</param>
             <returns>результат</returns>
         </member>
+        <member name="M:EP.Semantix.MiscHelper.IsEngAdjSuffix(EP.Semantix.Token)">
+            <summary>
+            Проверка, что это суффикс прилагательного (street's)
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
         <member name="T:EP.Semantix.GetTextAttr">
             <summary>
             Атрибуты получения текста
@@ -2545,6 +2602,11 @@
             Если все слова в верхнем регистре, то попытаться восстановить слова в нижнем регистре
             на основе их встречаемости в других частях всего документа
             (то есть если слово есть в нижнем, то оно переводится в нижний)
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.GetTextAttr.IgnoreArticles">
+            <summary>
+            Для английского языка игнорировать артикли и суффикс 'S 
             </summary>
         </member>
         <member name="T:EP.ExtOntology">

@@ -66,6 +66,11 @@
             День месяца (0 - неопределён)
             </summary>
         </member>
+        <member name="P:EP.DateReferent.DayOfWeek">
+            <summary>
+            День недели (0 - неопределён, 1 - понедельник ...)
+            </summary>
+        </member>
         <member name="P:EP.DateReferent.Hour">
             <summary>
             Час (-1 - неопределён)
@@ -114,6 +119,26 @@
         <member name="F:EP.DatePointerType.Today">
             <summary>
             В настоящее время, сегодня
+            </summary>
+        </member>
+        <member name="F:EP.DatePointerType.Winter">
+            <summary>
+            Зимой
+            </summary>
+        </member>
+        <member name="F:EP.DatePointerType.Spring">
+            <summary>
+            Весной
+            </summary>
+        </member>
+        <member name="F:EP.DatePointerType.Summer">
+            <summary>
+            Летом
+            </summary>
+        </member>
+        <member name="F:EP.DatePointerType.Autumn">
+            <summary>
+            Осенью
             </summary>
         </member>
         <member name="F:EP.DatePointerType.Undefined">

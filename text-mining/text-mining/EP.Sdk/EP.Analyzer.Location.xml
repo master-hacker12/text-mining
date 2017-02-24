@@ -54,18 +54,17 @@
             <param name="end"></param>
             <returns></returns>
         </member>
-        <member name="M:EP.Semantix.GeoAnalyzer.Try3(System.Collections.Generic.List{EP.Semantix.CityItemToken},EP.Semantix.IntOntologyItem@)">
-            <summary>
-            Это проверяем некоторые частные случаи
-            </summary>
-            <param name="li"></param>
-            <param name="oi"></param>
-            <returns></returns>
-        </member>
         <member name="M:EP.Semantix.GeoAnalyzer.GetAllCountries">
             <summary>
             Получить список всех стран из внутреннего словаря
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EP.Semantix.Internal.TerrAttachHelper.TryAttachStateUSATerritory(EP.Semantix.Token)">
+            <summary>
+            Это привязка сокращений штатов
+            </summary>
+            <param name="t"></param>
             <returns></returns>
         </member>
         <member name="T:EP.Semantix.StreetItemToken">
@@ -438,6 +437,14 @@
             <summary>
             Вышестоящий объект
             </summary>
+        </member>
+        <member name="M:EP.Semantix.Internal.CityAttachHelper.Try3(System.Collections.Generic.List{EP.Semantix.CityItemToken},EP.Semantix.IntOntologyItem@)">
+            <summary>
+            Это проверяем некоторые частные случаи
+            </summary>
+            <param name="li"></param>
+            <param name="oi"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

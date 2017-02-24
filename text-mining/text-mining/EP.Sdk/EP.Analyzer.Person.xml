@@ -61,6 +61,21 @@
             ВОзраст
             </summary>
         </member>
+        <member name="F:EP.Semantix.Internal.PersonAttrToken.IsDoubt">
+            <summary>
+            Сомнительный атрибут
+            </summary>
+        </member>
+        <member name="T:EP.Semantix.MailAnalyzer">
+            <summary>
+            Семантический анализатор анализа писем (блоков писем)
+            </summary>
+        </member>
+        <member name="P:EP.Semantix.MailAnalyzer.IsSpecific">
+            <summary>
+            Этот анализатор является специфическим
+            </summary>
+        </member>
         <member name="T:EP.Semantix.Properties.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -206,11 +221,6 @@
             Семантический анализатор выделения персон
             </summary>
         </member>
-        <member name="F:EP.Semantix.PersonAnalyzer.DoLatinPersons">
-            <summary>
-            Распознавать персон на латыни (английском)
-            </summary>
-        </member>
         <member name="F:EP.Semantix.PersonAnalyzer.NominativeCaseAlways">
             <summary>
             Все персоны идут в именительном падеже
@@ -246,12 +256,27 @@
             Адрес регистрации
             </summary>
         </member>
+        <member name="T:EP.MailReferent">
+            <summary>
+            Письмо (точнее, блок письма)
+            </summary>
+        </member>
+        <member name="P:EP.MailReferent.Kind">
+            <summary>
+            Тип блока письма
+            </summary>
+        </member>
         <member name="M:EP.Semantix.PersonItemToken.TryParsePerson(EP.Semantix.Token)">
             <summary>
             Это попытка привязать персону со специфического места
             </summary>
             <param name="t"></param>
             <returns></returns>
+        </member>
+        <member name="F:EP.Semantix.Internal.MailLine.Lev">
+            <summary>
+            Это кол-во элементов, которые характеризуют вложенность письма
+            </summary>
         </member>
     </members>
 </doc>

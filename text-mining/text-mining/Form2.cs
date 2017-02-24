@@ -11,7 +11,6 @@ using EP.Semantix;
 using EP;
 using EP.Text;
 using System.IO;
-using System.Xml.Serialization;
 using System.Xml;
 
 namespace text_mining
@@ -365,6 +364,8 @@ namespace text_mining
                 textWritter.WriteStartDocument();
 
                 textWritter.WriteStartElement("xml");
+                textWritter.WriteAttributeString("version", "1.0");
+                textWritter.WriteAttributeString("Encoding", "utf-8");
 
                 textWritter.WriteStartElement("processors");
                 int i = 1;
@@ -446,6 +447,7 @@ namespace text_mining
                     textWritter.WriteAttributeString("BeginChar", t.BeginChar.ToString());
 
                     textWritter.WriteAttributeString("EndChar", t.EndChar.ToString());
+                    textWritter.WriteAttributeString("LengthChar", t.LengthChar.ToString());
                     textWritter.WriteValue(t.ToString());
                     textWritter.WriteEndElement();
                     i++;

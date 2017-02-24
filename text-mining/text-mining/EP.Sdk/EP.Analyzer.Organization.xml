@@ -25,6 +25,136 @@
               resource lookups using this strongly typed resource class.
             </summary>
         </member>
+        <member name="T:EP.OrgProfile">
+            <summary>
+            Профили организации, хранятся в атрибутах ATTR_PROFILE, может быть несколько.
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Undefined">
+            <summary>
+            Неопределённое
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Unit">
+            <summary>
+            Подразделение, отдел
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Union">
+            <summary>
+            Различные объединения людей (фонды, движения, партии, ассоциации)
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Competition">
+            <summary>
+            Соревнование, конкурс, чемпионат
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Holding">
+            <summary>
+            Группы компаний, холдинги
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.State">
+            <summary>
+            Государственные
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Business">
+            <summary>
+            Бизнес, коммерция
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Finance">
+            <summary>
+            Финансы (банки, фонды)
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Education">
+            <summary>
+            Образование
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Science">
+            <summary>
+            Наука
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Industry">
+            <summary>
+            Производство
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Trade">
+            <summary>
+            Торговля, реализация
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Policy">
+            <summary>
+            Политика
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Justice">
+            <summary>
+            Судебная система
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Enforcement">
+            <summary>
+            Силовые структуры
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Army">
+            <summary>
+            Армейские структуры
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Sport">
+            <summary>
+            Спорт
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Religion">
+            <summary>
+            Религиозные
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Art">
+            <summary>
+            Искусство
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Music">
+            <summary>
+            Музыка, группы
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Show">
+            <summary>
+            Театры, выставки, музеи, концерты
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Media">
+            <summary>
+            Срадства массовой информации
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Press">
+            <summary>
+            Издательства, газеты, журналы ... (обычно вместе с Media)
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Hotel">
+            <summary>
+            пансионаты, отели, дома отдыха
+            </summary>
+        </member>
+        <member name="F:EP.OrgProfile.Food">
+            <summary>
+            Предприятия питания
+            </summary>
+        </member>
         <member name="T:EP.Semantix.Internal.OrgItemTypeToken">
             <summary>
             Используется внутренним образом
@@ -81,6 +211,11 @@
             </summary>
             <param name="t"></param>
             <returns></returns>
+        </member>
+        <member name="P:EP.Semantix.Internal.OrgItemTypeToken.Profiles">
+            <summary>
+            Список профилей
+            </summary>
         </member>
         <member name="P:EP.Semantix.Internal.OrgItemTypeToken.NameWordsCount">
             <summary>
@@ -166,7 +301,7 @@
             Список имён организации
             </summary>
         </member>
-        <member name="P:EP.OrganizationReferent.Profile">
+        <member name="P:EP.OrganizationReferent.Profiles">
             <summary>
             Профиль деятельности
             </summary>
@@ -256,19 +391,14 @@
             События (фестиваль, чемпионат)
             </summary>
         </member>
-        <member name="T:EP.OrgProfile">
+        <member name="F:EP.Semantix.Internal.OrgItemTermin.MustBePartofName">
             <summary>
-            Профили деятельности (хранятся в атрибутах, может быть несколько)
+            Признак того, что тип обязательно входит в имя (например, Министерство)
             </summary>
         </member>
-        <member name="F:EP.OrgProfile.Press">
+        <member name="F:EP.Semantix.Internal.OrgItemTermin.IsPurePrefix">
             <summary>
-            Издательства, газеты, журналы ... (обычно вместе с Media)
-            </summary>
-        </member>
-        <member name="F:EP.OrgProfile.Union">
-            <summary>
-            Различные объединения людей (фонды, движения, партии, ассоциации)
+            Чистый префикс, никогда не входит в имя (типа ООО)
             </summary>
         </member>
         <member name="F:EP.Semantix.Internal.OrgItemTermin.IsDoubtWord">

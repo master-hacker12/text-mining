@@ -190,27 +190,6 @@
             Также содержит некоторые полезные функции.
             </summary>
         </member>
-        <member name="M:EP.Text.LanguageHelper.GetCaptionByCode(System.String)">
-            <summary>
-            Получить заголовок по идентификатору языка (заголовок выводится на текущем языке)
-            </summary>
-            <param name="code">идентификатор ISO 639-1</param>
-            <returns></returns>
-        </member>
-        <member name="M:EP.Text.LanguageHelper.GetNativeCaptionByCode(System.String)">
-            <summary>
-            Получить заголовок языка на самом языке
-            </summary>
-            <param name="code">идентификатор ISO 639-1</param>
-            <returns></returns>
-        </member>
-        <member name="M:EP.Text.LanguageHelper.GetEnglishCaptionByCode(System.String)">
-            <summary>
-            Получить заголовок языка на английском языке
-            </summary>
-            <param name="code">идентификатор ISO 639-1</param>
-            <returns></returns>
-        </member>
         <member name="M:EP.Text.LanguageHelper.GetLanguageForText(System.String)">
             <summary>
             Определить язык для неструктурированного ткста
@@ -255,16 +234,6 @@
             <param name="str"></param>
             <param name="substr"></param>
             <returns></returns>
-        </member>
-        <member name="P:EP.Text.LanguageHelper.CurrentLanguage">
-            <summary>
-            Идентификатор (ISO 639-1) текущего языка текущего потока
-            </summary>
-        </member>
-        <member name="P:EP.Text.LanguageHelper.AllLanguages">
-            <summary>
-            Список идентификаторов всех языков
-            </summary>
         </member>
         <member name="T:EP.Text.MorphToken">
             <summary>

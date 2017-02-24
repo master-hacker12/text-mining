@@ -118,6 +118,13 @@
             <param name="lastStage"></param>
             <returns></returns>
         </member>
+        <member name="M:EP.Semantix.DenominationAnalyzer.TryAttachSpec(EP.Semantix.Token)">
+            <summary>
+            Некоторые специфические случаи
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
         <member name="T:EP.PhoneReferent">
             <summary>
             Сущность, представляющая телефонные номера
@@ -136,6 +143,11 @@
         <member name="P:EP.PhoneReferent.CountryCode">
             <summary>
             Код страны
+            </summary>
+        </member>
+        <member name="P:EP.PhoneReferent.Kind">
+            <summary>
+            Тип телефона
             </summary>
         </member>
         <member name="T:EP.MoneyReferent">
