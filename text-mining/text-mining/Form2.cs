@@ -30,12 +30,14 @@ namespace text_mining
         int m_IgnoreTreeChanging = 0;
         bool dsp = false;
         string starttext;
-        AnalysisResult export;
+        //AnalysisResult export;
         Processor pr = null;
 
         bool isDsp (string document)
         {
-           string[] str = document.Split('\n');
+           // string[] c = { "\r\n" };
+           //string[] str = document.Split( c, StringSplitOptions.None);
+            string[] str = document.Split('\n');
             for (int i = 0; i<str.Length; i++)
             {
                 if ((str[i] == "ДСП") || (str[i] == "Для служебного пользования"))
@@ -73,7 +75,7 @@ namespace text_mining
                 Cursor = Cursors.WaitCursor;
                 AnalysisResult result = processor.Process(new SourceOfAnalysis(txt));
                 pr = processor;
-                export = result;
+               // export = result;
                 if (txt != null && txt.Length > m_MaxTextLengthForShowing)
                 {
                     MessageBox.Show(string.Format("Внимание, текст слишком длинный ({0}Kb),\r\n" +
@@ -283,7 +285,7 @@ namespace text_mining
             }
 
             if (e.UserState != null)
-            {
+{
                 toolStripLabelMessage.Text = e.UserState.ToString();
                 toolStrip1.Update();
             }
@@ -353,109 +355,110 @@ namespace text_mining
                 string filetxt = getNameFile(sfd.FileName) + ".txt";
 
                 File.WriteAllText(filetxt, textControl1.Text);
-                XmlWriterSettings settings = new XmlWriterSettings()
-                {
-                    Indent = true,
-                    OmitXmlDeclaration = true,
+                ExportResult.ProcessXml(textControl1.Text, sfd.FileName, ref pr);
+               // XmlWriterSettings settings = new XmlWriterSettings()
+               // {
+               //     Indent = true,
+               //     OmitXmlDeclaration = true,
 
-                };
-                XmlWriter textWritter = XmlWriter.Create(sfd.FileName, settings);
+               // };
+               // XmlWriter textWritter = XmlWriter.Create(sfd.FileName, settings);
 
-                textWritter.WriteStartDocument();
+               // textWritter.WriteStartDocument();
 
-                textWritter.WriteStartElement("xml");
-                textWritter.WriteAttributeString("version", "1.0");
-                textWritter.WriteAttributeString("Encoding", "utf-8");
+               // textWritter.WriteStartElement("xml");
+               // textWritter.WriteAttributeString("version", "1.0");
+               // textWritter.WriteAttributeString("Encoding", "utf-8");
 
-                textWritter.WriteStartElement("processors");
-                int i = 1;
+               // textWritter.WriteStartElement("processors");
+               // int i = 1;
                 
-               foreach(var p in pr.Analyzers)
-                {
-                    textWritter.WriteStartElement("processor");
-                    textWritter.WriteAttributeString("id",i.ToString() );
-                    textWritter.WriteValue(p.ToString());
-                    textWritter.WriteEndElement();
-                    i++;
-                }
+               //foreach(var p in pr.Analyzers)
+               // {
+               //     textWritter.WriteStartElement("processor");
+               //     textWritter.WriteAttributeString("id",i.ToString() );
+               //     textWritter.WriteValue(p.ToString());
+               //     textWritter.WriteEndElement();
+               //     i++;
+               // }
 
 
-                textWritter.WriteEndElement();
+               // textWritter.WriteEndElement();
 
 
-                textWritter.WriteStartElement("Entities");
-                textWritter.WriteAttributeString("Language", "Ru");
-                 i = 1;
-                foreach (var ec in export.Entities)
-                {
-                    try
-                    {
-                        textWritter.WriteStartElement("Object");
-                        textWritter.WriteAttributeString("id", i.ToString());
-                        textWritter.WriteAttributeString("Type_object", ec.InstanceOf.Caption);
-                        textWritter.WriteValue(ec.ToString());
-                        textWritter.WriteStartElement("Value_Simple_Attributte");
-                        string x = "";
-                        foreach (var v in ec.Slots)
-                        {
-                            if (!v.IsInternal)
-                                if (!(v.Value is Referent))
-                                    x += v.ToString();
+               // textWritter.WriteStartElement("Entities");
+               // textWritter.WriteAttributeString("Language", "Ru");
+               //  i = 1;
+               // foreach (var ec in export.Entities)
+               // {
+               //     try
+               //     {
+               //         textWritter.WriteStartElement("Object");
+               //         textWritter.WriteAttributeString("id", i.ToString());
+               //         textWritter.WriteAttributeString("Type_object", ec.InstanceOf.Caption);
+               //         textWritter.WriteValue(ec.ToString());
+               //         textWritter.WriteStartElement("Value_Simple_Attributte");
+               //         string x = "";
+               //         foreach (var v in ec.Slots)
+               //         {
+               //             if (!v.IsInternal)
+               //                 if (!(v.Value is Referent))
+               //                     x += v.ToString();
 
 
-                        }
+               //         }
 
-                        textWritter.WriteValue(x.ToString());
+               //         textWritter.WriteValue(x.ToString());
 
-                        textWritter.WriteEndElement();
+               //         textWritter.WriteEndElement();
 
-                        textWritter.WriteStartElement("Value_Link_Attributte");
+               //         textWritter.WriteStartElement("Value_Link_Attributte");
 
-                        bool b = false;
-                        x = "";
-                        foreach (var v in ec.Slots)
-                            if (!v.IsInternal && (v.Value is Referent))
-                            {
+               //         bool b = false;
+               //         x = "";
+               //         foreach (var v in ec.Slots)
+               //             if (!v.IsInternal && (v.Value is Referent))
+               //             {
 
-                                x += v.ToString();
-                            }
-                        textWritter.WriteValue(x.ToString());
-                        textWritter.WriteEndElement();
-                        textWritter.WriteStartElement("Part_text");
-                        x = "";
-                        foreach (var v in CurrentEntity.Occurrence)
-                            x += v.ToString();
-                        textWritter.WriteValue(x.ToString());
-                        textWritter.WriteEndElement();
-                        textWritter.WriteEndElement();
-                        i++;
-                    }
-                    catch (Exception eeeee)
-                    {
-                        string m = eeeee.Message;
-                    }
-                }
+               //                 x += v.ToString();
+               //             }
+               //         textWritter.WriteValue(x.ToString());
+               //         textWritter.WriteEndElement();
+               //         textWritter.WriteStartElement("Part_text");
+               //         x = "";
+               //         foreach (var v in CurrentEntity.Occurrence)
+               //             x += v.ToString();
+               //         textWritter.WriteValue(x.ToString());
+               //         textWritter.WriteEndElement();
+               //         textWritter.WriteEndElement();
+               //         i++;
+               //     }
+               //     catch (Exception eeeee)
+               //     {
+               //         string m = eeeee.Message;
+               //     }
+               // }
 
-                i = 1;
-                textWritter.WriteEndElement();
+               // i = 1;
+               // textWritter.WriteEndElement();
 
-                textWritter.WriteStartElement("Tokens");
-                for (Token t = export.FirstToken; t != null; t = t.Next)
-                {
-                    textWritter.WriteStartElement("Token");
-                    textWritter.WriteAttributeString("id", i.ToString());
-                    textWritter.WriteAttributeString("BeginChar", t.BeginChar.ToString());
+               // textWritter.WriteStartElement("Tokens");
+               // for (Token t = export.FirstToken; t != null; t = t.Next)
+               // {
+               //     textWritter.WriteStartElement("Token");
+               //     textWritter.WriteAttributeString("id", i.ToString());
+               //     textWritter.WriteAttributeString("BeginChar", t.BeginChar.ToString());
 
-                    textWritter.WriteAttributeString("EndChar", t.EndChar.ToString());
-                    textWritter.WriteAttributeString("LengthChar", t.LengthChar.ToString());
-                    textWritter.WriteValue(t.ToString());
-                    textWritter.WriteEndElement();
-                    i++;
-                }
-                textWritter.WriteEndElement();
+               //     textWritter.WriteAttributeString("EndChar", t.EndChar.ToString());
+               //     textWritter.WriteAttributeString("LengthChar", t.LengthChar.ToString());
+               //     textWritter.WriteValue(t.ToString());
+               //     textWritter.WriteEndElement();
+               //     i++;
+               // }
+               // textWritter.WriteEndElement();
 
-                textWritter.WriteEndElement();
-                textWritter.Close();
+               // textWritter.WriteEndElement();
+               // textWritter.Close();
 
 
             }

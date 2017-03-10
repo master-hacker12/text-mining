@@ -35,27 +35,49 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="EP.Analyzer.Biblio.dll" />
+    <Content Include="EP.Analyzer.Biblio.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EP.Analyzer.Biblio.xml" />
-    <Content Include="EP.Analyzer.Business.dll" />
+    <Content Include="EP.Analyzer.Business.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EP.Analyzer.Business.xml" />
-    <Content Include="EP.Analyzer.Date.dll" />
+    <Content Include="EP.Analyzer.Date.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EP.Analyzer.Date.xml" />
-    <Content Include="EP.Analyzer.Decree.dll" />
+    <Content Include="EP.Analyzer.Decree.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EP.Analyzer.Decree.xml" />
-    <Content Include="EP.Analyzer.Location.dll" />
+    <Content Include="EP.Analyzer.Location.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EP.Analyzer.Location.xml" />
-    <Content Include="EP.Analyzer.Misc.dll" />
+    <Content Include="EP.Analyzer.Misc.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EP.Analyzer.Misc.xml" />
-    <Content Include="EP.Analyzer.Organization.dll" />
+    <Content Include="EP.Analyzer.Organization.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EP.Analyzer.Organization.xml" />
-    <Content Include="EP.Analyzer.Person.dll" />
+    <Content Include="EP.Analyzer.Person.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EP.Analyzer.Person.xml" />
-    <Content Include="EP.Analyzer.Semantic.dll" />
+    <Content Include="EP.Analyzer.Semantic.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EP.Analyzer.Semantic.xml" />
-    <Content Include="EP.Analyzer.Technical.dll" />
+    <Content Include="EP.Analyzer.Technical.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EP.Analyzer.Technical.xml" />
-    <Content Include="EP.Core.dll" />
+    <Content Include="EP.Core.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EP.Core.xml" />
     <None Include="Doc\Morphology.cd" />
     <None Include="Doc\Ontology.cd" />
@@ -67,9 +89,13 @@
     <None Include="Doc\Tokens\NumTokenDiagram.cd" />
     <None Include="Doc\Tokens\TerminCollectionDiagram.cd" />
     <None Include="Doc\Tokens\Tokens.cd" />
-    <Content Include="EP.Explanatory.dll" />
+    <Content Include="EP.Explanatory.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EP.Explanatory.xml" />
-    <Content Include="EP.Morphology.dll" />
+    <Content Include="EP.Morphology.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="EP.Morphology.xml" />
   </ItemGroup>
   <ItemGroup>
