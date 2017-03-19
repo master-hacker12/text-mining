@@ -32,18 +32,20 @@ namespace text_mining
         string starttext;
         //AnalysisResult export;
         Processor pr = null;
+        Person pers = null;
+
 
         bool isDsp (string document)
         {
            // string[] c = { "\r\n" };
            //string[] str = document.Split( c, StringSplitOptions.None);
             string[] str = document.Split('\n');
-            for (int i = 0; i<str.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
                 if ((str[i] == "ДСП") || (str[i] == "Для служебного пользования"))
                     return true;
             }
-
+          
             return false;
         }
 
@@ -103,19 +105,149 @@ namespace text_mining
                 DrawTokens(result.FirstToken);
                 if (dsp)
                     toolStripLabelMessage.Text += ". Данный документ возможно имеет гриф <Для служебного пользования> ";
-                return true;
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка анализа", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-            finally
-            {
                 Cursor = Cursors.Default;
                 starttext = txt;
+                return false;
             }
+           
+
+            string[] sentences = GetSentences(dataGridView1);
+
+            if (sentences != null)
+            for (int i = 0; i < sentences.Length; i++)
+            {
+                bool r = isPerson(sentences[i],i);
+            }
+            return true;
         }
+
+        public string[] GetSentences (DataGridView table)
+        {
+            //string[] str = new string[table.Rows.Count];
+            string str = textControl1.Text;
+            string result = string.Join(" ", str.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
+            char[] tochka = { '.', '?', '!' };
+            str = textControl1.Text;
+            string[] words = result.Split(tochka);
+
+            //int count = 0;
+
+            //for (int i = 0;i <table.Rows.Count;i++)
+            //{
+            //  if  ( table[0,i].Value.ToString() == "Предложение" )
+            //    {
+            //        str[count] = table[1, i].Value.ToString();
+            //        count++;
+            //    }
+
+            // }
+
+            // if (count == 0)
+            //     return null;
+
+            //string[] result = new string[count];
+
+            //for (int i=0;i<result.Length;i++)
+            // {
+            //     result[i] = str[i];
+            // }
+
+            return words;
+        }
+
+        public bool isPerson (string sentence,int num)
+        {
+            string name = null;
+            string surname = null;
+            string secname = null;
+            string birthday = null;
+            string gender = null;
+            string status = null;
+            string addres = null;
+
+              AnalysisResult res = pr.Process(new SourceOfAnalysis(sentence));// разбить предложение на слова и дальше анализировать высчитывать расстояния от одной персоны до другой
+            int person = 0;
+            foreach (var e in res.Entities)
+            {
+                if (e.InstanceOf.Caption == "Актант предиката")
+                {
+
+                }
+
+                if (e.InstanceOf.Caption == "Персона")
+                {
+                    person ++;
+                    int i = 0;
+                    foreach (var f in e.Slots)
+                    {
+                        if (i == 0)
+                        {
+                            if (f.Value.ToString() == "MALE")
+                            {
+                                gender = "Мужской";
+                            }
+                            if (f.Value.ToString() == "FEMALE")
+                            {
+                                gender = "Женский";
+                            }
+                            i++;
+                            continue;
+                        }
+                        if (i == 1)
+                        {
+                            surname = f.Value.ToString();
+                            i++;
+                            continue;
+                        }
+                        if (i == 2)
+                        {
+                            name = f.Value.ToString();
+                            i++;
+                            continue;
+                        }
+
+                        if (i == 3)
+                        {
+                            secname = f.Value.ToString();
+                            i++;
+                            continue;
+                        }
+                    }
+                }
+
+            }
+
+            //for (Token t = res.FirstToken;t!=null;t=t.Next)               
+            //{
+            //    MetaToken mt = t as MetaToken;
+            //    if (mt == null)
+            //        continue;
+            //    for (Token tt = mt.BeginToken; tt != null ; tt = tt.Next)
+            //    {
+                    
+            //        if (tt.Morph.Class.IsProperSurname)
+            //        {
+                        
+            //            tt.ToString();
+            //        }
+            //    }
+            //}
+
+                   
+                
+         
+            return false;
+
+            return true;
+        }
+
+
+
 
         /// <summary>
         /// Текущая сущность, выбранная пользователем в таблице
@@ -356,111 +488,6 @@ namespace text_mining
 
                 File.WriteAllText(filetxt, textControl1.Text);
                 ExportResult.ProcessXml(textControl1.Text, sfd.FileName, ref pr);
-               // XmlWriterSettings settings = new XmlWriterSettings()
-               // {
-               //     Indent = true,
-               //     OmitXmlDeclaration = true,
-
-               // };
-               // XmlWriter textWritter = XmlWriter.Create(sfd.FileName, settings);
-
-               // textWritter.WriteStartDocument();
-
-               // textWritter.WriteStartElement("xml");
-               // textWritter.WriteAttributeString("version", "1.0");
-               // textWritter.WriteAttributeString("Encoding", "utf-8");
-
-               // textWritter.WriteStartElement("processors");
-               // int i = 1;
-                
-               //foreach(var p in pr.Analyzers)
-               // {
-               //     textWritter.WriteStartElement("processor");
-               //     textWritter.WriteAttributeString("id",i.ToString() );
-               //     textWritter.WriteValue(p.ToString());
-               //     textWritter.WriteEndElement();
-               //     i++;
-               // }
-
-
-               // textWritter.WriteEndElement();
-
-
-               // textWritter.WriteStartElement("Entities");
-               // textWritter.WriteAttributeString("Language", "Ru");
-               //  i = 1;
-               // foreach (var ec in export.Entities)
-               // {
-               //     try
-               //     {
-               //         textWritter.WriteStartElement("Object");
-               //         textWritter.WriteAttributeString("id", i.ToString());
-               //         textWritter.WriteAttributeString("Type_object", ec.InstanceOf.Caption);
-               //         textWritter.WriteValue(ec.ToString());
-               //         textWritter.WriteStartElement("Value_Simple_Attributte");
-               //         string x = "";
-               //         foreach (var v in ec.Slots)
-               //         {
-               //             if (!v.IsInternal)
-               //                 if (!(v.Value is Referent))
-               //                     x += v.ToString();
-
-
-               //         }
-
-               //         textWritter.WriteValue(x.ToString());
-
-               //         textWritter.WriteEndElement();
-
-               //         textWritter.WriteStartElement("Value_Link_Attributte");
-
-               //         bool b = false;
-               //         x = "";
-               //         foreach (var v in ec.Slots)
-               //             if (!v.IsInternal && (v.Value is Referent))
-               //             {
-
-               //                 x += v.ToString();
-               //             }
-               //         textWritter.WriteValue(x.ToString());
-               //         textWritter.WriteEndElement();
-               //         textWritter.WriteStartElement("Part_text");
-               //         x = "";
-               //         foreach (var v in CurrentEntity.Occurrence)
-               //             x += v.ToString();
-               //         textWritter.WriteValue(x.ToString());
-               //         textWritter.WriteEndElement();
-               //         textWritter.WriteEndElement();
-               //         i++;
-               //     }
-               //     catch (Exception eeeee)
-               //     {
-               //         string m = eeeee.Message;
-               //     }
-               // }
-
-               // i = 1;
-               // textWritter.WriteEndElement();
-
-               // textWritter.WriteStartElement("Tokens");
-               // for (Token t = export.FirstToken; t != null; t = t.Next)
-               // {
-               //     textWritter.WriteStartElement("Token");
-               //     textWritter.WriteAttributeString("id", i.ToString());
-               //     textWritter.WriteAttributeString("BeginChar", t.BeginChar.ToString());
-
-               //     textWritter.WriteAttributeString("EndChar", t.EndChar.ToString());
-               //     textWritter.WriteAttributeString("LengthChar", t.LengthChar.ToString());
-               //     textWritter.WriteValue(t.ToString());
-               //     textWritter.WriteEndElement();
-               //     i++;
-               // }
-               // textWritter.WriteEndElement();
-
-               // textWritter.WriteEndElement();
-               // textWritter.Close();
-
-
             }
 
         }
@@ -592,6 +619,11 @@ namespace text_mining
         private void button2_Click(object sender, EventArgs e) //десериализация результатов (импорт)
         {
             importResult();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
