@@ -22,28 +22,12 @@ namespace text_mining
             name = "Нет данных";
             surname = "Нет данных";
             secname = "Нет данных";
-            age = 0;
             birthday = "Нет данных";
             phone = "Нет данных";
             gender = "Нет данных";
             status = "Нет данных";
             addres = "Нет данных";
 
-        }
-        /// <summary>
-        /// Заполнение персональных данных
-        /// </summary>
-        /// <param name="name">Имя</param>
-        public Person(string name)
-        {
-            this.name = name;
-            surname = "Нет данных";
-            secname = "Нет данных";
-            birthday = "Нет данных";
-            phone = "Нет данных";
-            gender = "Нет данных";
-            status = "Нет данных";
-            addres = "Нет данных";
         }
 
         /// <summary>
@@ -57,7 +41,7 @@ namespace text_mining
         /// <param name="gender">Пол, если неизвестно, в качестве параметра указывать null</param>
         /// <param name="status">Должность, если неизвестно, в качестве параметра указывать null</param>
         /// <param name="addres">Адрес, если неизвестно, в качестве параметра указывать null</param>
-        public Person(string name, string surname, string secname, string birthday, string phone, string gender, string status,string addres)
+        public void AddPerson(string name, string surname, string secname, string birthday, string phone, string gender, string status,string addres)
         {
             if (name==null)
             {
@@ -126,5 +110,99 @@ namespace text_mining
                 this.addres = addres;
             }
         }
+
+        /// <summary>
+        /// Дополнение персональных данных
+        /// </summary>
+        /// <param name="name">Имя, если неизвестно, то в качестве параметра указывать null</param>
+        /// <param name="surname">Фамилия, если неизвестно, то в качестве параметра указывать null</param>
+        /// <param name="secname">Отчество, если неизвестно, то в качестве параметра указывать null</param>
+        /// <param name="birthday">Дата рождения, то если неизвестно, в качестве параметра указывать null</param>
+        /// <param name="phone">Номер телефона, то если неизвестно, в качестве параметра указывать null</param>
+        /// <param name="gender">Пол, если неизвестно, в качестве параметра указывать null</param>
+        /// <param name="status">Должность, если неизвестно, в качестве параметра указывать null</param>
+        /// <param name="addres">Адрес, если неизвестно, в качестве параметра указывать null</param>
+        public void Append(string name, string surname, string secname, string birthday, string phone, string gender, string status, string addres)
+        {
+            if (name != null)
+                this.name = name;
+            if (surname != null)
+                this.surname = surname;
+            if (secname != null)
+                this.secname = secname;
+            if (birthday != null)
+                this.birthday = birthday;
+            if (phone != null)
+                this.phone = phone;
+            if (gender != null)
+                this.gender = gender;
+            if (status != null)
+                this.status = status;
+            if (name != null)
+                this.addres = addres;
+        }
+
+        ///<summary>
+        ///Выгрузка персональных данных
+        ///</sumamry
+        public string[] Get()
+        {
+            string[] result = new string[8];
+            result[0] = this.surname;
+            result[1] = this.name;
+            result[2] = this.secname;
+            result[3] = this.gender;
+            result[4] = this.birthday;
+            result[5] = this.phone;
+            result[6] = this.addres;
+            result[7] = this.status;
+            return result;
+        }
+
+        public static Person[] Summa (Person[] p1, Person[] p2)
+        {
+            Person[] result = null;
+            if (p1 == null)
+            {
+                result = new Person[0 + p2.Length];
+                for (int i = 0; i < p2.Length; i++)
+                {
+                    result[i] = new Person();
+                    result[i] = p2[i];
+                }
+            }
+            if (p2 == null)
+            {
+                result = new Person[p1.Length + 0];
+                for (int i = 0; i < p1.Length; i++)
+                {
+                    result[i] = new Person();
+                    result[i] = p1[i];
+                }
+            }
+            if ((p1 != null) && (p2 != null))
+            {
+                result = new Person[p1.Length + p2.Length];
+
+                for (int i = 0; i < p1.Length; i++)
+                {
+                    result[i] = new Person();
+                    result[i] = p1[i];
+                }
+
+                for (int i = 0; i < p2.Length; i++)
+                {
+                    result[i + p1.Length] = new Person();
+                    result[i + p1.Length] = p2[i];
+                }
+            }
+
+            return result;
+        }
+
+
+
+
     }
+
 }

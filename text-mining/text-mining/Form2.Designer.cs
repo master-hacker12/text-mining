@@ -34,9 +34,6 @@ namespace text_mining
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.typeNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.captionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -49,14 +46,19 @@ namespace text_mining
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button2 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.textControl1 = new text_mining.TextControl();
+            this.typeNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.captionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.button3 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -99,27 +101,6 @@ namespace text_mining
             this.dataGridView1.Size = new System.Drawing.Size(550, 320);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // typeNameDataGridViewTextBoxColumn1
-            // 
-            this.typeNameDataGridViewTextBoxColumn1.DataPropertyName = "TypeName";
-            this.typeNameDataGridViewTextBoxColumn1.HeaderText = "Тип сущности";
-            this.typeNameDataGridViewTextBoxColumn1.Name = "typeNameDataGridViewTextBoxColumn1";
-            this.typeNameDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.typeNameDataGridViewTextBoxColumn1.Width = 120;
-            // 
-            // captionDataGridViewTextBoxColumn1
-            // 
-            this.captionDataGridViewTextBoxColumn1.DataPropertyName = "Caption";
-            this.captionDataGridViewTextBoxColumn1.HeaderText = "Краткое описание";
-            this.captionDataGridViewTextBoxColumn1.Name = "captionDataGridViewTextBoxColumn1";
-            this.captionDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.captionDataGridViewTextBoxColumn1.Width = 278;
-            // 
-            // bindingSource1
-            // 
-            this.bindingSource1.DataSource = typeof(text_mining.EntityWrapper);
-            this.bindingSource1.CurrentChanged += new System.EventHandler(this.bindingSource1_CurrentChanged_1);
             // 
             // tabPage2
             // 
@@ -198,7 +179,7 @@ namespace text_mining
             this.toolStrip2.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1});
-            this.toolStrip2.Location = new System.Drawing.Point(526, 516);
+            this.toolStrip2.Location = new System.Drawing.Point(260, 516);
             this.toolStrip2.Name = "toolStrip2";
             this.toolStrip2.Size = new System.Drawing.Size(98, 25);
             this.toolStrip2.TabIndex = 6;
@@ -226,6 +207,15 @@ namespace text_mining
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(383, 496);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "label1";
+            // 
             // textControl1
             // 
             this.textControl1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -236,11 +226,43 @@ namespace text_mining
             this.textControl1.TabIndex = 4;
             this.textControl1.Load += new System.EventHandler(this.textControl1_Load);
             // 
+            // typeNameDataGridViewTextBoxColumn1
+            // 
+            this.typeNameDataGridViewTextBoxColumn1.DataPropertyName = "TypeName";
+            this.typeNameDataGridViewTextBoxColumn1.HeaderText = "Тип сущности";
+            this.typeNameDataGridViewTextBoxColumn1.Name = "typeNameDataGridViewTextBoxColumn1";
+            this.typeNameDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.typeNameDataGridViewTextBoxColumn1.Width = 120;
+            // 
+            // captionDataGridViewTextBoxColumn1
+            // 
+            this.captionDataGridViewTextBoxColumn1.DataPropertyName = "Caption";
+            this.captionDataGridViewTextBoxColumn1.HeaderText = "Краткое описание";
+            this.captionDataGridViewTextBoxColumn1.Name = "captionDataGridViewTextBoxColumn1";
+            this.captionDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.captionDataGridViewTextBoxColumn1.Width = 278;
+            // 
+            // bindingSource1
+            // 
+            this.bindingSource1.DataSource = typeof(text_mining.EntityWrapper);
+            this.bindingSource1.CurrentChanged += new System.EventHandler(this.bindingSource1_CurrentChanged_1);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(703, 496);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(145, 42);
+            this.button3.TabIndex = 9;
+            this.button3.Text = "Показать персональные данные";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(848, 550);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.toolStrip2);
             this.Controls.Add(this.button1);
@@ -255,12 +277,12 @@ namespace text_mining
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -287,5 +309,7 @@ namespace text_mining
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button3;
     }
 }

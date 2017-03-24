@@ -32,7 +32,7 @@ namespace text_mining
         string starttext;
         //AnalysisResult export;
         Processor pr = null;
-        Person pers = null;
+        Person[] persondata = null;
 
 
         bool isDsp (string document)
@@ -115,52 +115,113 @@ namespace text_mining
                 return false;
             }
            
-
-            string[] sentences = GetSentences(dataGridView1);
-
-            if (sentences != null)
-            for (int i = 0; i < sentences.Length; i++)
+            
+            string[] sentences = GetSentences(textControl1.Text);
+            if (sentences!=null)
             {
-                bool r = isPerson(sentences[i],i);
+                for (int i=0;i<sentences.Length;i++)
+                {
+                 persondata = Person.Summa(persondata, FindPerson(sentences[i]));
+                }
             }
+            label1.Text = "";
+            button3.Enabled = false;
+            if (persondata != null)
+                label1.Text = "Текст содержит персональные данные см. подробнее------>";
             return true;
         }
 
-        public string[] GetSentences (DataGridView table)
+        public string[] GetSentences (string text)
         {
-            //string[] str = new string[table.Rows.Count];
             string str = textControl1.Text;
             string result = string.Join(" ", str.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
             char[] tochka = { '.', '?', '!' };
-            str = textControl1.Text;
             string[] words = result.Split(tochka);
-
-            //int count = 0;
-
-            //for (int i = 0;i <table.Rows.Count;i++)
-            //{
-            //  if  ( table[0,i].Value.ToString() == "Предложение" )
-            //    {
-            //        str[count] = table[1, i].Value.ToString();
-            //        count++;
-            //    }
-
-            // }
-
-            // if (count == 0)
-            //     return null;
-
-            //string[] result = new string[count];
-
-            //for (int i=0;i<result.Length;i++)
-            // {
-            //     result[i] = str[i];
-            // }
-
             return words;
         }
 
-        public bool isPerson (string sentence,int num)
+        private Person AnalysisToken(MetaToken t)
+        {
+            Person persona = new Person();
+            for (Token tt = t.BeginToken; tt != null; tt = tt.Next)
+            {
+
+                MetaToken mt = tt as MetaToken;
+                if (mt != null)
+                    persona = AnalysisToken(mt);
+
+                if (tt.Morph.Class.IsProperSurname)
+                {
+
+                   tt.ToString();
+                }
+            }
+            return persona;
+        }
+
+        public int CountPerson (AnalysisResult ar)
+        {
+            int count = 0;
+
+            foreach (var e in ar.Entities)
+           {
+                if (e.InstanceOf.Caption == "Персона")
+                    count++;
+
+            }
+            return count;
+        }
+
+        public string[] GetWords(string sentence)
+        {
+            string[] result = sentence.Split(' ', ',','\n');
+            return result;
+        }
+
+        public int PhoneInPerson(string word,string[] sentence, string[] person)
+        {
+            int pos = 0;
+            int col = 0;
+            for (int i=0;i<sentence.Length;i++)
+            {
+                if (word == sentence[i])
+                {
+                    pos = i;
+                    col++;
+                }
+            }
+
+            if (col > 1)
+                return 0;
+
+            int posPers = 0;
+            person[0] = person[0].ToLower();
+            if (person[1].Length>2)
+            person[1] = person[1].ToLower();
+            if (person[2].Length > 2)
+                person[2] = person[2].ToLower();
+            person[0] = person[0].Remove(person[0].Length - 2, 2);
+            if (person[1].Length > 2)
+                person[1] = person[1].Remove(person[1].Length - 2, 2);
+            if (person[2].Length > 2)
+                person[2] = person[2].Remove(person[2].Length - 2, 2);
+            for (int i = 0; i < sentence.Length; i++)
+            {
+                
+                   sentence[i].StartsWith(person[0], StringComparison.CurrentCultureIgnoreCase);
+                
+
+                if ( sentence[i].StartsWith(person[0], StringComparison.CurrentCultureIgnoreCase) || sentence[i].StartsWith(person[1], StringComparison.CurrentCultureIgnoreCase) || sentence[i].StartsWith(person[2], StringComparison.CurrentCultureIgnoreCase))
+
+                {
+                    posPers = i;
+                }
+            }
+
+            return Math.Abs(posPers-pos) ;
+        }
+
+        private Person[] FindPerson(string sentence)
         {
             string name = null;
             string surname = null;
@@ -169,19 +230,38 @@ namespace text_mining
             string gender = null;
             string status = null;
             string addres = null;
+            string phone = null;
 
-              AnalysisResult res = pr.Process(new SourceOfAnalysis(sentence));// разбить предложение на слова и дальше анализировать высчитывать расстояния от одной персоны до другой
-            int person = 0;
+            AnalysisResult res = pr.Process(new SourceOfAnalysis(sentence));// разбить предложение на слова и дальше анализировать высчитывать расстояния от одной персоны до другой
+
+            //for (Token t = res.FirstToken;t!=null;t=t.Next)
+            //{
+            //    MetaToken mt = t as MetaToken;
+            //    if (mt == null)
+            //        continue;
+
+            //        //AnalysisToken(mt);
+
+            //}
+
+
+            int person = CountPerson(res);
+            Person[] pers = new Person[person];
+
+            int j = 0;
             foreach (var e in res.Entities)
             {
-                if (e.InstanceOf.Caption == "Актант предиката")
-                {
 
-                }
-
+                name = null;
+                surname = null;
+                secname = null;
+                birthday = null;
+                gender = null;
+                status = null;
+                addres = null;
+                phone = null;
                 if (e.InstanceOf.Caption == "Персона")
                 {
-                    person ++;
                     int i = 0;
                     foreach (var f in e.Slots)
                     {
@@ -213,38 +293,104 @@ namespace text_mining
 
                         if (i == 3)
                         {
-                            secname = f.Value.ToString();
+                            if (f.DefiningFeature.Caption.ToString() == "Свойство")
+                            {
+                                status = f.Value.ToString();
+                                secname = null;
+                            }
+                            else
+                                secname = f.Value.ToString();
                             i++;
                             continue;
                         }
+                        if (i == 4)
+                        {
+                            if (f.DefiningFeature.Caption == "Родился")
+                            {
+                                birthday = f.Value.ToString();
+                            }
+                        }
+
                     }
+
+                    pers[j] = new Person();
+                    pers[j].AddPerson(name, surname, secname, birthday, null, gender, status, null);
+                    j++;
                 }
 
             }
+            int[] pos = null;
+            if (person > 1)
+            {
+               pos  = new int[person];
+            }
 
-            //for (Token t = res.FirstToken;t!=null;t=t.Next)               
-            //{
-            //    MetaToken mt = t as MetaToken;
-            //    if (mt == null)
-            //        continue;
-            //    for (Token tt = mt.BeginToken; tt != null ; tt = tt.Next)
-            //    {
-                    
-            //        if (tt.Morph.Class.IsProperSurname)
-            //        {
-                        
-            //            tt.ToString();
-            //        }
-            //    }
-            //}
+            for (int i = 0; i < person; i++)
+            {
+                foreach (var e in res.Entities)
+                {
+                    addres = null;
+                    if (e.InstanceOf.Caption == "Адрес")
+                    {
 
-                   
-                
-         
-            return false;
+                        addres = e.ToString();
+                    }
+                }
 
-            return true;
+                string[] words = GetWords(sentence);
+                string[] data = pers[i].Get();
+
+                for (int k = 0; k < words.Length; k++)
+                {
+                    if (words[k] == "телефон")
+                    {
+
+                        double tel = 0;
+                        try
+                        {
+                            tel = Convert.ToDouble(words[k + 1]);
+                            phone = tel.ToString();
+                            pos[i] = PhoneInPerson(words[k], words, data);
+                            if (pos[i] == 0)
+                            {
+                                pers[i].Append(null, null, null, null, phone, null, null, null);
+                                pos = null;
+                                break;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            phone = null;
+                            pos = null;
+                        }                   
+                    }
+
+
+                }
+            }
+            if (pos!=null)
+            {
+                int min = pos[0];
+                int index = 0;
+
+                for (int i=0;i<pos.Length;i++)
+                    for(int p=0;p<pos.Length;p++)
+                {
+                        if (pos[p] < min)
+                        {
+                            min = pos[p];
+                            index = p;
+                        }
+                }
+
+                pers[index].Append(null, null, null, null, phone, null, null, null);
+
+            }
+
+
+            return pers;
         }
+
 
 
 
