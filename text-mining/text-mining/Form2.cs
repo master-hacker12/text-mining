@@ -12,6 +12,7 @@ using EP;
 using EP.Text;
 using System.IO;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace text_mining
 {
@@ -140,25 +141,7 @@ namespace text_mining
             return words;
         }
 
-        private Person AnalysisToken(MetaToken t)
-        {
-            Person persona = new Person();
-            for (Token tt = t.BeginToken; tt != null; tt = tt.Next)
-            {
-
-                MetaToken mt = tt as MetaToken;
-                if (mt != null)
-                    persona = AnalysisToken(mt);
-
-                if (tt.Morph.Class.IsProperSurname)
-                {
-
-                   tt.ToString();
-                }
-            }
-            return persona;
-        }
-
+      
         public int CountPerson (AnalysisResult ar)
         {
             int count = 0;
@@ -178,7 +161,7 @@ namespace text_mining
             return result;
         }
 
-        public int PhoneInPerson(string word,string[] sentence, string[] person)
+        public int PhoneInPerson(string word,string[] sentence, string[] person,int length)
         {
             int pos = 0;
             int col = 0;
@@ -191,7 +174,7 @@ namespace text_mining
                 }
             }
 
-            if (col > 1)
+            if (col>=length)
                 return 0;
 
             int posPers = 0;
@@ -350,10 +333,10 @@ namespace text_mining
                         {
                             tel = Convert.ToDouble(words[k + 1]);
                             phone = tel.ToString();
-                            pos[i] = PhoneInPerson(words[k], words, data);
+                            pos[i] = PhoneInPerson(words[k], words, data,person);
                             if (pos[i] == 0)
                             {
-                                pers[i].Append(null, null, null, null, phone, null, null, null);
+                                pers[i].Append(null, null, null, null, phone, null, null, null,false);
                                 pos = null;
                                 break;
                             }
@@ -383,7 +366,7 @@ namespace text_mining
                         }
                 }
 
-                pers[index].Append(null, null, null, null, phone, null, null, null);
+                pers[index].Append(null, null, null, null, phone, null, null, null,false);
 
             }
 
@@ -768,6 +751,96 @@ namespace text_mining
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void Form2_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
+            if (!File.Exists("people.xml"))
+            {
+                using (FileStream fs = new FileStream("people.xml", FileMode.CreateNew))
+                {
+                    formatter.Serialize(fs, persondata);
+                }
+
+            }
+            else
+            {
+                Person[] import = null;
+                using (FileStream fs = new FileStream("people.xml", FileMode.Open))
+                {
+                    import = (Person[])formatter.Deserialize(fs);
+                }
+                int length = persondata.Length;
+
+                for (int i=0;i<length;i++)
+                {
+                    if ((import[i].surname == persondata[i].surname) && ((persondata[i].name.StartsWith(import[i].name, StringComparison.CurrentCultureIgnoreCase)) || (persondata[i].secname.StartsWith(import[i].secname))))
+                    {
+                        if ((persondata[i].name.Length > import[i].name.Length) && (persondata[i].name != "Нет данных"))
+                        {
+                            import[i].name = persondata[i].name;
+                        }
+                        if ((persondata[i].secname.Length > import[i].secname.Length) && (persondata[i].secname != "Нет данных"))
+                        {
+                            import[i].secname = persondata[i].secname;
+                        }
+
+                        if ((persondata[i].gender != import[i].gender) && (persondata[i].gender != "Нет данных"))
+                        {
+                            import[i].gender = persondata[i].gender;
+                        }
+
+                        if ((persondata[i].birthday != import[i].birthday) && (persondata[i].birthday != "Нет данных"))
+                        {
+                            import[i].birthday = persondata[i].birthday;
+                        }
+                        if ((persondata[i].phone != import[i].phone) && (persondata[i].phone != "Нет данных"))
+                        {
+                            import[i].phone = persondata[i].phone;
+                        }
+                        if ((persondata[i].status != import[i].status) && (persondata[i].status != "Нет данных"))
+                        {
+                            import[i].status = persondata[i].status;
+                        }
+                        if ((persondata[i].addres != import[i].addres) && (persondata[i].addres != "Нет данных"))
+                        {
+                            import[i].addres = persondata[i].addres;
+                        }
+                        if (persondata[i].crytical != import[i].crytical)
+                        {
+                            import[i].crytical = persondata[i].crytical;
+                        }
+                    }
+                    else
+                    {
+                        Person[] p = new Person[1];
+                        p[0] = persondata[i];
+                        import = Person.Summa(import, p);
+                    }                
+                }
+
+                try
+                {
+                    File.Delete("people.xml");
+                }
+                catch (Exception ee)
+                {
+
+                }
+                finally
+                {
+                    using (FileStream fs = new FileStream("people.xml", FileMode.CreateNew))
+                    {
+                        formatter.Serialize(fs, import);
+                    }
+                }
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
         {
 
         }

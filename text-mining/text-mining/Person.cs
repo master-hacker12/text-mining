@@ -5,17 +5,18 @@ using System.Text;
 
 namespace text_mining
 {
-    class Person
+    [Serializable]
+    public class Person
     {
-        private string name;
-        private string surname;
-        private string secname;
-        private int age;
-        private string birthday;
-        private string phone;
-        private string gender;
-        private string status;
-        private string addres;
+        public string name;
+        public string surname;
+        public string secname;
+        public string birthday;
+        public string phone;
+        public string gender;
+        public string status;
+        public string addres;
+        public bool crytical;
 
         public Person()
         {
@@ -27,6 +28,7 @@ namespace text_mining
             gender = "Нет данных";
             status = "Нет данных";
             addres = "Нет данных";
+            crytical = false;
 
         }
 
@@ -122,7 +124,8 @@ namespace text_mining
         /// <param name="gender">Пол, если неизвестно, в качестве параметра указывать null</param>
         /// <param name="status">Должность, если неизвестно, в качестве параметра указывать null</param>
         /// <param name="addres">Адрес, если неизвестно, в качестве параметра указывать null</param>
-        public void Append(string name, string surname, string secname, string birthday, string phone, string gender, string status, string addres)
+        /// <param name="crytical">Критичность, если неизвестно, в качестве параметра указывать false</param>
+        public void Append(string name, string surname, string secname, string birthday, string phone, string gender, string status, string addres,bool crytical)
         {
             if (name != null)
                 this.name = name;
@@ -140,6 +143,7 @@ namespace text_mining
                 this.status = status;
             if (name != null)
                 this.addres = addres;
+            this.crytical = crytical;
         }
 
         ///<summary>
@@ -147,7 +151,7 @@ namespace text_mining
         ///</sumamry
         public string[] Get()
         {
-            string[] result = new string[8];
+            string[] result = new string[9];
             result[0] = this.surname;
             result[1] = this.name;
             result[2] = this.secname;
@@ -156,9 +160,12 @@ namespace text_mining
             result[5] = this.phone;
             result[6] = this.addres;
             result[7] = this.status;
+            result[8] = this.crytical.ToString();
             return result;
         }
-
+        ///<summary>
+        ///Объединение нескольких объектов
+        ///</sumamry
         public static Person[] Summa (Person[] p1, Person[] p2)
         {
             Person[] result = null;

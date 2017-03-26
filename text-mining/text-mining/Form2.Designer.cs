@@ -47,11 +47,11 @@ namespace text_mining
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.button3 = new System.Windows.Forms.Button();
             this.textControl1 = new text_mining.TextControl();
             this.typeNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.captionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.button3 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -216,6 +216,16 @@ namespace text_mining
             this.label1.TabIndex = 8;
             this.label1.Text = "label1";
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(703, 496);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(145, 42);
+            this.button3.TabIndex = 9;
+            this.button3.Text = "Показать персональные данные";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // textControl1
             // 
             this.textControl1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -247,15 +257,6 @@ namespace text_mining
             this.bindingSource1.DataSource = typeof(text_mining.EntityWrapper);
             this.bindingSource1.CurrentChanged += new System.EventHandler(this.bindingSource1_CurrentChanged_1);
             // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(703, 496);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(145, 42);
-            this.button3.TabIndex = 9;
-            this.button3.Text = "Показать персональные данные";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -273,6 +274,7 @@ namespace text_mining
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form2";
             this.Text = "Результат анализа";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form2_FormClosing);
             this.Load += new System.EventHandler(this.Form2_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

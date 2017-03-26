@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<ArrayOfPerson xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Person>
+    <name>ДОНАЛЬД</name>
+    <surname>ТРАМП</surname>
+    <secname>Нет данных</secname>
+    <birthday>Нет данных</birthday>
+    <phone>Нет данных</phone>
+    <gender>Мужской</gender>
+    <status>президент; Сша</status>
+    <addres>Нет данных</addres>
+    <crytical>false</crytical>
+  </Person>
+  <Person>
+    <name>СЕРГЕЙ</name>
+    <surname>РЯБКОВ</surname>
+    <secname>Нет данных</secname>
+    <birthday>Нет данных</birthday>
+    <phone>Нет данных</phone>
+    <gender>Мужской</gender>
+    <status>заместитель; глава; Министерство Иностранных Дел (Мид), Россия</status>
+    <addres>Нет данных</addres>
+    <crytical>false</crytical>
+  </Person>
+  <Person>
+    <name>СЕРГЕЙ</name>
+    <surname>КРИВОШЛЯПОВ</surname>
+    <secname>АНАТОЛЬЕВИЧ</secname>
+    <birthday>Нет данных</birthday>
+    <phone>Нет данных</phone>
+    <gender>Мужской</gender>
+    <status>Нет данных</status>
+    <addres>Нет данных</addres>
+    <crytical>false</crytical>
+  </Person>
+  <Person>
+    <name>СВЕТЛАНА</name>
+    <surname>КУЗЬКИНА</surname>
+    <secname>ПЕТРОВНА</secname>
+    <birthday>Нет данных</birthday>
+    <phone>890477345434</phone>
+    <gender>Женский</gender>
+    <status>Нет данных</status>
+    <addres>Нет данных</addres>
+    <crytical>false</crytical>
+  </Person>
+</ArrayOfPerson>
