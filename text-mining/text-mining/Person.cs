@@ -141,7 +141,7 @@ namespace text_mining
                 this.gender = gender;
             if (status != null)
                 this.status = status;
-            if (name != null)
+            if (addres != null)
                 this.addres = addres;
             this.crytical = crytical;
         }

@@ -13,6 +13,7 @@ using EP.Text;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using System.Text.RegularExpressions;
 
 namespace text_mining
 {
@@ -161,7 +162,7 @@ namespace text_mining
             return result;
         }
 
-        public int PhoneInPerson(string word,string[] sentence, string[] person,int length)
+        public int InformationInPerson(string word,string[] sentence, string[] person,int length)
         {
             int pos = 0;
             int col = 0;
@@ -214,6 +215,8 @@ namespace text_mining
             string status = null;
             string addres = null;
             string phone = null;
+            string document = null;
+            string link = null;
 
             AnalysisResult res = pr.Process(new SourceOfAnalysis(sentence));// разбить предложение на слова и дальше анализировать высчитывать расстояния от одной персоны до другой
 
@@ -243,12 +246,15 @@ namespace text_mining
                 status = null;
                 addres = null;
                 phone = null;
+                document = null;
+                link = null;
                 if (e.InstanceOf.Caption == "Персона")
                 {
-                    int i = 0;
+                    //int i = 0;
                     foreach (var f in e.Slots)
                     {
-                        if (i == 0)
+
+                        if (f.DefiningFeature.Caption=="Пол")
                         {
                             if (f.Value.ToString() == "MALE")
                             {
@@ -258,41 +264,90 @@ namespace text_mining
                             {
                                 gender = "Женский";
                             }
-                            i++;
-                            continue;
-                        }
-                        if (i == 1)
-                        {
-                            surname = f.Value.ToString();
-                            i++;
-                            continue;
-                        }
-                        if (i == 2)
-                        {
-                            name = f.Value.ToString();
-                            i++;
                             continue;
                         }
 
-                        if (i == 3)
+                        if (f.DefiningFeature.Caption == "Фамилия")
                         {
-                            if (f.DefiningFeature.Caption.ToString() == "Свойство")
-                            {
-                                status = f.Value.ToString();
-                                secname = null;
-                            }
-                            else
-                                secname = f.Value.ToString();
-                            i++;
+                            surname = f.Value.ToString();
                             continue;
                         }
-                        if (i == 4)
+                        if (f.DefiningFeature.Caption == "Имя")
                         {
-                            if (f.DefiningFeature.Caption == "Родился")
-                            {
-                                birthday = f.Value.ToString();
-                            }
+                            name = f.Value.ToString();
+                            continue;
                         }
+                        if (f.DefiningFeature.Caption == "Отчество")
+                        {
+                            secname = f.Value.ToString();
+                            continue;
+                        }
+                        if (f.DefiningFeature.Caption == "Свойство")
+                        {
+                            status = f.Value.ToString();
+                            continue;
+                        }
+                        if (f.DefiningFeature.Caption == "Родился")
+                        {
+                            birthday = f.Value.ToString();
+                            continue;
+                        }
+                        if (f.DefiningFeature.Caption == "Контактные данные")
+                        {
+                            link = f.Value.ToString();
+                            continue;
+                        }
+                        if (f.DefiningFeature.Caption == "Удостоверение личности")
+                        {
+                            document = f.Value.ToString();
+                            continue;
+                        }
+
+                        //if (i == 0)
+                        //{
+                        //    if (f.Value.ToString() == "MALE")
+                        //    {
+                        //        gender = "Мужской";
+                        //    }
+                        //    if (f.Value.ToString() == "FEMALE")
+                        //    {
+                        //        gender = "Женский";
+                        //    }
+                        //    i++;
+                        //    continue;
+                        //}
+                        //if (i == 1)
+                        //{
+                        //    surname = f.Value.ToString();
+                        //    i++;
+                        //    continue;
+                        //}
+                        //if (i == 2)
+                        //{
+                        //    name = f.Value.ToString();
+                        //    i++;
+                        //    continue;
+                        //}
+
+                        //if (i == 3)
+                        //{
+                        //    if (f.DefiningFeature.Caption.ToString() == "Свойство")
+                        //    {
+                        //        status = f.Value.ToString();
+                        //        secname = null;
+                        //    }
+                        //    else
+                        //        secname = f.Value.ToString();
+                        //    i++;
+                        //    continue;
+                        //}
+                        //if (i == 4)
+                        //{
+                        //    if (f.DefiningFeature.Caption == "Родился")
+                        //    {
+                        //        birthday = f.Value.ToString();
+                        //    }
+                        //}
 
                     }
 
@@ -302,27 +357,57 @@ namespace text_mining
                 }
 
             }
+
+            ////переосмыслить привязки телефонов и адресов к персонам
+            string[] words = GetWords(sentence);
+            int countTel = 0;
+            int colAdress = 0;
+            Regex reg = new Regex(@"жив(\w*)");
+            for (int k = 0; k < words.Length; k++)
+            {
+                if (reg.IsMatch(words[k]))
+                {
+                    colAdress++;
+                }
+                if (words[k]=="телефон")
+                {
+                    countTel++;
+                }
+            }
+
+            string[] pAdress = new string[colAdress];
+            string[] pTel = new string[countTel];
+           countTel = 0;
+           colAdress = 0;
             int[] pos = null;
+            int[] posadrees = null;
             if (person > 1)
             {
                pos  = new int[person];
+                posadrees = new int[person];
             }
-
+            int id = 0;
             for (int i = 0; i < person; i++)
             {
+                string[] data = pers[i].Get();
+                id = i;
+                int pp = 0;
                 foreach (var e in res.Entities)
                 {
-                    addres = null;
+                   
                     if (e.InstanceOf.Caption == "Адрес")
                     {
+                        if (pp == id)
+                        {
+                            addres = e.ToString();
+                            
+                            break;
+                        }
+                        pp++;
 
-                        addres = e.ToString();
                     }
+                   
                 }
-
-                string[] words = GetWords(sentence);
-                string[] data = pers[i].Get();
-
                 for (int k = 0; k < words.Length; k++)
                 {
                     if (words[k] == "телефон")
@@ -333,7 +418,9 @@ namespace text_mining
                         {
                             tel = Convert.ToDouble(words[k + 1]);
                             phone = tel.ToString();
-                            pos[i] = PhoneInPerson(words[k], words, data,person);
+                            pTel[countTel] = phone;
+                            countTel++;
+                            pos[i] = InformationInPerson(words[k], words, data,person);
                             if (pos[i] == 0)
                             {
                                 pers[i].Append(null, null, null, null, phone, null, null, null,false);
@@ -346,6 +433,19 @@ namespace text_mining
                             phone = null;
                             pos = null;
                         }                   
+                    }
+                   
+                    if (reg.IsMatch(words[k]))
+                    {
+                        posadrees[i] = InformationInPerson(words[k], words, data, person);
+                        pAdress[colAdress] = words[k];
+                        colAdress++;
+                        if (posadrees[i]==0)
+                        {
+                            pers[i].Append(null, null, null, null, null, null, null, addres, false);
+                            posadrees = null;
+                            break;
+                        }
                     }
 
 
@@ -366,8 +466,29 @@ namespace text_mining
                         }
                 }
 
-                pers[index].Append(null, null, null, null, phone, null, null, null,false);
+                   // pers[index].Append(null, null, null, null, , null, null, null, false);
+               
 
+
+
+
+            }
+            if (posadrees != null)
+            {
+                int min = posadrees[0];
+                int index = 0;
+
+                for (int i = 0; i < posadrees.Length; i++)
+                    for (int p = 0; p < posadrees.Length; p++)
+                    {
+                        if ((posadrees[p] < min) && (posadrees[p]!=0))
+                        {
+                            min = posadrees[p];
+                            index = p;
+                        }
+                    }
+
+                pers[index].Append(null, null, null, null, null, null, null, addres, false);
             }
 
 
