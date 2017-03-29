@@ -166,17 +166,25 @@ namespace text_mining
         {
             int pos = 0;
             int col = 0;
+            bool zap = false;
             for (int i=0;i<sentence.Length;i++)
             {
                 if (word == sentence[i])
                 {
                     pos = i;
+                    if ((i + 2) < sentence.Length)
+                    {
+                        if (sentence[i + 2] == "")
+                            zap = true;
+                    }
                     col++;
                 }
             }
 
             if (col>=length)
                 return 0;
+            if (zap)
+                return 1;
 
             int posPers = 0;
             person[0] = person[0].ToLower();
@@ -219,18 +227,6 @@ namespace text_mining
             string link = null;
 
             AnalysisResult res = pr.Process(new SourceOfAnalysis(sentence));// разбить предложение на слова и дальше анализировать высчитывать расстояния от одной персоны до другой
-
-            //for (Token t = res.FirstToken;t!=null;t=t.Next)
-            //{
-            //    MetaToken mt = t as MetaToken;
-            //    if (mt == null)
-            //        continue;
-
-            //        //AnalysisToken(mt);
-
-            //}
-
-
             int person = CountPerson(res);
             Person[] pers = new Person[person];
 
@@ -250,7 +246,6 @@ namespace text_mining
                 link = null;
                 if (e.InstanceOf.Caption == "Персона")
                 {
-                    //int i = 0;
                     foreach (var f in e.Slots)
                     {
 
@@ -302,53 +297,6 @@ namespace text_mining
                             document = f.Value.ToString();
                             continue;
                         }
-
-                        //if (i == 0)
-                        //{
-                        //    if (f.Value.ToString() == "MALE")
-                        //    {
-                        //        gender = "Мужской";
-                        //    }
-                        //    if (f.Value.ToString() == "FEMALE")
-                        //    {
-                        //        gender = "Женский";
-                        //    }
-                        //    i++;
-                        //    continue;
-                        //}
-                        //if (i == 1)
-                        //{
-                        //    surname = f.Value.ToString();
-                        //    i++;
-                        //    continue;
-                        //}
-                        //if (i == 2)
-                        //{
-                        //    name = f.Value.ToString();
-                        //    i++;
-                        //    continue;
-                        //}
-
-                        //if (i == 3)
-                        //{
-                        //    if (f.DefiningFeature.Caption.ToString() == "Свойство")
-                        //    {
-                        //        status = f.Value.ToString();
-                        //        secname = null;
-                        //    }
-                        //    else
-                        //        secname = f.Value.ToString();
-                        //    i++;
-                        //    continue;
-                        //}
-                        //if (i == 4)
-                        //{
-                        //    if (f.DefiningFeature.Caption == "Родился")
-                        //    {
-                        //        birthday = f.Value.ToString();
-                        //    }
-                        //}
-
                     }
 
                     pers[j] = new Person();
@@ -357,147 +305,334 @@ namespace text_mining
                 }
 
             }
-
-            ////переосмыслить привязки телефонов и адресов к персонам
             string[] words = GetWords(sentence);
-            int countTel = 0;
-            int colAdress = 0;
-            Regex reg = new Regex(@"жив(\w*)");
-            for (int k = 0; k < words.Length; k++)
-            {
-                if (reg.IsMatch(words[k]))
-                {
-                    colAdress++;
-                }
-                if (words[k]=="телефон")
-                {
-                    countTel++;
-                }
-            }
+            int countPhone = 0;
+            int countAdress = 0;
+            Regex street = new Regex(@"жив(\w*)");
+            Regex phoneNum = new Regex(@"телефон(\w*)");
 
-            string[] pAdress = new string[colAdress];
-            string[] pTel = new string[countTel];
-           countTel = 0;
-           colAdress = 0;
-            int[] pos = null;
-            int[] posadrees = null;
-            if (person > 1)
+
+            for (int i=0;i<words.Length;i++)
             {
-               pos  = new int[person];
-                posadrees = new int[person];
-            }
-            int id = 0;
-            for (int i = 0; i < person; i++)
-            {
-                string[] data = pers[i].Get();
-                id = i;
-                int pp = 0;
-                foreach (var e in res.Entities)
+                if (street.IsMatch(words[i]))
                 {
-                   
-                    if (e.InstanceOf.Caption == "Адрес")
+                    countAdress++;
+                }
+                if (phoneNum.IsMatch(words[i]))
+                {
+                    countPhone++;
+                }
+            }            
+            int[,] pPhone = new int[person,countPhone];
+            int[,] pAdress = new int[person, countAdress];
+            string[] listPhone = new string[countPhone];
+            string[] listAdress = new string[countAdress];
+            int ppp = 0;
+            int pp = 0;
+            for (int i = 0;i<person;i++)
+            {             
+                    foreach(var e in res.Entities)
                     {
-                        if (pp == id)
+                        if (e.InstanceOf.Caption=="Адрес")
                         {
-                            addres = e.ToString();
-                            
+
+                        if (listAdress == null)
+                        break;
+                        if (ppp >= listAdress.Length)
                             break;
+                            listAdress[ppp] = e.ToString();
+                            ppp++; 
                         }
-                        pp++;
-
-                    }
-                   
-                }
-                for (int k = 0; k < words.Length; k++)
-                {
-                    if (words[k] == "телефон")
+                        if (e.InstanceOf.Caption=="Телефонный номер")
                     {
-
-                        double tel = 0;
-                        try
+                        if (listPhone == null)
+                            break;
+                        if (pp >= listPhone.Length)
+                            break;
+                        listPhone[pp] = e.Slots[0].Value.ToString();
+                        pp++;
+                    }
+                        if (countPhone>0)
+                    {
+                        if (listPhone[0]==null)
                         {
-                            tel = Convert.ToDouble(words[k + 1]);
-                            phone = tel.ToString();
-                            pTel[countTel] = phone;
-                            countTel++;
-                            pos[i] = InformationInPerson(words[k], words, data,person);
-                            if (pos[i] == 0)
+                            pp = 0;
+                            for (int gg=0;gg<words.Length;gg++)
                             {
-                                pers[i].Append(null, null, null, null, phone, null, null, null,false);
-                                pos = null;
-                                break;
+                                if (phoneNum.IsMatch(words[gg]))
+                                {
+                                    if (pp >= listPhone.Length)
+                                        break;
+                                    try
+                                    {
+                                        double tel = Convert.ToDouble(words[gg + 1]);
+                                        listPhone[pp] = tel.ToString();
+                                        pp++;
+                                    }
+                                    catch(Exception ex)
+                                    {
+
+                                    }
+                                }
                             }
                         }
-                        catch (Exception e)
-                        {
-                            phone = null;
-                            pos = null;
-                        }                   
                     }
-                   
-                    if (reg.IsMatch(words[k]))
+                        
+                    }
+                if (countAdress != 0)
+                {
+                    for (int jj = 0; jj < listAdress.Length; jj++)
                     {
-                        posadrees[i] = InformationInPerson(words[k], words, data, person);
-                        pAdress[colAdress] = words[k];
-                        colAdress++;
-                        if (posadrees[i]==0)
+                        string[] data = pers[i].Get();
+                        if (pAdress == null)
                         {
-                            pers[i].Append(null, null, null, null, null, null, null, addres, false);
-                            posadrees = null;
+                            pers[i].Append(null, null, null, null, null, null, null, listAdress[jj], false);
+                            break;
+                        }
+                        pAdress[i, jj] = InformationInPerson(listAdress[jj], words, data, person);
+                        if (pAdress[i, jj] == 0)
+                        {
+                            pAdress = null;
+                            pers[i].Append(null, null, null, null, null, null, null, listAdress[jj], false);
                             break;
                         }
                     }
-
-
                 }
-            }
-            if (pos!=null)
-            {
-                int min = pos[0];
-                int index = 0;
-
-                for (int i=0;i<pos.Length;i++)
-                    for(int p=0;p<pos.Length;p++)
+                if (countPhone != 0)
                 {
-                        if (pos[p] < min)
-                        {
-                            min = pos[p];
-                            index = p;
-                        }
-                }
-
-                   // pers[index].Append(null, null, null, null, , null, null, null, false);
-               
-
-
-
-
-            }
-            if (posadrees != null)
-            {
-                int min = posadrees[0];
-                int index = 0;
-
-                for (int i = 0; i < posadrees.Length; i++)
-                    for (int p = 0; p < posadrees.Length; p++)
+                    for (int jj = 0; jj < listPhone.Length; jj++)
                     {
-                        if ((posadrees[p] < min) && (posadrees[p]!=0))
+                        if (pPhone == null)
                         {
-                            min = posadrees[p];
-                            index = p;
+                            pers[i].Append(null, null, null, null, null, phone, null, null, false);
+                            break;
+                        }
+                        string[] data = pers[i].Get();
+                        pPhone[i, jj] = InformationInPerson(listPhone[jj], words, data, person);
+                        if (pPhone[i, jj] == 0)
+                        {
+                            pPhone = null;
+                            pers[i].Append(null, null, null, null, null, phone, null, null, false);
+                            break;
                         }
                     }
-
-                pers[index].Append(null, null, null, null, null, null, null, addres, false);
+                }
             }
+
+            if ((pAdress != null) && (countAdress!=0))
+            {
+                int[] pMin = new int[person];
+                int p = 0;
+                for (int jj = 0; jj < pMin.Length; jj++)
+                {
+                    p = 0;
+                    for (int i = 0; i < person; i++)
+                    {
+                        if (p >= pMin.Length)
+                            break;
+                        try
+                        {
+                            pMin[p] = pAdress[i, jj];
+                            p++;
+                        }
+                        catch (Exception ee)
+                        {
+                            break;
+                        }
+                    }
+                    int index =0;
+                    int min = pMin[0];
+                    for (int h = 0; h < pMin.Length; h++)
+                    {
+                        for (int hh = 0; hh < pMin.Length; hh++)
+                        {
+                            if (pMin[hh] < min)
+                            {
+                                min = pMin[hh];
+                                index = hh;
+                            }
+                        }
+                    }
+                    if (jj == listAdress.Length)
+                        break;
+                    pers[index].Append(null, null, null, null, null, null, null, listAdress[jj],false);
+                }
+            }
+            if ((pPhone != null) && (countPhone!=0))
+            {
+                int[] pMin = new int[person];
+                int p = 0;
+                for (int jj = 0; jj < pMin.Length; jj++)
+                {
+                    p = 0;
+                    for (int i = 0; i < person; i++)
+                    {
+                        if (p >= pMin.Length)
+                            break;
+                        try
+                        {
+                            pMin[p] = pPhone[i, jj];
+                            p++;
+                        }
+                        catch (Exception ee)
+                        {
+                            break;
+                        }
+                    }
+                    int index = 0;
+                    int min = pMin[0];
+                    for (int h = 0; h < pMin.Length; h++)
+                    {
+                        for (int hh = 0; hh < pMin.Length; hh++)
+                        {
+                            if (pMin[hh] < min)
+                            {
+                                min = pMin[hh];
+                                index = hh;
+                            }
+                        }
+                    }
+                    if (jj == listPhone.Length)
+                        break;
+                    pers[index].Append(null, null, null, null, listPhone[jj], null, null, null, false);
+                }
+            }
+            ////переосмыслить привязки телефонов и адресов к персонам
+            // 
+            // int countTel = 0;
+            // int colAdress = 0;
+            // Regex reg = new Regex(@"жив(\w*)");
+            // for (int k = 0; k < words.Length; k++)
+            // {
+            //     if (reg.IsMatch(words[k]))
+            //     {
+            //         colAdress++;
+            //     }
+            //     if (words[k]=="телефон")
+            //     {
+            //         countTel++;
+            //     }
+            // }
+
+            // string[] pAdress = new string[colAdress];
+            // string[] pTel = new string[countTel];
+            //countTel = 0;
+            //colAdress = 0;
+            // int[] pos = null;
+            // int[] posadrees = null;
+            // if (person > 1)
+            // {
+            //    pos  = new int[person];
+            //     posadrees = new int[person];
+            // }
+            // int id = 0;
+            // for (int i = 0; i < person; i++)
+            // {
+            //     string[] data = pers[i].Get();
+            //     id = i;
+            //     int pp = 0;
+            //     foreach (var e in res.Entities)
+            //     {
+
+            //         if (e.InstanceOf.Caption == "Адрес")
+            //         {
+            //             if (pp == id)
+            //             {
+            //                 addres = e.ToString();
+
+            //                 break;
+            //             }
+            //             pp++;
+
+            //         }
+
+            //     }
+            //     for (int k = 0; k < words.Length; k++)
+            //     {
+            //         if (words[k] == "телефон")
+            //         {
+
+            //             double tel = 0;
+            //             try
+            //             {
+            //                 tel = Convert.ToDouble(words[k + 1]);
+            //                 phone = tel.ToString();
+            //                 pTel[countTel] = phone;
+            //                 countTel++;
+            //                 pos[i] = InformationInPerson(words[k], words, data,person);
+            //                 if (pos[i] == 0)
+            //                 {
+            //                     pers[i].Append(null, null, null, null, phone, null, null, null,false);
+            //                     pos = null;
+            //                     break;
+            //                 }
+            //             }
+            //             catch (Exception e)
+            //             {
+            //                 phone = null;
+            //                 pos = null;
+            //             }                   
+            //         }
+
+            //         if (reg.IsMatch(words[k]))
+            //         {
+            //             posadrees[i] = InformationInPerson(words[k], words, data, person);
+            //             pAdress[colAdress] = words[k];
+            //             colAdress++;
+            //             if (posadrees[i]==0)
+            //             {
+            //                 pers[i].Append(null, null, null, null, null, null, null, addres, false);
+            //                 posadrees = null;
+            //                 break;
+            //             }
+            //         }
+
+
+            //     }
+            //}
+            //if (pos!=null)
+            //{
+            //    int min = pos[0];
+            //    int index = 0;
+
+            //    for (int i=0;i<pos.Length;i++)
+            //        for(int p=0;p<pos.Length;p++)
+            //    {
+            //            if (pos[p] < min)
+            //            {
+            //                min = pos[p];
+            //                index = p;
+            //            }
+            //    }
+
+            //       // pers[index].Append(null, null, null, null, , null, null, null, false);
+
+
+
+
+
+            //}
+            //if (posadrees != null)
+            //{
+            //    int min = posadrees[0];
+            //    int index = 0;
+
+            //    for (int i = 0; i < posadrees.Length; i++)
+            //        for (int p = 0; p < posadrees.Length; p++)
+            //        {
+            //            if ((posadrees[p] < min) && (posadrees[p]!=0))
+            //            {
+            //                min = posadrees[p];
+            //                index = p;
+            //            }
+            //        }
+
+            //    pers[index].Append(null, null, null, null, null, null, null, addres, false);
+            //}
 
 
             return pers;
         }
-
-
-
-
 
         /// <summary>
         /// Текущая сущность, выбранная пользователем в таблице
@@ -895,57 +1030,84 @@ namespace text_mining
                     import = (Person[])formatter.Deserialize(fs);
                 }
                 int length = persondata.Length;
-
-                for (int i=0;i<length;i++)
+                bool find = false;
+                int pp = 0;
+                for (int j = 0; j < length; j++)
                 {
-                    if ((import[i].surname == persondata[i].surname) && ((persondata[i].name.StartsWith(import[i].name, StringComparison.CurrentCultureIgnoreCase)) || (persondata[i].secname.StartsWith(import[i].secname))))
+                    find = false;
+                    for (int i = 0; i < length; i++)
                     {
-                        if ((persondata[i].name.Length > import[i].name.Length) && (persondata[i].name != "Нет данных"))
+                        find = false;
+                        if ((import[i].surname == persondata[j].surname) && ((persondata[j].name.StartsWith(import[i].name, StringComparison.CurrentCultureIgnoreCase)) || (persondata[j].secname.StartsWith(import[i].secname))))
                         {
-                            import[i].name = persondata[i].name;
-                        }
-                        if ((persondata[i].secname.Length > import[i].secname.Length) && (persondata[i].secname != "Нет данных"))
-                        {
-                            import[i].secname = persondata[i].secname;
-                        }
+                            find = true;
+                            if ((persondata[j].name.Length > import[i].name.Length) && (persondata[j].name != "Нет данных"))
+                            {
+                                import[i].name = persondata[j].name;
+                            }
+                            if ((persondata[j].secname.Length > import[i].secname.Length) && (persondata[j].secname != "Нет данных"))
+                            {
+                                import[i].secname = persondata[j].secname;
+                            }
 
-                        if ((persondata[i].gender != import[i].gender) && (persondata[i].gender != "Нет данных"))
-                        {
-                            import[i].gender = persondata[i].gender;
-                        }
+                            if ((persondata[j].gender != import[i].gender) && (persondata[j].gender != "Нет данных"))
+                            {
+                                import[j].gender = persondata[i].gender;
+                            }
 
-                        if ((persondata[i].birthday != import[i].birthday) && (persondata[i].birthday != "Нет данных"))
-                        {
-                            import[i].birthday = persondata[i].birthday;
+                            if ((persondata[j].birthday != import[i].birthday) && (persondata[j].birthday != "Нет данных"))
+                            {
+                                import[i].birthday = persondata[j].birthday;
+                            }
+                            if ((persondata[j].phone != import[i].phone) && (persondata[j].phone != "Нет данных"))
+                            {
+                                import[i].phone = persondata[j].phone;
+                            }
+                            if ((persondata[j].status != import[i].status) && (persondata[j].status != "Нет данных"))
+                            {
+                                import[i].status = persondata[j].status;
+                            }
+                            if ((persondata[j].addres != import[i].addres) && (persondata[j].addres != "Нет данных"))
+                            {
+                                import[i].addres = persondata[j].addres;
+                            }
+                            if (persondata[j].crytical != import[i].crytical)
+                            {
+                                import[i].crytical = persondata[j].crytical;
+                            }
+                            break;
                         }
-                        if ((persondata[i].phone != import[i].phone) && (persondata[i].phone != "Нет данных"))
-                        {
-                            import[i].phone = persondata[i].phone;
-                        }
-                        if ((persondata[i].status != import[i].status) && (persondata[i].status != "Нет данных"))
-                        {
-                            import[i].status = persondata[i].status;
-                        }
-                        if ((persondata[i].addres != import[i].addres) && (persondata[i].addres != "Нет данных"))
-                        {
-                            import[i].addres = persondata[i].addres;
-                        }
-                        if (persondata[i].crytical != import[i].crytical)
-                        {
-                            import[i].crytical = persondata[i].crytical;
-                        }
+                        if ((i + 1 == length) && (!find))
+                            pp = j; 
                     }
-                    else
-                    {
-                        Person[] p = new Person[1];
-                        p[0] = persondata[i];
-                        import = Person.Summa(import, p);
-                    }                
+                        if (!find)
+                        {
+                            Person[] p = new Person[1];
+                            p[0] = persondata[pp];
+                            import = Person.Summa(import, p);
+                        }
+                    
                 }
 
                 try
                 {
                     File.Delete("people.xml");
+                }
+                catch (IOException ee)
+                {
+                    for (;;)
+                    {
+                        MessageBox.Show("Закройте файл people.xml", "Ошибка экспорта", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        try
+                        { 
+                             File.Delete("people.xml");
+                            break;
+                        }
+                        catch (Exception eee)
+                        {
+                            continue;
+                        }
+                    }
                 }
                 catch (Exception ee)
                 {

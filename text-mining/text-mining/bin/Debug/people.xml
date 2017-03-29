@@ -1,6 +1,28 @@
 <?xml version="1.0"?>
 <ArrayOfPerson xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Person>
+    <name>ДАРЬЯ</name>
+    <surname>БУЛГАКОВА</surname>
+    <secname>СЕРГЕЕВНА</secname>
+    <birthday>Нет данных</birthday>
+    <phone>Нет данных</phone>
+    <gender>Женский</gender>
+    <status>лаборант кафедры кб</status>
+    <addres>4955553535</addres>
+    <crytical>false</crytical>
+  </Person>
+  <Person>
+    <name>ВЛАДИМИР</name>
+    <surname>ШЕСТАКОВ</surname>
+    <secname>АЛЕКСАНДРОВИЧ</secname>
+    <birthday>Нет данных</birthday>
+    <phone>Нет данных</phone>
+    <gender>Мужской</gender>
+    <status>техник центра специального назначения</status>
+    <addres>Нет данных</addres>
+    <crytical>false</crytical>
+  </Person>
+  <Person>
     <name>ДОНАЛЬД</name>
     <surname>ТРАМП</surname>
     <secname>Нет данных</secname>
@@ -26,11 +48,11 @@
     <name>СЕРГЕЙ</name>
     <surname>КРИВОШЛЯПОВ</surname>
     <secname>АНАТОЛЬЕВИЧ</secname>
-    <birthday>Нет данных</birthday>
+    <birthday>1993 год</birthday>
     <phone>Нет данных</phone>
     <gender>Мужской</gender>
     <status>Нет данных</status>
-    <addres>Нет данных</addres>
+    <addres>улица Красноказарменная д.15; Москва</addres>
     <crytical>false</crytical>
   </Person>
   <Person>
@@ -41,72 +63,6 @@
     <phone>890477345434</phone>
     <gender>Женский</gender>
     <status>Нет данных</status>
-    <addres>Нет данных</addres>
-    <crytical>false</crytical>
-  </Person>
-  <Person>
-    <name>ДАРЬЯ</name>
-    <surname>БУЛГАКОВА</surname>
-    <secname>СЕРГЕЕВНА</secname>
-    <birthday>Нет данных</birthday>
-    <phone>Нет данных</phone>
-    <gender>Женский</gender>
-    <status>Нет данных</status>
-    <addres>Нет данных</addres>
-    <crytical>false</crytical>
-  </Person>
-  <Person>
-    <name>ВЛАДИМИР</name>
-    <surname>ШЕСТАКОВ</surname>
-    <secname>АЛЕКСАНДРОВИЧ</secname>
-    <birthday>Нет данных</birthday>
-    <phone>Нет данных</phone>
-    <gender>Мужской</gender>
-    <status>Нет данных</status>
-    <addres>Нет данных</addres>
-    <crytical>false</crytical>
-  </Person>
-  <Person>
-    <name>ДАРЬЯ</name>
-    <surname>БУЛГАКОВА</surname>
-    <secname>СЕРГЕЕВНА</secname>
-    <birthday>Нет данных</birthday>
-    <phone>Нет данных</phone>
-    <gender>Женский</gender>
-    <status>лаборант кафедры кб</status>
-    <addres>Нет данных</addres>
-    <crytical>false</crytical>
-  </Person>
-  <Person>
-    <name>ВЛАДИМИР</name>
-    <surname>ШЕСТАКОВ</surname>
-    <secname>АЛЕКСАНДРОВИЧ</secname>
-    <birthday>Нет данных</birthday>
-    <phone>Нет данных</phone>
-    <gender>Мужской</gender>
-    <status>техник цсн</status>
-    <addres>Нет данных</addres>
-    <crytical>false</crytical>
-  </Person>
-  <Person>
-    <name>ДАРЬЯ</name>
-    <surname>БУЛГАКОВА</surname>
-    <secname>СЕРГЕЕВНА</secname>
-    <birthday>Нет данных</birthday>
-    <phone>Нет данных</phone>
-    <gender>Женский</gender>
-    <status>лаборант кафедры кб</status>
-    <addres>Нет данных</addres>
-    <crytical>false</crytical>
-  </Person>
-  <Person>
-    <name>ВЛАДИМИР</name>
-    <surname>ШЕСТАКОВ</surname>
-    <secname>АЛЕКСАНДРОВИЧ</secname>
-    <birthday>Нет данных</birthday>
-    <phone>Нет данных</phone>
-    <gender>Мужской</gender>
-    <status>техник цсн</status>
     <addres>Нет данных</addres>
     <crytical>false</crytical>
   </Person>
