@@ -32,15 +32,12 @@ namespace text_mining
         int m_IgnoreTreeChanging = 0;
         bool dsp = false;
         string starttext;
-        //AnalysisResult export;
         Processor pr = null;
         Person[] persondata = null;
-
+        TableForm tb = null;
 
         bool isDsp (string document)
         {
-           // string[] c = { "\r\n" };
-           //string[] str = document.Split( c, StringSplitOptions.None);
             string[] str = document.Split('\n');
             for (int i = 0; i < str.Length; i++)
             {
@@ -79,7 +76,6 @@ namespace text_mining
                 Cursor = Cursors.WaitCursor;
                 AnalysisResult result = processor.Process(new SourceOfAnalysis(txt));
                 pr = processor;
-               // export = result;
                 if (txt != null && txt.Length > m_MaxTextLengthForShowing)
                 {
                     MessageBox.Show(string.Format("Внимание, текст слишком длинный ({0}Kb),\r\n" +
@@ -129,7 +125,10 @@ namespace text_mining
             label1.Text = "";
             button3.Enabled = false;
             if (persondata != null)
+            {
                 label1.Text = "Текст содержит персональные данные см. подробнее------>";
+                button3.Enabled = true;
+            }
             return true;
         }
 
@@ -497,139 +496,6 @@ namespace text_mining
                     pers[index].Append(null, null, null, null, listPhone[jj], null, null, null, false);
                 }
             }
-            ////переосмыслить привязки телефонов и адресов к персонам
-            // 
-            // int countTel = 0;
-            // int colAdress = 0;
-            // Regex reg = new Regex(@"жив(\w*)");
-            // for (int k = 0; k < words.Length; k++)
-            // {
-            //     if (reg.IsMatch(words[k]))
-            //     {
-            //         colAdress++;
-            //     }
-            //     if (words[k]=="телефон")
-            //     {
-            //         countTel++;
-            //     }
-            // }
-
-            // string[] pAdress = new string[colAdress];
-            // string[] pTel = new string[countTel];
-            //countTel = 0;
-            //colAdress = 0;
-            // int[] pos = null;
-            // int[] posadrees = null;
-            // if (person > 1)
-            // {
-            //    pos  = new int[person];
-            //     posadrees = new int[person];
-            // }
-            // int id = 0;
-            // for (int i = 0; i < person; i++)
-            // {
-            //     string[] data = pers[i].Get();
-            //     id = i;
-            //     int pp = 0;
-            //     foreach (var e in res.Entities)
-            //     {
-
-            //         if (e.InstanceOf.Caption == "Адрес")
-            //         {
-            //             if (pp == id)
-            //             {
-            //                 addres = e.ToString();
-
-            //                 break;
-            //             }
-            //             pp++;
-
-            //         }
-
-            //     }
-            //     for (int k = 0; k < words.Length; k++)
-            //     {
-            //         if (words[k] == "телефон")
-            //         {
-
-            //             double tel = 0;
-            //             try
-            //             {
-            //                 tel = Convert.ToDouble(words[k + 1]);
-            //                 phone = tel.ToString();
-            //                 pTel[countTel] = phone;
-            //                 countTel++;
-            //                 pos[i] = InformationInPerson(words[k], words, data,person);
-            //                 if (pos[i] == 0)
-            //                 {
-            //                     pers[i].Append(null, null, null, null, phone, null, null, null,false);
-            //                     pos = null;
-            //                     break;
-            //                 }
-            //             }
-            //             catch (Exception e)
-            //             {
-            //                 phone = null;
-            //                 pos = null;
-            //             }                   
-            //         }
-
-            //         if (reg.IsMatch(words[k]))
-            //         {
-            //             posadrees[i] = InformationInPerson(words[k], words, data, person);
-            //             pAdress[colAdress] = words[k];
-            //             colAdress++;
-            //             if (posadrees[i]==0)
-            //             {
-            //                 pers[i].Append(null, null, null, null, null, null, null, addres, false);
-            //                 posadrees = null;
-            //                 break;
-            //             }
-            //         }
-
-
-            //     }
-            //}
-            //if (pos!=null)
-            //{
-            //    int min = pos[0];
-            //    int index = 0;
-
-            //    for (int i=0;i<pos.Length;i++)
-            //        for(int p=0;p<pos.Length;p++)
-            //    {
-            //            if (pos[p] < min)
-            //            {
-            //                min = pos[p];
-            //                index = p;
-            //            }
-            //    }
-
-            //       // pers[index].Append(null, null, null, null, , null, null, null, false);
-
-
-
-
-
-            //}
-            //if (posadrees != null)
-            //{
-            //    int min = posadrees[0];
-            //    int index = 0;
-
-            //    for (int i = 0; i < posadrees.Length; i++)
-            //        for (int p = 0; p < posadrees.Length; p++)
-            //        {
-            //            if ((posadrees[p] < min) && (posadrees[p]!=0))
-            //            {
-            //                min = posadrees[p];
-            //                index = p;
-            //            }
-            //        }
-
-            //    pers[index].Append(null, null, null, null, null, null, null, addres, false);
-            //}
-
 
             return pers;
         }
@@ -1125,7 +991,24 @@ namespace text_mining
 
         private void button3_Click(object sender, EventArgs e)
         {
+             tb = new TableForm();
+            tb.UpdateTable(persondata);
+            tb.Visible = true;
+            timer2.Enabled = true;
+        }
 
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            if (!tb.Visible)
+            {
+                XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
+                using (FileStream fs = new FileStream("save.xml", FileMode.Open))
+                {
+                    persondata = (Person[])formatter.Deserialize(fs);
+                }
+                File.Delete("save.xml");
+                timer2.Enabled = false;
+            }
         }
     }
 }
