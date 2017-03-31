@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace text_mining
 {
@@ -148,7 +150,7 @@ namespace text_mining
 
         ///<summary>
         ///Выгрузка персональных данных
-        ///</sumamry
+        ///</sumamry>
         public string[] Get()
         {
             string[] result = new string[9];
@@ -165,7 +167,7 @@ namespace text_mining
         }
         ///<summary>
         ///Объединение нескольких объектов
-        ///</sumamry
+        ///</sumamry>
         public static Person[] Summa (Person[] p1, Person[] p2)
         {
             Person[] result = null;
@@ -207,8 +209,29 @@ namespace text_mining
             return result;
         }
 
+        ///<summary>
+        ///Является ли персональные данные критичными
+        ///</sumamry>
+        public static bool IsCryticalPerson(Person data)
+        {
+            XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
+            if (!File.Exists("people.xml"))
+                return false;
+            Person[] import = null;
+            using (FileStream fs = new FileStream("people.xml", FileMode.Open))
+            {
+                import = (Person[])formatter.Deserialize(fs);
+            }
 
-
+            for (int i = 0; i < import.Length; i++)
+            {
+                if ((import[i].surname == data.surname) && ((data.name.StartsWith(import[i].name, StringComparison.CurrentCultureIgnoreCase)) || (data.secname.StartsWith(import[i].secname))) && (import[i].crytical))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
     }
 

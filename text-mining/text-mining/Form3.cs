@@ -39,7 +39,12 @@ namespace text_mining
                 table.Rows[i].Cells[7].Value = data[i].addres;
                 table.Rows[i].Cells[8].Value = data[i].status;
                 table.Rows[i].Cells[9].Value = data[i].crytical;
+                if (data[i].crytical)
+                {
+                    table.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                }
             }
+
             persona = data;
         }
 

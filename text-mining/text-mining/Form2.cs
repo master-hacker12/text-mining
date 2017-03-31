@@ -126,6 +126,14 @@ namespace text_mining
             button3.Enabled = false;
             if (persondata != null)
             {
+
+                for (int i=0;i<persondata.Length;i++)
+                {
+                    if (Person.IsCryticalPerson(persondata[i]))
+                    {
+                        persondata[i].crytical = true;
+                    }
+                }
                 label1.Text = "Текст содержит персональные данные см. подробнее------>";
                 button3.Enabled = true;
             }
@@ -937,9 +945,13 @@ namespace text_mining
                             {
                                 import[i].addres = persondata[j].addres;
                             }
-                            if (persondata[j].crytical != import[i].crytical)
+                            if (import[i].crytical)
                             {
-                                import[i].crytical = persondata[j].crytical;
+                               persondata[j].crytical = import[i].crytical;
+                            }
+                            else
+                            {
+                                import[i].crytical = persondata[i].crytical;
                             }
                             break;
                         }
