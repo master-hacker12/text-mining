@@ -85,3 +85,4 @@ F:\GitHub\text-mining\text-mining\text-mining\bin\Debug\EP.Sdk.dll
 D:\Github\text-mining\text-mining\text-mining\bin\Debug\EP.Sdk.dll
 F:\GitHub\text-mining\text-mining\text-mining\obj\Debug\text-mining.csprojResolveAssemblyReference.cache
 F:\GitHub\text-mining\text-mining\text-mining\obj\Debug\text_mining.TableForm.resources
+D:\Github\text-mining\text-mining\text-mining\obj\Debug\text_mining.TableForm.resources

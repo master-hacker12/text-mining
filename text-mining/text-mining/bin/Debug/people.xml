@@ -26,7 +26,7 @@
     <name>СЕРГЕЙ</name>
     <surname>КРИВОШЛЯПОВ</surname>
     <secname>АНАТОЛЬЕВИЧ</secname>
-    <birthday>Нет данных</birthday>
+    <birthday>1993 год</birthday>
     <phone>Нет данных</phone>
     <gender>Мужской</gender>
     <status>Нет данных</status>
@@ -41,6 +41,28 @@
     <phone>890477345434</phone>
     <gender>Женский</gender>
     <status>Нет данных</status>
+    <addres>Нет данных</addres>
+    <crytical>false</crytical>
+  </Person>
+  <Person>
+    <name>ДАРЬЯ</name>
+    <surname>БУЛГАКОВА</surname>
+    <secname>СЕРГЕЕВНА</secname>
+    <birthday>Нет данных</birthday>
+    <phone>Нет данных</phone>
+    <gender>Женский</gender>
+    <status>лаборант кафедры кб</status>
+    <addres>Нет данных</addres>
+    <crytical>true</crytical>
+  </Person>
+  <Person>
+    <name>ВЛАДИМИР</name>
+    <surname>ШЕСТАКОВ</surname>
+    <secname>АЛЕКСАНДРОВИЧ</secname>
+    <birthday>Нет данных</birthday>
+    <phone>Нет данных</phone>
+    <gender>Мужской</gender>
+    <status>техник центра специального назначения</status>
     <addres>Нет данных</addres>
     <crytical>false</crytical>
   </Person>

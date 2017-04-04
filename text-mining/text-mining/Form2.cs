@@ -909,7 +909,7 @@ namespace text_mining
                 for (int j = 0; j < length; j++)
                 {
                     find = false;
-                    for (int i = 0; i < length; i++)
+                    for (int i = 0; i < import.Length; i++)
                     {
                         find = false;
                         if ((import[i].surname == persondata[j].surname) && ((persondata[j].name.StartsWith(import[i].name, StringComparison.CurrentCultureIgnoreCase)) || (persondata[j].secname.StartsWith(import[i].secname))))
@@ -945,17 +945,13 @@ namespace text_mining
                             {
                                 import[i].addres = persondata[j].addres;
                             }
-                            if (import[i].crytical)
+                            if (persondata[j].crytical!=import[i].crytical)
                             {
-                               persondata[j].crytical = import[i].crytical;
-                            }
-                            else
-                            {
-                                import[i].crytical = persondata[i].crytical;
+                                import[i].crytical = persondata[j].crytical;
                             }
                             break;
                         }
-                        if ((i + 1 == length) && (!find))
+                        if ((i + 1 == import.Length) && (!find))
                             pp = j; 
                     }
                         if (!find)
