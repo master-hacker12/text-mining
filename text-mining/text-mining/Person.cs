@@ -19,6 +19,8 @@ namespace text_mining
         public string status;
         public string addres;
         public bool crytical;
+        public string link;
+        public string document;
 
         public Person()
         {
@@ -31,6 +33,8 @@ namespace text_mining
             status = "Нет данных";
             addres = "Нет данных";
             crytical = false;
+            link = "Нет данных";
+            document = "Нет данных";
 
         }
 
@@ -212,7 +216,7 @@ namespace text_mining
         ///<summary>
         ///Является ли персональные данные критичными
         ///</sumamry>
-        public static bool IsCryticalPerson(Person data)
+        public static bool IsCryticalPerson(ref Person data)
         {
             XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
             if (!File.Exists("people.xml"))
@@ -225,13 +229,35 @@ namespace text_mining
 
             for (int i = 0; i < import.Length; i++)
             {
-                if ((import[i].surname == data.surname) && ((data.name.StartsWith(import[i].name, StringComparison.CurrentCultureIgnoreCase)) || (data.secname.StartsWith(import[i].secname))) && (import[i].crytical))
+                if ((import[i].surname == data.surname) && ((data.name.StartsWith(import[i].name, StringComparison.CurrentCultureIgnoreCase)) || (data.secname.StartsWith(import[i].secname))))
                 {
+                    if ((data.birthday == "Нет данных") && (import[i]).birthday != "Нет данных")
+                    {
+                        data.birthday = import[i].birthday;
+                    }
+                    if ((data.gender == "Нет данных") && (import[i]).gender != "Нет данных")
+                    {
+                        data.gender = import[i].gender;
+                    }
+                    if ((data.phone == "Нет данных") && (import[i]).phone != "Нет данных")
+                    {
+                        data.phone = import[i].phone;
+                    }
+                    if ((data.status == "Нет данных") && (import[i]).status!= "Нет данных")
+                    {
+                        data.status = import[i].status;
+                    }
+                    if ((data.addres == "Нет данных") && (import[i]).addres != "Нет данных")
+                    {
+                        data.addres = import[i].addres;
+                    }
+                    if ((import[i].crytical) || (data.document!= "Нет данных"))
                     return true;
                 }
             }
             return false;
         }
+     
 
     }
 

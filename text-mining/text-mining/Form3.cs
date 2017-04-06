@@ -78,6 +78,7 @@ namespace text_mining
             textBox5.Enabled = true;
             textBox6.Enabled = true;
             textBox7.Enabled = true;
+            textBox8.Enabled = true;
             radioButton1.Enabled = true;
             radioButton2.Enabled = true;
             radioButton3.Enabled = true;
@@ -100,6 +101,9 @@ namespace text_mining
                 textBox5.Text = persona[index].phone;
                 textBox6.Text = persona[index].addres;
                 textBox7.Text = persona[index].status;
+                textBox8.Text = persona[index].link;
+                listBox1.Items.Clear();
+                listBox1.Items.Add(persona[index].document);
                 if (persona[index].crytical)
                     radioButton3.Checked = true;
                 else
@@ -132,6 +136,8 @@ namespace text_mining
                 persona[pos].crytical = true;
             if (radioButton4.Checked)
                 persona[pos].crytical = false;
+            if (textBox8.Text != null)
+                persona[pos].link = textBox8.Text;
             UpdateTable(persona);
             edit = false;
             button1.Enabled = true;
@@ -143,6 +149,7 @@ namespace text_mining
             textBox5.Enabled = false;
             textBox6.Enabled = false;
             textBox7.Enabled = false;
+            textBox8.Enabled = false;
             radioButton1.Enabled = false;
             radioButton2.Enabled = false;
             radioButton3.Enabled = false;

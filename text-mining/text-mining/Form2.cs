@@ -129,11 +129,13 @@ namespace text_mining
 
                 for (int i=0;i<persondata.Length;i++)
                 {
-                    if (Person.IsCryticalPerson(persondata[i]))
+                    if (Person.IsCryticalPerson(ref persondata[i]))
                     {
                         persondata[i].crytical = true;
                     }
+
                 }
+
                 label1.Text = "Текст содержит персональные данные см. подробнее------>";
                 button3.Enabled = true;
             }
@@ -297,11 +299,13 @@ namespace text_mining
                         if (f.DefiningFeature.Caption == "Контактные данные")
                         {
                             link = f.Value.ToString();
+                            pers[j].link = link;
                             continue;
                         }
                         if (f.DefiningFeature.Caption == "Удостоверение личности")
                         {
                             document = f.Value.ToString();
+                            pers[j].document = document;
                             continue;
                         }
                     }
@@ -504,9 +508,11 @@ namespace text_mining
                     pers[index].Append(null, null, null, null, listPhone[jj], null, null, null, false);
                 }
             }
-
             return pers;
         }
+
+
+
 
         /// <summary>
         /// Текущая сущность, выбранная пользователем в таблице
