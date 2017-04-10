@@ -126,7 +126,7 @@ namespace text_mining
             button3.Enabled = false;
             if (persondata != null)
             {
-
+                persondata = Person.CheckDublicate(persondata);
                 for (int i=0;i<persondata.Length;i++)
                 {
                     if (Person.IsCryticalPerson(ref persondata[i]))

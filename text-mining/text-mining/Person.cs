@@ -257,8 +257,168 @@ namespace text_mining
             }
             return false;
         }
-     
 
+        ///<summary>
+        ///Удаление повторяющихся персон
+        ///</sumamry>
+        public static Person[] CheckDublicate(Person[] p1)
+        {
+            Person[] dublicate = p1;
+
+            for (int i = 0; i < dublicate.Length; i++)
+            {
+                for (int j = 0; j < p1.Length; j++)
+                {
+                    if (p1[j] == null)
+                        continue;
+                    if (i == j)
+                        continue;
+                    if ((dublicate[i].surname == p1[j].surname) && ((p1[j].name.StartsWith(dublicate[i].name, StringComparison.CurrentCultureIgnoreCase)) || (p1[j].secname.StartsWith(dublicate[i].secname))))
+                    {
+                        int col1 = countComplitedData(dublicate[i]);
+                        int col2 = countComplitedData(p1[j]);
+                        if (col1 >= col2)
+                        {
+                            if (p1[j].name.Length > dublicate[i].name.Length)
+                            {
+                                dublicate[i].name = p1[j].name;
+                            }
+                            if (p1[j].secname.Length > dublicate[i].secname.Length)
+                            {
+                                dublicate[i].secname = p1[j].secname;
+                            }
+
+                            if ((dublicate[i].birthday == "Нет данных") && (p1[j].birthday != "Нет данных"))
+                            {
+                                dublicate[i].birthday = p1[j].birthday;
+                            }
+                            if ((dublicate[i].phone == "Нет данных") && (p1[j].phone != "Нет данных"))
+                            {
+                                dublicate[i].phone = p1[j].phone;
+                            }
+                            if ((dublicate[i].addres == "Нет данных") && (p1[j].addres != "Нет данных"))
+                            {
+                                dublicate[i].addres = p1[j].addres;
+                            }
+                            if ((dublicate[i].status == "Нет данных") && (p1[j].status != "Нет данных"))
+                            {
+                                dublicate[i].status = p1[j].status;
+                            }
+                            if ((dublicate[i].gender == "Нет данных") && (p1[j].gender != "Нет данных"))
+                            {
+                                dublicate[i].gender = p1[j].gender;
+                            }
+                            if ((dublicate[i].link == "Нет данных") && (p1[j].link != "Нет данных"))
+                            {
+                                dublicate[i].link = p1[j].link;
+                            }
+                            if ((dublicate[i].document == "Нет данных") && (p1[j].document != "Нет данных"))
+                            {
+                                dublicate[i].document = p1[j].document;
+                            }
+                            p1[j] = null;
+                        }
+                        else
+                        {
+                            if (p1[i].name.Length > dublicate[j].name.Length)
+                            {
+                                dublicate[j].name = p1[i].name;
+                            }
+                            if (p1[i].secname.Length > dublicate[j].secname.Length)
+                            {
+                                dublicate[j].secname = p1[i].secname;
+                            }
+
+                            if ((dublicate[j].birthday == "Нет данных") && (p1[i].birthday != "Нет данных"))
+                            {
+                                dublicate[j].birthday = p1[i].birthday;
+                            }
+                            if ((dublicate[j].phone == "Нет данных") && (p1[i].phone != "Нет данных"))
+                            {
+                                dublicate[j].phone = p1[i].phone;
+                            }
+                            if ((dublicate[j].addres == "Нет данных") && (p1[i].addres != "Нет данных"))
+                            {
+                                dublicate[j].addres = p1[i].addres;
+                            }
+                            if ((dublicate[j].status == "Нет данных") && (p1[i].status != "Нет данных"))
+                            {
+                                dublicate[j].status = p1[i].status;
+                            }
+                            if ((dublicate[j].gender == "Нет данных") && (p1[i].gender != "Нет данных"))
+                            {
+                                dublicate[j].gender = p1[i].gender;
+                            }
+                            if ((dublicate[j].link == "Нет данных") && (p1[i].link != "Нет данных"))
+                            {
+                                dublicate[j].link = p1[i].link;
+                            }
+                            if ((dublicate[j].document == "Нет данных") && (p1[i].document != "Нет данных"))
+                            {
+                                dublicate[j].document = p1[i].document;
+                            }
+                            p1[i] = null;
+                        }
+                    }
+                }
+            }
+            int countNull = 0;
+            for (int i = 0; i < p1.Length; i++)
+            {
+                if (p1[i] == null)
+                    countNull++;
+                else
+                {
+                    p1[i] = dublicate[i];
+                }
+            }
+
+            Person[] result = new Person[p1.Length-countNull];
+            int k = 0;
+            for (int i=0;i<p1.Length;i++)
+            {
+                if (p1[i] != null)
+                {
+                    result[k] = p1[i];
+                    k++;
+                }
+            }
+
+
+            return result;
+
+
+        }
+
+        ///<summary>
+        ///Количество заполненных данных о человеке
+        ///</sumamry>
+        public static int countComplitedData(Person p1)
+        {
+            int result = 0;
+            if (p1.surname != "Нет данных")
+                result++;
+            if (p1.name != "Нет данных")
+                result++;
+            if (p1.secname != "Нет данных")
+                result++;
+            if (p1.gender != "Нет данных")
+                result++;
+            if (p1.birthday != "Нет данных")
+                result++;
+            if (p1.phone != "Нет данных")
+                result++;
+            if (p1.addres != "Нет данных")
+                result++;
+            if (p1.surname != "Нет данных")
+                result++;
+            if (p1.link != "Нет данных")
+                result++;
+            if (p1.document != "Нет данных")
+                result++;
+
+            return result;
+        }
     }
 
 }
