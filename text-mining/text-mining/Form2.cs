@@ -14,6 +14,8 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Text.RegularExpressions;
+using Microsoft.Office.Interop.Word;
+using Word = Microsoft.Office.Interop.Word;
 
 namespace text_mining
 {
@@ -55,7 +57,7 @@ namespace text_mining
 
         public bool ProcessAnalize(ref string txt, ref Processor processor)
         {
-            
+            dsp = false;
             if (txt != null && txt.Length > m_MaxTextLengthForShowing)
                 textControl1.Text = txt.Substring(0, m_MaxTextLengthForShowing) +
                     "\r\n...\r\nТекст обрезан, так как компонент RichTextBox не отображает длинные тексты";
@@ -129,7 +131,7 @@ namespace text_mining
                 persondata = Person.CheckDublicate(persondata);
                 for (int i=0;i<persondata.Length;i++)
                 {
-                    if (Person.IsCryticalPerson(ref persondata[i]))
+                    if (Person.IsCryticalPerson(ref persondata[i]) || (dsp) )
                     {
                         persondata[i].crytical = true;
                     }
@@ -1024,5 +1026,40 @@ namespace text_mining
                 timer2.Enabled = false;
             }
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (!File.Exists("Шаблоны\\Отчет(шаблон).docx"))
+            {
+                MessageBox.Show("Сформировать отчет невозможно, возможно был удален шаблон", "Ошибка отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+			//Код фуфло, хз как работать с Word, слишком сложно
+			//Функция формирование отчетов недоступна, и вряд ли будет доступной
+//            Word.Application app = new Word.Application();
+//            object missing = Type.Missing;
+//            var document = app.Documents.Open("D:\\Github\\text-mining\\text-mining\\text-mining\\bin\\Debug\\Шаблоны\\Отчет(шаблон).docx", Visible: false);
+//            var range = document.Content;
+//            string f = "Table";
+//            object start = 8;
+//            object end = 10;
+            
+//            range = document.Range(ref start, ref end);
+//            Table table = document.Tables.Add(range, dataGridView1.RowCount, dataGridView1.ColumnCount);
+//            table.Borders.Enable = 1;
+//            for (int i =0;i<table.Rows.Count;i++)
+//            {
+//                for (int j=0;j<table.Columns.Count;j++)
+//                {
+//                    table.Cell(i, j).Range.Text = dataGridView1[j, i].Value.ToString();
+//                }
+//            }
+//            app.Selection.Find.Execute(f, ref missing, ref missing, ref missing,
+//ref missing, ref missing, ref missing, ref missing, ref missing, table, ref missing, ref missing, ref missing, ref missing, ref missing);
+//            document.SaveAs("kk.docx");
+//            document.Close();
+      }
+
+
     }
 }

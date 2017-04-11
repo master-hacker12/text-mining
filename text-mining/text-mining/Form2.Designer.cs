@@ -34,9 +34,6 @@ namespace text_mining
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.typeNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.captionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -51,15 +48,19 @@ namespace text_mining
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
-            this.textControl1 = new text_mining.TextControl();
             this.timer2 = new System.Windows.Forms.Timer(this.components);
+            this.button4 = new System.Windows.Forms.Button();
+            this.textControl1 = new text_mining.TextControl();
+            this.typeNameDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.captionDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -102,27 +103,6 @@ namespace text_mining
             this.dataGridView1.Size = new System.Drawing.Size(550, 320);
             this.dataGridView1.TabIndex = 1;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // typeNameDataGridViewTextBoxColumn1
-            // 
-            this.typeNameDataGridViewTextBoxColumn1.DataPropertyName = "TypeName";
-            this.typeNameDataGridViewTextBoxColumn1.HeaderText = "Тип сущности";
-            this.typeNameDataGridViewTextBoxColumn1.Name = "typeNameDataGridViewTextBoxColumn1";
-            this.typeNameDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.typeNameDataGridViewTextBoxColumn1.Width = 120;
-            // 
-            // captionDataGridViewTextBoxColumn1
-            // 
-            this.captionDataGridViewTextBoxColumn1.DataPropertyName = "Caption";
-            this.captionDataGridViewTextBoxColumn1.HeaderText = "Краткое описание";
-            this.captionDataGridViewTextBoxColumn1.Name = "captionDataGridViewTextBoxColumn1";
-            this.captionDataGridViewTextBoxColumn1.ReadOnly = true;
-            this.captionDataGridViewTextBoxColumn1.Width = 278;
-            // 
-            // bindingSource1
-            // 
-            this.bindingSource1.DataSource = typeof(text_mining.EntityWrapper);
-            this.bindingSource1.CurrentChanged += new System.EventHandler(this.bindingSource1_CurrentChanged_1);
             // 
             // tabPage2
             // 
@@ -186,7 +166,7 @@ namespace text_mining
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(729, 386);
+            this.button1.Location = new System.Drawing.Point(729, 377);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(119, 37);
             this.button1.TabIndex = 5;
@@ -221,7 +201,7 @@ namespace text_mining
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(729, 429);
+            this.button2.Location = new System.Drawing.Point(729, 413);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(119, 37);
             this.button2.TabIndex = 7;
@@ -248,6 +228,22 @@ namespace text_mining
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
+            // timer2
+            // 
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
+            // button4
+            // 
+            this.button4.Enabled = false;
+            this.button4.Location = new System.Drawing.Point(729, 456);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(119, 34);
+            this.button4.TabIndex = 10;
+            this.button4.Text = "Сформировать отчет";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // textControl1
             // 
             this.textControl1.Dock = System.Windows.Forms.DockStyle.Left;
@@ -258,15 +254,33 @@ namespace text_mining
             this.textControl1.TabIndex = 4;
             this.textControl1.Load += new System.EventHandler(this.textControl1_Load);
             // 
-            // timer2
+            // typeNameDataGridViewTextBoxColumn1
             // 
-            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            this.typeNameDataGridViewTextBoxColumn1.DataPropertyName = "TypeName";
+            this.typeNameDataGridViewTextBoxColumn1.HeaderText = "Тип сущности";
+            this.typeNameDataGridViewTextBoxColumn1.Name = "typeNameDataGridViewTextBoxColumn1";
+            this.typeNameDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.typeNameDataGridViewTextBoxColumn1.Width = 120;
+            // 
+            // captionDataGridViewTextBoxColumn1
+            // 
+            this.captionDataGridViewTextBoxColumn1.DataPropertyName = "Caption";
+            this.captionDataGridViewTextBoxColumn1.HeaderText = "Краткое описание";
+            this.captionDataGridViewTextBoxColumn1.Name = "captionDataGridViewTextBoxColumn1";
+            this.captionDataGridViewTextBoxColumn1.ReadOnly = true;
+            this.captionDataGridViewTextBoxColumn1.Width = 278;
+            // 
+            // bindingSource1
+            // 
+            this.bindingSource1.DataSource = typeof(text_mining.EntityWrapper);
+            this.bindingSource1.CurrentChanged += new System.EventHandler(this.bindingSource1_CurrentChanged_1);
             // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(848, 550);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
@@ -284,12 +298,12 @@ namespace text_mining
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -319,5 +333,6 @@ namespace text_mining
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Timer timer2;
+        private System.Windows.Forms.Button button4;
     }
 }

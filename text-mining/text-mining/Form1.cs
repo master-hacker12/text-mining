@@ -74,8 +74,7 @@ namespace text_mining
             if (FBD.ShowDialog()==DialogResult.OK)
             {
                 string[] filesDoc = Directory.GetFiles(FBD.SelectedPath,"*.doc*");
-                string[] filesPdf = Directory.GetFiles(FBD.SelectedPath, "*.pdf");
-                if ((filesDoc.Length==0) && (filesPdf.Length==0))
+                if (filesDoc.Length==0)
                 {
                     MessageBox.Show("В данной папке документы не найдены", "Поиск", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
@@ -85,13 +84,6 @@ namespace text_mining
                     for (int i = 0; i < filesDoc.Length; i++)
                     {
                         listBox1.Items.Add(filesDoc[i]);
-                    }
-                }
-                if (filesPdf.Length != 0)
-                {
-                    for (int i = 0; i < filesPdf.Length; i++)
-                    {
-                        listBox1.Items.Add(filesPdf[i]);
                     }
                 }
             }
