@@ -912,6 +912,8 @@ namespace text_mining
                 {
                     import = (Person[])formatter.Deserialize(fs);
                 }
+                if (persondata == null)
+                    return;
                 int length = persondata.Length;
                 bool find = false;
                 int pp = 0;
@@ -1030,16 +1032,17 @@ namespace text_mining
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (!File.Exists("Шаблоны\\Отчет(шаблон).docx"))
+            string pathFile = "Шаблоны\\Отчет(шаблон).docx";
+            if (!File.Exists(pathFile))
             {
                 MessageBox.Show("Сформировать отчет невозможно, возможно был удален шаблон", "Ошибка отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            //Код фуфло, хз как работать с Word, слишком сложно
-            //Функция формирование отчетов недоступна, и вряд ли будет доступной
+
             Word.Application app = new Word.Application();
             object missing = Type.Missing;
-            var document = app.Documents.Open("F:\\Github\\text-mining\\text-mining\\text-mining\\bin\\Debug\\Шаблоны\\Отчет(шаблон).docx", Visible: true);
+            FileInfo fi = new FileInfo(pathFile);
+            var document = app.Documents.Open(fi.FullName, Visible: true);
             Word.Find find = app.Selection.Find;
             find.Text = "Table1";
             app.Selection.Find.Execute(find.Text, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
@@ -1271,7 +1274,6 @@ namespace text_mining
             document.Application.Selection.GoTo(Word.WdGoToItem.wdGoToPage, Word.WdGoToDirection.wdGoToAbsolute, pageCount + 1, 1);
             find.Text = "data";
             app.Selection.Find.Execute(find.Text, ReplaceWith: date);
-          //  document.SaveAs("kk.docx");
             SaveFileDialog SFD = new SaveFileDialog();
             SFD.Filter = "Документы Word (*.docx)|*.docx";
             if (SFD.ShowDialog()==DialogResult.OK)
