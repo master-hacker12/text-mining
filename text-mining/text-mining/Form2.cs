@@ -37,6 +37,7 @@ namespace text_mining
         Processor pr = null;
         Person[] persondata = null;
         TableForm tb = null;
+        string date;
 
         bool isDsp (string document)
         {
@@ -114,8 +115,8 @@ namespace text_mining
                 starttext = txt;
                 return false;
             }
-           
-            
+
+            date = DateTime.Now.ToShortDateString();
             string[] sentences = GetSentences(textControl1.Text);
             if (sentences!=null)
             {
@@ -1034,31 +1035,251 @@ namespace text_mining
                 MessageBox.Show("Сформировать отчет невозможно, возможно был удален шаблон", "Ошибка отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-			//Код фуфло, хз как работать с Word, слишком сложно
-			//Функция формирование отчетов недоступна, и вряд ли будет доступной
-//            Word.Application app = new Word.Application();
-//            object missing = Type.Missing;
-//            var document = app.Documents.Open("D:\\Github\\text-mining\\text-mining\\text-mining\\bin\\Debug\\Шаблоны\\Отчет(шаблон).docx", Visible: false);
-//            var range = document.Content;
-//            string f = "Table";
-//            object start = 8;
-//            object end = 10;
-            
-//            range = document.Range(ref start, ref end);
-//            Table table = document.Tables.Add(range, dataGridView1.RowCount, dataGridView1.ColumnCount);
-//            table.Borders.Enable = 1;
-//            for (int i =0;i<table.Rows.Count;i++)
-//            {
-//                for (int j=0;j<table.Columns.Count;j++)
-//                {
-//                    table.Cell(i, j).Range.Text = dataGridView1[j, i].Value.ToString();
-//                }
-//            }
-//            app.Selection.Find.Execute(f, ref missing, ref missing, ref missing,
-//ref missing, ref missing, ref missing, ref missing, ref missing, table, ref missing, ref missing, ref missing, ref missing, ref missing);
-//            document.SaveAs("kk.docx");
-//            document.Close();
-      }
+            //Код фуфло, хз как работать с Word, слишком сложно
+            //Функция формирование отчетов недоступна, и вряд ли будет доступной
+            Word.Application app = new Word.Application();
+            object missing = Type.Missing;
+            var document = app.Documents.Open("F:\\Github\\text-mining\\text-mining\\text-mining\\bin\\Debug\\Шаблоны\\Отчет(шаблон).docx", Visible: true);
+            Word.Find find = app.Selection.Find;
+            find.Text = "Table1";
+            app.Selection.Find.Execute(find.Text, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
+        ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
+        ref missing, ref missing);
+            Word.Range wordRange = app.Selection.Range;
+            Table table = document.Tables.Add(wordRange, dataGridView1.RowCount+1, dataGridView1.ColumnCount);
+            table.Borders.Enable = 1;
+            foreach (Row row in table.Rows)
+            {
+                foreach (Cell cell in row.Cells)
+                {
+                    if (cell.RowIndex==1)
+                    {
+                        if (cell.ColumnIndex==1)
+                        {
+                            cell.Range.Text = "Тип сущности";
+                            cell.Range.Bold = 1;
+                            cell.Range.Font.Name = "Times new Roman";
+                            cell.Range.Font.Size = 12;
+                        }
+                        if (cell.ColumnIndex == 2)
+                        {
+                            cell.Range.Text = "Краткое описаниие";
+                            cell.Range.Bold = 1;
+                            cell.Range.Font.Name = "Times new Roman";
+                            cell.Range.Font.Size = 12;
+                        }
+
+                       
+                    }
+                    try
+                    {
+                        if (cell.RowIndex>1)
+                        cell.Range.Text = dataGridView1[cell.ColumnIndex-1, cell.RowIndex-2].Value.ToString(); ;
+                    }
+                    catch (Exception expp)
+                    {
+                        break;
+                    }
+                }
+            }
+            find.Text = "text";
+            try
+            {
+                app.Selection.Find.Execute(find.Text, ReplaceWith: textControl1.Text);
+            }
+            catch (Exception eeeeeee)
+            {
+                app.Selection.Find.Execute(find.Text, ReplaceWith: " ");
+                app.Selection.Range.Text = textControl1.Text;
+            }
+            find.ClearFormatting();
+            int pageCount = document.ComputeStatistics(Word.WdStatistic.wdStatisticPages);
+            document.Application.Selection.GoTo(Word.WdGoToItem.wdGoToPage, Word.WdGoToDirection.wdGoToAbsolute, pageCount+1,1);
+            find.Text = "Person";
+            if (persondata != null)
+            {
+                if (persondata.Length != 0)
+                {
+                    app.Selection.Find.Execute(find.Text, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
+                ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
+                ref missing, ref missing);
+                    wordRange = app.Selection.Range;
+                    table = document.Tables.Add(wordRange, NumRows: persondata.Length+1,NumColumns: 12);
+                    table.Borders.Enable = 1;
+                    foreach (Row row in table.Rows)
+                    {
+                        foreach (Cell cell in row.Cells)
+                        {
+                            if (cell.RowIndex == 1)
+                            {
+                                if (cell.ColumnIndex == 1)
+                                {
+                                    cell.Range.Text = "№";
+                                    cell.Range.Bold = 1;
+                                    cell.Range.Font.Name = "Times new Roman";
+                                    cell.Range.Font.Size = 12;
+                                }
+                                if (cell.ColumnIndex == 2)
+                                {
+                                    cell.Range.Text = "Фамилия";
+                                    cell.Range.Bold = 1;
+                                    cell.Range.Font.Name = "Times new Roman";
+                                    cell.Range.Font.Size = 12;
+                                }
+                                if (cell.ColumnIndex == 3)
+                                {
+                                    cell.Range.Text = "Имя";
+                                    cell.Range.Bold = 1;
+                                    cell.Range.Font.Name = "Times new Roman";
+                                    cell.Range.Font.Size = 12;
+                                }
+                                if (cell.ColumnIndex == 4)
+                                {
+                                    cell.Range.Text = "Отчество";
+                                    cell.Range.Bold = 1;
+                                    cell.Range.Font.Name = "Times new Roman";
+                                    cell.Range.Font.Size = 12;
+                                }
+                                if (cell.ColumnIndex == 5)
+                                {
+                                    cell.Range.Text = "Пол";
+                                    cell.Range.Bold = 1;
+                                    cell.Range.Font.Name = "Times new Roman";
+                                    cell.Range.Font.Size = 12;
+                                }
+                                if (cell.ColumnIndex == 6)
+                                {
+                                    cell.Range.Text = "Год рождения";
+                                    cell.Range.Bold = 1;
+                                    cell.Range.Font.Name = "Times new Roman";
+                                    cell.Range.Font.Size = 12;
+                                }
+                                if (cell.ColumnIndex == 7)
+                                {
+                                    cell.Range.Text = "Телефон";
+                                    cell.Range.Bold = 1;
+                                    cell.Range.Font.Name = "Times new Roman";
+                                    cell.Range.Font.Size = 12;
+                                }
+                                if (cell.ColumnIndex == 8)
+                                {
+                                    cell.Range.Text = "Адрес";
+                                    cell.Range.Bold = 1;
+                                    cell.Range.Font.Name = "Times new Roman";
+                                    cell.Range.Font.Size = 12;
+                                }
+                                if (cell.ColumnIndex == 9)
+                                {
+                                    cell.Range.Text = "Должность";
+                                    cell.Range.Bold = 1;
+                                    cell.Range.Font.Name = "Times new Roman";
+                                    cell.Range.Font.Size = 12;
+                                }
+                                if (cell.ColumnIndex == 10)
+                                {
+                                    cell.Range.Text = "Контактные данные";
+                                    cell.Range.Bold = 1;
+                                    cell.Range.Font.Name = "Times new Roman";
+                                    cell.Range.Font.Size = 12;
+                                }
+                                if (cell.ColumnIndex == 11)
+                                {
+                                    cell.Range.Text = "Удостоверение личности";
+                                    cell.Range.Bold = 1;
+                                    cell.Range.Font.Name = "Times new Roman";
+                                    cell.Range.Font.Size = 12;
+                                }
+                                if (cell.ColumnIndex == 12)
+                                {
+                                    cell.Range.Text = "Критичность";
+                                    cell.Range.Bold = 1;
+                                    cell.Range.Font.Name = "Times new Roman";
+                                    cell.Range.Font.Size = 12;
+                                }
+                            }
+                            if ((cell.ColumnIndex == 1) && (cell.RowIndex != 1))
+                            {
+                                cell.Range.Font.Name = "Times new Roman";
+                                cell.Range.Font.Size = 12;
+                                cell.Range.Text = (cell.RowIndex - 1).ToString();
+                            }
+                            if ((cell.RowIndex > 1) && (cell.ColumnIndex != 1))
+                            {
+                                cell.Range.Font.Name = "Times new Roman";
+                                cell.Range.Font.Size = 12;
+                                switch (cell.ColumnIndex)
+                                {
+                                    case 2: { cell.Range.Text = persondata[cell.RowIndex - 2].surname; break; }
+                                    case 3: { cell.Range.Text = persondata[cell.RowIndex - 2].name; break; }
+                                    case 4: { cell.Range.Text = persondata[cell.RowIndex - 2].secname; break; }
+                                    case 5: { cell.Range.Text = persondata[cell.RowIndex - 2].gender; break; }
+                                    case 6: { cell.Range.Text = persondata[cell.RowIndex - 2].birthday; break; }
+                                    case 7: { cell.Range.Text = persondata[cell.RowIndex - 2].phone; break; }
+                                    case 8: { cell.Range.Text = persondata[cell.RowIndex - 2].addres; break; }
+                                    case 9: { cell.Range.Text = persondata[cell.RowIndex - 2].status; break; }
+                                    case 10: { cell.Range.Text = persondata[cell.RowIndex - 2].link; break; }
+                                    case 11: { cell.Range.Text = persondata[cell.RowIndex - 2].document; break; }
+                                    case 12: { if (persondata[cell.RowIndex - 2].crytical) cell.Range.Text = "Критичен"; else cell.Range.Text = "Не критичен"; break; }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                app.Selection.Find.Execute(find.Text, ReplaceWith: "Персональные данные в тексте не найдены.");
+            }
+            find.ClearFormatting();
+            pageCount = document.ComputeStatistics(Word.WdStatistic.wdStatisticPages);
+            document.Application.Selection.GoTo(Word.WdGoToItem.wdGoToPage, Word.WdGoToDirection.wdGoToAbsolute, pageCount + 1, 1);
+            find.Text = "result";
+
+            string result = null;
+            bool flag = false;
+            if (persondata != null)
+            {
+                for (int i = 0; i < persondata.Length; i++)
+                {
+                    if (persondata[i].crytical)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag)
+                {
+                    result = "В данном документе присутствуют персональные данные, которые не рекомедуются передавать 3-м лицам. Рекомедуется присвоить гриф Для служебного пользования";
+                }
+                else
+                {
+                    result = "Данный документ не содержит критичных персональных данных.";
+                }
+
+                if (dsp)
+                {
+                    result = "Так как документ имеет гриф Для служебного пользования, все персональные данные помечены как критичные";
+                }
+            }
+            else
+            {
+                result = "Данный документ не имеет персональных данных.";
+            }
+            app.Selection.Find.Execute(find.Text, ReplaceWith: result);
+           find.ClearFormatting();
+            pageCount = document.ComputeStatistics(Word.WdStatistic.wdStatisticPages);
+            document.Application.Selection.GoTo(Word.WdGoToItem.wdGoToPage, Word.WdGoToDirection.wdGoToAbsolute, pageCount + 1, 1);
+            find.Text = "data";
+            app.Selection.Find.Execute(find.Text, ReplaceWith: date);
+          //  document.SaveAs("kk.docx");
+            SaveFileDialog SFD = new SaveFileDialog();
+            SFD.Filter = "Документы Word (*.docx)|*.docx";
+            if (SFD.ShowDialog()==DialogResult.OK)
+            {
+                document.SaveAs(SFD.FileName);
+            }
+            document.Close();
+        }
 
 
     }
