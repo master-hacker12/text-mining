@@ -1249,7 +1249,7 @@ namespace text_mining
                 }
                 if (flag)
                 {
-                    result = "В данном документе присутствуют персональные данные, которые не рекомедуются передавать 3-м лицам. Рекомедуется присвоить гриф Для служебного пользования";
+                    result = "В данном документе присутствуют персональные данные, которые не следует передавать 3-м лицам. Рекомедуется присвоить гриф Для служебного пользования";
                 }
                 else
                 {
@@ -1277,8 +1277,10 @@ namespace text_mining
             if (SFD.ShowDialog()==DialogResult.OK)
             {
                 document.SaveAs(SFD.FileName);
+                MessageBox.Show("Отчет сформирован!!!!", "Успех!!!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             document.Close();
+            app.Quit();
         }
 
 
