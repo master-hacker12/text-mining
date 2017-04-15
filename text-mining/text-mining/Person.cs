@@ -263,7 +263,22 @@ namespace text_mining
         ///</sumamry>
         public static Person[] CheckDublicate(Person[] p1)
         {
-            Person[] dublicate = p1;
+            Person[] dublicate = new Person[p1.Length];
+            for (int i=0;i<dublicate.Length;i++)
+            {
+                dublicate[i] = new Person();
+                dublicate[i].surname = p1[i].surname;
+                dublicate[i].name = p1[i].name;
+                dublicate[i].secname = p1[i].secname;
+                dublicate[i].birthday = p1[i].birthday;
+                dublicate[i].phone = p1[i].phone;
+                dublicate[i].addres = p1[i].addres;
+                dublicate[i].status = p1[i].status;
+                dublicate[i].gender = p1[i].gender;
+                dublicate[i].link = p1[i].link;
+                dublicate[i].crytical = p1[i].crytical;
+                dublicate[i].document = p1[i].document;
+            }
 
             for (int i = 0; i < dublicate.Length; i++)
             {
