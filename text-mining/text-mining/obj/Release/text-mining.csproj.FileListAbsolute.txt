@@ -39,3 +39,7 @@ F:\GitHub\text-mining\text-mining\text-mining\bin\Release\EP.Explanatory.xml
 F:\GitHub\text-mining\text-mining\text-mining\bin\Release\EP.Morphology.xml
 F:\GitHub\text-mining\text-mining\text-mining\obj\Release\text-mining.exe
 F:\GitHub\text-mining\text-mining\text-mining\obj\Release\text-mining.pdb
+F:\GitHub\text-mining\text-mining\text-mining\bin\Release\EP.Sdk.dll
+F:\GitHub\text-mining\text-mining\text-mining\obj\Release\text_mining.TableForm.resources
+F:\GitHub\text-mining\text-mining\text-mining\obj\Release\text_mining.Form4.resources
+F:\GitHub\text-mining\text-mining\text-mining\obj\Release\text_mining.Resource1.resources

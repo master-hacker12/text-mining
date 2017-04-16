@@ -1056,6 +1056,7 @@ namespace text_mining
             }
             catch (System.Runtime.InteropServices.COMException eee)
             {
+                MessageBox.Show("Нет доступа к шаблону отчета, возможно используется другими программами", "Ошибка доступа", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             Word.Find find = app.Selection.Find;
