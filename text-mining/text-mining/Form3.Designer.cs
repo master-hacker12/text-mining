@@ -345,7 +345,7 @@
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.table);
-           // this.Name = "TableForm";
+          //  this.Name = "TableForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TableForm_FormClosing);
             this.Load += new System.EventHandler(this.TableForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.table)).EndInit();

@@ -39,7 +39,7 @@ namespace text_mining
         TableForm tb = null;
         string date;
 
-        bool isDsp (string document)
+        bool isDsp(string document)
         {
             string[] str = document.Split('\n');
             for (int i = 0; i < str.Length; i++)
@@ -47,11 +47,11 @@ namespace text_mining
                 if ((str[i] == "ДСП") || (str[i] == "Для служебного пользования"))
                     return true;
             }
-          
+
             return false;
         }
 
-        string NowTime () // Текущая дата и время
+        string NowTime() // Текущая дата и время
         {
             return DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString();
         }
@@ -72,7 +72,7 @@ namespace text_mining
             }
             // подписываемся на событие "бегунка"
             processor.Progress += new ProgressChangedEventHandler(processor_Progress);
-           dsp = isDsp(txt);
+            dsp = isDsp(txt);
             try
             {
                 textBoxInform.Text = null;
@@ -96,7 +96,7 @@ namespace text_mining
                 }
                 BindingList<EntityWrapper> entities = new BindingList<EntityWrapper>();
                 foreach (var e in result.Entities) entities.Add(new EntityWrapper(e));
-               
+
                 // выводим в таблице
                 bindingSource1.DataSource = entities;
                 if (entities.Count > 0)
@@ -106,7 +106,7 @@ namespace text_mining
                 DrawTokens(result.FirstToken);
                 if (dsp)
                     toolStripLabelMessage.Text += ". Данный документ возможно имеет гриф <Для служебного пользования> ";
-                
+
             }
             catch (Exception ex)
             {
@@ -118,11 +118,11 @@ namespace text_mining
 
             date = DateTime.Now.ToShortDateString();
             string[] sentences = GetSentences(textControl1.Text);
-            if (sentences!=null)
+            if (sentences != null)
             {
-                for (int i=0;i<sentences.Length;i++)
+                for (int i = 0; i < sentences.Length; i++)
                 {
-                 persondata = Person.Summa(persondata, FindPerson(sentences[i]));
+                    persondata = Person.Summa(persondata, FindPerson(sentences[i]));
                 }
             }
             label1.Text = "";
@@ -130,9 +130,9 @@ namespace text_mining
             if (persondata != null)
             {
                 persondata = Person.CheckDublicate(persondata);
-                for (int i=0;i<persondata.Length;i++)
+                for (int i = 0; i < persondata.Length; i++)
                 {
-                    if (Person.IsCryticalPerson(ref persondata[i]) || (dsp) )
+                    if (Person.IsCryticalPerson(ref persondata[i]) || (dsp))
                     {
                         persondata[i].crytical = true;
                     }
@@ -145,7 +145,7 @@ namespace text_mining
             return true;
         }
 
-        public string[] GetSentences (string text)
+        public string[] GetSentences(string text)
         {
             string str = textControl1.Text;
             string result = string.Join(" ", str.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries));
@@ -154,13 +154,13 @@ namespace text_mining
             return words;
         }
 
-      
-        public int CountPerson (AnalysisResult ar)
+
+        public int CountPerson(AnalysisResult ar)
         {
             int count = 0;
 
             foreach (var e in ar.Entities)
-           {
+            {
                 if (e.InstanceOf.Caption == "Персона")
                     count++;
 
@@ -170,16 +170,16 @@ namespace text_mining
 
         public string[] GetWords(string sentence)
         {
-            string[] result = sentence.Split(' ', ',','\n');
+            string[] result = sentence.Split(' ', ',', '\n');
             return result;
         }
 
-        public int InformationInPerson(string word,string[] sentence, string[] person,int length)
+        public int InformationInPerson(string word, string[] sentence, string[] person, int length)
         {
             int pos = 0;
             int col = 0;
             bool zap = false;
-            for (int i=0;i<sentence.Length;i++)
+            for (int i = 0; i < sentence.Length; i++)
             {
                 if (word == sentence[i])
                 {
@@ -193,15 +193,15 @@ namespace text_mining
                 }
             }
 
-            if (col>=length)
+            if (col >= length)
                 return 0;
             if (zap)
                 return 1;
 
             int posPers = 0;
             person[0] = person[0].ToLower();
-            if (person[1].Length>2)
-            person[1] = person[1].ToLower();
+            if (person[1].Length > 2)
+                person[1] = person[1].ToLower();
             if (person[2].Length > 2)
                 person[2] = person[2].ToLower();
             person[0] = person[0].Remove(person[0].Length - 2, 2);
@@ -211,18 +211,18 @@ namespace text_mining
                 person[2] = person[2].Remove(person[2].Length - 2, 2);
             for (int i = 0; i < sentence.Length; i++)
             {
-                
-                   sentence[i].StartsWith(person[0], StringComparison.CurrentCultureIgnoreCase);
-                
 
-                if ( sentence[i].StartsWith(person[0], StringComparison.CurrentCultureIgnoreCase) || sentence[i].StartsWith(person[1], StringComparison.CurrentCultureIgnoreCase) || sentence[i].StartsWith(person[2], StringComparison.CurrentCultureIgnoreCase))
+                sentence[i].StartsWith(person[0], StringComparison.CurrentCultureIgnoreCase);
+
+
+                if (sentence[i].StartsWith(person[0], StringComparison.CurrentCultureIgnoreCase) || sentence[i].StartsWith(person[1], StringComparison.CurrentCultureIgnoreCase) || sentence[i].StartsWith(person[2], StringComparison.CurrentCultureIgnoreCase))
 
                 {
                     posPers = i;
                 }
             }
 
-            return Math.Abs(posPers-pos) ;
+            return Math.Abs(posPers - pos);
         }
 
         private Person[] FindPerson(string sentence)
@@ -261,7 +261,7 @@ namespace text_mining
                     foreach (var f in e.Slots)
                     {
 
-                        if (f.DefiningFeature.Caption=="Пол")
+                        if (f.DefiningFeature.Caption == "Пол")
                         {
                             if (f.Value.ToString() == "MALE")
                             {
@@ -326,7 +326,7 @@ namespace text_mining
             Regex phoneNum = new Regex(@"телефон(\w*)");
 
 
-            for (int i=0;i<words.Length;i++)
+            for (int i = 0; i < words.Length; i++)
             {
                 if (street.IsMatch(words[i]))
                 {
@@ -336,28 +336,28 @@ namespace text_mining
                 {
                     countPhone++;
                 }
-            }            
-            int[,] pPhone = new int[person,countPhone];
+            }
+            int[,] pPhone = new int[person, countPhone];
             int[,] pAdress = new int[person, countAdress];
             string[] listPhone = new string[countPhone];
             string[] listAdress = new string[countAdress];
             int ppp = 0;
             int pp = 0;
-            for (int i = 0;i<person;i++)
-            {             
-                    foreach(var e in res.Entities)
+            for (int i = 0; i < person; i++)
+            {
+                foreach (var e in res.Entities)
+                {
+                    if (e.InstanceOf.Caption == "Адрес")
                     {
-                        if (e.InstanceOf.Caption=="Адрес")
-                        {
 
                         if (listAdress == null)
-                        break;
+                            break;
                         if (ppp >= listAdress.Length)
                             break;
-                            listAdress[ppp] = e.ToString();
-                            ppp++; 
-                        }
-                        if (e.InstanceOf.Caption=="Телефонный номер")
+                        listAdress[ppp] = e.ToString();
+                        ppp++;
+                    }
+                    if (e.InstanceOf.Caption == "Телефонный номер")
                     {
                         if (listPhone == null)
                             break;
@@ -366,12 +366,12 @@ namespace text_mining
                         listPhone[pp] = e.Slots[0].Value.ToString();
                         pp++;
                     }
-                        if (countPhone>0)
+                    if (countPhone > 0)
                     {
-                        if (listPhone[0]==null)
+                        if (listPhone[0] == null)
                         {
                             pp = 0;
-                            for (int gg=0;gg<words.Length;gg++)
+                            for (int gg = 0; gg < words.Length; gg++)
                             {
                                 if (phoneNum.IsMatch(words[gg]))
                                 {
@@ -383,7 +383,7 @@ namespace text_mining
                                         listPhone[pp] = tel.ToString();
                                         pp++;
                                     }
-                                    catch(Exception ex)
+                                    catch (Exception ex)
                                     {
 
                                     }
@@ -391,8 +391,8 @@ namespace text_mining
                             }
                         }
                     }
-                        
-                    }
+
+                }
                 if (countAdress != 0)
                 {
                     for (int jj = 0; jj < listAdress.Length; jj++)
@@ -433,7 +433,7 @@ namespace text_mining
                 }
             }
 
-            if ((pAdress != null) && (countAdress!=0))
+            if ((pAdress != null) && (countAdress != 0))
             {
                 int[] pMin = new int[person];
                 int p = 0;
@@ -454,7 +454,7 @@ namespace text_mining
                             break;
                         }
                     }
-                    int index =0;
+                    int index = 0;
                     int min = pMin[0];
                     for (int h = 0; h < pMin.Length; h++)
                     {
@@ -469,10 +469,10 @@ namespace text_mining
                     }
                     if (jj == listAdress.Length)
                         break;
-                    pers[index].Append(null, null, null, null, null, null, null, listAdress[jj],false);
+                    pers[index].Append(null, null, null, null, null, null, null, listAdress[jj], false);
                 }
             }
-            if ((pPhone != null) && (countPhone!=0))
+            if ((pPhone != null) && (countPhone != 0))
             {
                 int[] pMin = new int[person];
                 int p = 0;
@@ -625,12 +625,12 @@ namespace text_mining
                 ind = 1;
                 txt = t.ToString();
             }
-            else if  (money!=null )
+            else if (money != null)
             {
                 ind = 4;
                 txt = money.ToString();
             }
-            else if (num!=null)
+            else if (num != null)
             {
                 ind = 5;
                 double sumLengthMeter = 0;
@@ -673,7 +673,7 @@ namespace text_mining
             }
             return res;
         }
-     
+
 
         void processor_Progress(object sender, ProgressChangedEventArgs e)
         {
@@ -685,7 +685,7 @@ namespace text_mining
             }
 
             if (e.UserState != null)
-{
+            {
                 toolStripLabelMessage.Text = e.UserState.ToString();
                 toolStrip1.Update();
             }
@@ -719,7 +719,7 @@ namespace text_mining
         }
         private void Form2_Load(object sender, EventArgs e)
         {
-           
+
         }
 
         private void toolStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
@@ -759,13 +759,13 @@ namespace text_mining
             }
 
         }
-       
+
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             toolStripLabel1.Text = NowTime();
         }
-        public void importResult ()
+        public void importResult()
         {
             MessageBox.Show("Xml файл должен иметь такое же имя как и имя файла исходного текста", "Вниманиие!!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
@@ -956,22 +956,22 @@ namespace text_mining
                             {
                                 import[i].addres = persondata[j].addres;
                             }
-                            if (persondata[j].crytical!=import[i].crytical)
+                            if (persondata[j].crytical != import[i].crytical)
                             {
                                 import[i].crytical = persondata[j].crytical;
                             }
                             break;
                         }
                         if ((i + 1 == import.Length) && (!find))
-                            pp = j; 
+                            pp = j;
                     }
-                        if (!find)
-                        {
-                            Person[] p = new Person[1];
-                            p[0] = persondata[pp];
-                            import = Person.Summa(import, p);
-                        }
-                    
+                    if (!find)
+                    {
+                        Person[] p = new Person[1];
+                        p[0] = persondata[pp];
+                        import = Person.Summa(import, p);
+                    }
+
                 }
 
                 try
@@ -984,8 +984,8 @@ namespace text_mining
                     {
                         MessageBox.Show("Закройте файл people.xml", "Ошибка экспорта", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         try
-                        { 
-                             File.Delete("people.xml");
+                        {
+                            File.Delete("people.xml");
                             break;
                         }
                         catch (Exception eee)
@@ -1010,7 +1010,7 @@ namespace text_mining
 
         private void button3_Click(object sender, EventArgs e)
         {
-             tb = new TableForm();
+            tb = new TableForm();
             tb.UpdateTable(persondata);
             tb.Visible = true;
             timer2.Enabled = true;
@@ -1030,6 +1030,13 @@ namespace text_mining
             }
         }
 
+        private void ResetFind(Document doc)
+        {
+            int pageCount = doc.ComputeStatistics(Word.WdStatistic.wdStatisticPages);
+            doc.Application.Selection.GoTo(Word.WdGoToItem.wdGoToPage, Word.WdGoToDirection.wdGoToAbsolute, pageCount + 1, 1);
+        }
+
+
         private void button4_Click(object sender, EventArgs e)
         {
             string pathFile = "Шаблоны\\Отчет(шаблон).docx";
@@ -1042,8 +1049,52 @@ namespace text_mining
             Word.Application app = new Word.Application();
             object missing = Type.Missing;
             FileInfo fi = new FileInfo(pathFile);
-            var document = app.Documents.Open(fi.FullName, Visible: true);
+            Document document = null;
+            try
+            {
+                document = app.Documents.Open(fi.FullName, Visible: true);
+            }
+            catch (System.Runtime.InteropServices.COMException eee)
+            {
+                return;
+            }
             Word.Find find = app.Selection.Find;
+
+            Settings setting = null;
+
+            if (File.Exists("settings.xml"))
+            {
+                XmlSerializer formatter = new XmlSerializer(typeof(Settings));
+                using (FileStream fs = new FileStream("settings.xml", FileMode.Open))
+                {
+                    setting = (Settings)formatter.Deserialize(fs);
+                }
+            }
+            else
+            {
+                setting = new Settings();
+            }
+            find.Text = "type";
+            app.Selection.Find.Execute(find.Text, ReplaceWith: setting.type);
+            ResetFind(document);
+            find.Text = "title";
+            app.Selection.Find.Execute(find.Text, ReplaceWith: setting.title);
+
+            ResetFind(document);
+            find.Text = "statusup";
+            app.Selection.Find.Execute(find.Text, ReplaceWith: setting.statusup);
+
+            ResetFind(document);
+            find.Text = "fioup";
+            app.Selection.Find.Execute(find.Text, ReplaceWith: setting.fioup);
+
+            ResetFind(document);
+            find.Text = "yearnow";
+            app.Selection.Find.Execute(find.Text, ReplaceWith: Settings.yearnow);
+            ResetFind(document);
+
+
+
             find.Text = "Table1";
             app.Selection.Find.Execute(find.Text, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
         ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
@@ -1096,8 +1147,7 @@ namespace text_mining
                 app.Selection.Range.Text = textControl1.Text;
             }
             find.ClearFormatting();
-            int pageCount = document.ComputeStatistics(Word.WdStatistic.wdStatisticPages);
-            document.Application.Selection.GoTo(Word.WdGoToItem.wdGoToPage, Word.WdGoToDirection.wdGoToAbsolute, pageCount+1,1);
+            ResetFind(document);
             find.Text = "Person";
             if (persondata != null)
             {
@@ -1234,8 +1284,9 @@ namespace text_mining
                 app.Selection.Find.Execute(find.Text, ReplaceWith: "Персональные данные в тексте не найдены.");
             }
             find.ClearFormatting();
-            pageCount = document.ComputeStatistics(Word.WdStatistic.wdStatisticPages);
-            document.Application.Selection.GoTo(Word.WdGoToItem.wdGoToPage, Word.WdGoToDirection.wdGoToAbsolute, pageCount + 1, 1);
+            ResetFind(document);
+
+
             find.Text = "result";
 
             string result = null;
@@ -1269,9 +1320,16 @@ namespace text_mining
                 result = "Данный документ не имеет персональных данных.";
             }
             app.Selection.Find.Execute(find.Text, ReplaceWith: result);
-           find.ClearFormatting();
-            pageCount = document.ComputeStatistics(Word.WdStatistic.wdStatisticPages);
-            document.Application.Selection.GoTo(Word.WdGoToItem.wdGoToPage, Word.WdGoToDirection.wdGoToAbsolute, pageCount + 1, 1);
+            // find.ClearFormatting();
+            ResetFind(document);
+            find.Text = "statusdown";
+            app.Selection.Find.Execute(find.Text, ReplaceWith: setting.statusdown);
+            //  find.ClearFormatting();
+            ResetFind(document);
+            find.Text = "fiodown";
+            app.Selection.Find.Execute(find.Text, ReplaceWith: setting.fiodown);
+            //  find.ClearFormatting();
+            ResetFind(document);
             find.Text = "data";
             app.Selection.Find.Execute(find.Text, ReplaceWith: date);
             SaveFileDialog SFD = new SaveFileDialog();

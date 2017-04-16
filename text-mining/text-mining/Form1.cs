@@ -180,5 +180,16 @@ namespace text_mining
             f2.importResult();
           
         }
+
+        private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form4 f4 = new Form4();
+            f4.Visible = true;
+        }
+
+        private void выходToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
