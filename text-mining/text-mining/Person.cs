@@ -226,34 +226,40 @@ namespace text_mining
             {
                 import = (Person[])formatter.Deserialize(fs);
             }
-
-            for (int i = 0; i < import.Length; i++)
+            try
             {
-                if ((import[i].surname == data.surname) && ((data.name.StartsWith(import[i].name, StringComparison.CurrentCultureIgnoreCase)) || (data.secname.StartsWith(import[i].secname))))
+                for (int i = 0; i < import.Length; i++)
                 {
-                    if ((data.birthday == "Нет данных") && (import[i]).birthday != "Нет данных")
+                    if ((import[i].surname == data.surname) && ((data.name.StartsWith(import[i].name, StringComparison.CurrentCultureIgnoreCase)) || (data.secname.StartsWith(import[i].secname))))
                     {
-                        data.birthday = import[i].birthday;
+                        if ((data.birthday == "Нет данных") && (import[i]).birthday != "Нет данных")
+                        {
+                            data.birthday = import[i].birthday;
+                        }
+                        if ((data.gender == "Нет данных") && (import[i]).gender != "Нет данных")
+                        {
+                            data.gender = import[i].gender;
+                        }
+                        if ((data.phone == "Нет данных") && (import[i]).phone != "Нет данных")
+                        {
+                            data.phone = import[i].phone;
+                        }
+                        if ((data.status == "Нет данных") && (import[i]).status != "Нет данных")
+                        {
+                            data.status = import[i].status;
+                        }
+                        if ((data.addres == "Нет данных") && (import[i]).addres != "Нет данных")
+                        {
+                            data.addres = import[i].addres;
+                        }
+                        if ((import[i].crytical) || (data.document != "Нет данных"))
+                            return true;
                     }
-                    if ((data.gender == "Нет данных") && (import[i]).gender != "Нет данных")
-                    {
-                        data.gender = import[i].gender;
-                    }
-                    if ((data.phone == "Нет данных") && (import[i]).phone != "Нет данных")
-                    {
-                        data.phone = import[i].phone;
-                    }
-                    if ((data.status == "Нет данных") && (import[i]).status!= "Нет данных")
-                    {
-                        data.status = import[i].status;
-                    }
-                    if ((data.addres == "Нет данных") && (import[i]).addres != "Нет данных")
-                    {
-                        data.addres = import[i].addres;
-                    }
-                    if ((import[i].crytical) || (data.document!= "Нет данных"))
-                    return true;
                 }
+            }
+            catch (NullReferenceException ex)
+            {
+                File.Delete("people.xml");
             }
             return false;
         }
