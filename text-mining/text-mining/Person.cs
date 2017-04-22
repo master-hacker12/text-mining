@@ -294,7 +294,7 @@ namespace text_mining
                         continue;
                     if (i == j)
                         continue;
-                    if ((dublicate[i].surname == p1[j].surname) && ((p1[j].name.StartsWith(dublicate[i].name, StringComparison.CurrentCultureIgnoreCase)) || (p1[j].secname.StartsWith(dublicate[i].secname))))
+                    if ((dublicate[i].surname == p1[j].surname) && ((p1[j].name.StartsWith(dublicate[i].name, StringComparison.CurrentCultureIgnoreCase)) || (p1[j].secname.StartsWith(dublicate[i].secname))) && (p1[i]!=null))
                     {
                         int col1 = countComplitedData(dublicate[i]);
                         int col2 = countComplitedData(p1[j]);
