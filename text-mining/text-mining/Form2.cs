@@ -38,7 +38,7 @@ namespace text_mining
         Person[] persondata = null;
         TableForm tb = null;
         string date;
-
+        bool analize = false;
         bool isDsp(string document)
         {
             string[] str = document.Split('\n');
@@ -55,7 +55,6 @@ namespace text_mining
         {
             return DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString();
         }
-
         public bool ProcessAnalize(ref string txt, ref Processor processor)
         {
             dsp = false;
@@ -71,7 +70,8 @@ namespace text_mining
                 txt = textControl1.Text;
             }
             // подписываемся на событие "бегунка"
-            processor.Progress += new ProgressChangedEventHandler(processor_Progress);
+                processor.Progress += new ProgressChangedEventHandler(processor_Progress);
+
             dsp = isDsp(txt);
             try
             {
@@ -115,7 +115,7 @@ namespace text_mining
                 starttext = txt;
                 return false;
             }
-
+            analize = true;
             date = DateTime.Now.ToShortDateString();
             string[] sentences = GetSentences(textControl1.Text);
             if (sentences != null)
@@ -683,8 +683,7 @@ namespace text_mining
             {
                 // если < 0, то это просто информационное сообщение
             }
-
-            if (e.UserState != null)
+            if ( (e.UserState != null)&& (!analize) ) 
             {
                 toolStripLabelMessage.Text = e.UserState.ToString();
                 toolStrip1.Update();
@@ -886,6 +885,7 @@ namespace text_mining
 
         private void button2_Click(object sender, EventArgs e) //десериализация результатов (импорт)
         {
+            analize = false;
             importResult();
         }
 
