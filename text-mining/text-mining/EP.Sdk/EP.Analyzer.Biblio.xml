@@ -381,6 +381,49 @@
             Специальность (если есть)
             </summary>
         </member>
+        <member name="T:EP.BookLinkRefReferent">
+            <summary>
+            Ссылка на внешний литературный источник (статью, книгу и пр.)
+            </summary>
+        </member>
+        <member name="M:EP.BookLinkRefReferent.GetNumberDiff(EP.Referent,EP.Referent)">
+            <summary>
+            Возвращает разницу номеров r2 - r1, иначе null, если номеров нет
+            </summary>
+            <param name="r1"></param>
+            <param name="r2"></param>
+            <returns></returns>
+        </member>
+        <member name="P:EP.BookLinkRefReferent.Typ">
+            <summary>
+            Тип ссылки
+            </summary>
+        </member>
+        <member name="P:EP.BookLinkRefReferent.Book">
+            <summary>
+            Собственно ссылка вовне на источник - BookLinkReferent или DecreeReferent
+            </summary>
+        </member>
+        <member name="P:EP.BookLinkRefReferent.Number">
+            <summary>
+            Порядковый номер в списке
+            </summary>
+        </member>
+        <member name="P:EP.BookLinkRefReferent.Pages">
+            <summary>
+            Ссылка на страницу или диапазон страниц
+            </summary>
+        </member>
+        <member name="T:EP.BookLinkRefType">
+            <summary>
+            Тип ссылки
+            </summary>
+        </member>
+        <member name="F:EP.BookLinkRefType.Inline">
+            <summary>
+            Встроенная в текст
+            </summary>
+        </member>
         <member name="T:EP.Semantix.Internal.MetaPeace">
             <summary>
             Метаинформация о литературном персонаже
@@ -441,6 +484,11 @@
         <member name="P:EP.LiteratureAnalyzer.Images">
             <summary>
             Это список иконок для объектов
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.Internal.BookLinkTyp.Tamze">
+            <summary>
+            там же
             </summary>
         </member>
     </members>

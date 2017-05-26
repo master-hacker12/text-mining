@@ -103,6 +103,15 @@
             Факт исправления переходов на новую строку
             </summary>
         </member>
+        <member name="F:EP.SourceOfAnalysis.DoWordCorrectionByMorph">
+            <summary>
+            Пытаться ли делать коррекцию слов, не попавших в словарь.
+            </summary>
+        </member>
+        <member name="F:EP.SourceOfAnalysis.DoWordsMergingByMorph">
+            Объединять соседние слова, не попавшие в словарь, если при объединении получается слово из словаря
+            (очень полезно для текстов из PDF)
+        </member>
         <member name="F:EP.SourceOfAnalysis.CorrectionDict">
             <summary>
             Словарь корректировки типовых ошибок.
@@ -149,33 +158,38 @@
             Работа с числовыми значениями
             </summary>
         </member>
+        <member name="M:EP.Semantix.NumberHelper._tryParse(EP.Semantix.Token)">
+            <summary>
+            Попробовать создать числительное
+            </summary>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
         <member name="M:EP.Semantix.NumberHelper.TryParseRoman(EP.Semantix.Token)">
             <summary>
             Попробовать выделить римскую цифру
             </summary>
-            <param name="t">начальный токен</param>
+            <param name="t"></param>
             <returns></returns>
         </member>
         <member name="M:EP.Semantix.NumberHelper.TryParseRomanBack(EP.Semantix.Token)">
             <summary>
-            Выделить римскую цифру "назад"
+            Выделить римскую цифру с token в обратном порядке
             </summary>
-            <param name="t">конечный токен</param>
+            <param name="token"></param>
             <returns></returns>
         </member>
         <member name="M:EP.Semantix.NumberHelper.TryParseAge(EP.Semantix.Token)">
             <summary>
             Это выделение числительных типа 16-летие, 50-летний
             </summary>
-            <param name="t">начальный токен</param>
+            <param name="t"></param>
             <returns></returns>
         </member>
         <member name="M:EP.Semantix.NumberHelper.TryParseAnniversary(EP.Semantix.Token)">
             <summary>
             Выделение годовщин и летий (XX-летие) ...
             </summary>
-            <param name="t">начальный токен</param>
-            <returns></returns>
         </member>
         <member name="M:EP.Semantix.NumberHelper.GetNumberAdjective(System.Int32,EP.Text.MorphGender,EP.Text.MorphNumber)">
             <summary>
@@ -373,163 +387,9 @@
             Это заглушка референта при десериализации
             </summary>
         </member>
-        <member name="T:EP.Semantix.Termin">
+        <member name="T:EP.Semantix.Internal.NounPhraseItem">
             <summary>
-            Термин, понятие, система обозначений чего-либо и варианты его написания
-            </summary>
-        </member>
-        <member name="F:EP.Semantix.Termin.Terms">
-            <summary>
-            Морфологические токены полного написания
-            </summary>
-        </member>
-        <member name="F:EP.Semantix.Termin.AdditionalVars">
-            <summary>
-            Дополнительные варианты
-            </summary>
-        </member>
-        <member name="M:EP.Semantix.Termin.AddVariant(System.String,System.Boolean)">
-            <summary>
-            Добавить дополнительный вариант полного написания
-            </summary>
-            <param name="var"></param>
-        </member>
-        <member name="F:EP.Semantix.Termin.IgnoreTermsOrder">
-            <summary>
-            Порядок токенов неважен (то есть привязка с точностью до перестановок)
-            </summary>
-        </member>
-        <member name="F:EP.Semantix.Termin.Acronym">
-            <summary>
-            Возможная аббревиатура (всегда слитно в верхнем регистре)
-            </summary>
-        </member>
-        <member name="F:EP.Semantix.Termin.AcronymSmart">
-            <summary>
-            "Мягкая" аббревиатура, допускающая разбивку, точки и т.п.
-            </summary>
-        </member>
-        <member name="F:EP.Semantix.Termin.AcronymCanBeLower">
-            <summary>
-            Аббревиатура м.б. в нижнем регистре
-            </summary>
-        </member>
-        <member name="M:EP.Semantix.Termin.SetStdAcronim(System.Boolean)">
-            <summary>
-            Установить стандартную аббревиатуру
-            </summary>
-        </member>
-        <member name="F:EP.Semantix.Termin.Abridges">
-            <summary>
-            Список возможных сокращений
-            </summary>
-        </member>
-        <member name="F:EP.Semantix.Termin.Lang">
-            <summary>
-            Язык
-            </summary>
-        </member>
-        <member name="F:EP.Semantix.Termin.Tag">
-            <summary>
-            Используется произвольным образом
-            </summary>
-        </member>
-        <member name="F:EP.Semantix.Termin.Tag2">
-            <summary>
-            Используется произвольным образом
-            </summary>
-        </member>
-        <member name="M:EP.Semantix.Termin.AddAllAbridges(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Добавить все сокращения (с первой буквы до любого согласного)
-            </summary>
-        </member>
-        <member name="M:EP.Semantix.Termin.TryParse(EP.Semantix.Token,EP.Semantix.TerminParseAttr)">
-            <summary>
-            Попробовать привязать термин
-            </summary>
-            <param name="t0"></param>
-            <param name="fullWordsOnly"></param>
-            <returns></returns>
-        </member>
-        <member name="P:EP.Semantix.Termin.CanonicText">
-            <summary>
-            Каноноический текст
-            </summary>
-        </member>
-        <member name="P:EP.Semantix.Termin.Gender">
-            <summary>
-            Род (первого термина)
-            </summary>
-        </member>
-        <member name="T:EP.Semantix.Termin.Term">
-            <summary>
-            Элемент термина (слово или число)
-            </summary>
-        </member>
-        <member name="F:EP.Semantix.Termin.Term.IsPatternAny">
-            <summary>
-            То есть на месте этого терма может быть всё, что угодно
-            </summary>
-        </member>
-        <member name="M:EP.Semantix.Termin.Term.Check(EP.Semantix.Token)">
-            <summary>
-            Сравнение с токеном
-            </summary>
-            <param name="t"></param>
-            <returns></returns>
-        </member>
-        <member name="P:EP.Semantix.Termin.Term.Variants">
-            <summary>
-            Варианты морфологического написания
-            </summary>
-        </member>
-        <member name="P:EP.Semantix.Termin.Term.CanonicalText">
-            <summary>
-            Каноническое изображение (первый вариант)
-            </summary>
-        </member>
-        <member name="P:EP.Semantix.Termin.Term.IsNumber">
-            <summary>
-            Признак того, что это число
-            </summary>
-        </member>
-        <member name="P:EP.Semantix.Termin.Term.IsHiphen">
-            <summary>
-            Это перенос
-            </summary>
-        </member>
-        <member name="P:EP.Semantix.Termin.Term.IsPoint">
-            <summary>
-            Это точка
-            </summary>
-        </member>
-        <member name="P:EP.Semantix.Termin.Term.Gender">
-            <summary>
-            Род
-            </summary>
-        </member>
-        <member name="T:EP.Semantix.TableHelper">
-            <summary>
-            Поддержка работы с таблицами, расположенными в текстах.
-            Начало таблицы - символ 1Eh, конец - 1Fh, ячейки оканчиваются 07h,
-            комбинация 0D 0A 07 - конец строки.
-            Данную структуру формирует функция извлечения текстов (ExtractText), так что это - для
-            обратного восстановления таблицы в случае необходимости.
-            </summary>
-        </member>
-        <member name="M:EP.Semantix.TableHelper.TryParseRows(EP.Semantix.Token,System.Int32,System.Boolean)">
-            <summary>
-            Получить список строк таблицы
-            </summary>
-            <param name="t">начальная позиция</param>
-            <param name="maxChar">максимальная позиция (0 - не ограничена)</param>
-            <param name="mustBeStartOfTable">при true первый символ должен быть 1Eh</param>
-            <returns>список строк</returns>
-        </member>
-        <member name="T:EP.Semantix.TableRowToken">
-            <summary>
-            Токен - строка таблицы из текста
+            Элемент именной группы
             </summary>
         </member>
         <member name="T:EP.Semantix.MetaToken">
@@ -733,6 +593,190 @@
             Количество токенов в диапазоне
             </summary>
         </member>
+        <member name="P:EP.Semantix.Internal.NounPhraseItem.CanBeNumericAdj">
+            <summary>
+            Это признак количественного (число, НЕСКОЛЬКО, МНОГО)
+            </summary>
+        </member>
+        <member name="P:EP.Semantix.Internal.NounPhraseItem.IsVerb">
+            <summary>
+            Это признак причастия
+            </summary>
+        </member>
+        <member name="T:EP.Semantix.Internal.NounPhraseItemTextVar">
+            <summary>
+            Морфологический вариант для элемента именной группы
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.Internal.NounPhraseItemTextVar.NormalValue">
+            <summary>
+            Нормализованное значение
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.Internal.NounPhraseItemTextVar.SingleNumberValue">
+            <summary>
+            Нормализованное значение в единственном числе
+            </summary>
+        </member>
+        <member name="T:EP.Semantix.Termin">
+            <summary>
+            Термин, понятие, система обозначений чего-либо и варианты его написания
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.Termin.Terms">
+            <summary>
+            Морфологические токены полного написания
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.Termin.AdditionalVars">
+            <summary>
+            Дополнительные варианты
+            </summary>
+        </member>
+        <member name="M:EP.Semantix.Termin.AddVariant(System.String,System.Boolean)">
+            <summary>
+            Добавить дополнительный вариант полного написания
+            </summary>
+            <param name="var"></param>
+        </member>
+        <member name="F:EP.Semantix.Termin.IgnoreTermsOrder">
+            <summary>
+            Порядок токенов неважен (то есть привязка с точностью до перестановок)
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.Termin.Acronym">
+            <summary>
+            Возможная аббревиатура (всегда слитно в верхнем регистре)
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.Termin.AcronymSmart">
+            <summary>
+            "Мягкая" аббревиатура, допускающая разбивку, точки и т.п.
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.Termin.AcronymCanBeLower">
+            <summary>
+            Аббревиатура м.б. в нижнем регистре
+            </summary>
+        </member>
+        <member name="M:EP.Semantix.Termin.SetStdAcronim(System.Boolean)">
+            <summary>
+            Установить стандартную аббревиатуру
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.Termin.Abridges">
+            <summary>
+            Список возможных сокращений
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.Termin.Lang">
+            <summary>
+            Язык
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.Termin.Tag">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.Termin.Tag2">
+            <summary>
+            Используется произвольным образом
+            </summary>
+        </member>
+        <member name="M:EP.Semantix.Termin.AddAllAbridges(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Добавить все сокращения (с первой буквы до любого согласного)
+            </summary>
+        </member>
+        <member name="M:EP.Semantix.Termin.TryParse(EP.Semantix.Token,EP.Semantix.TerminParseAttr)">
+            <summary>
+            Попробовать привязать термин
+            </summary>
+            <param name="t0"></param>
+            <param name="fullWordsOnly"></param>
+            <returns></returns>
+        </member>
+        <member name="P:EP.Semantix.Termin.CanonicText">
+            <summary>
+            Каноноический текст
+            </summary>
+        </member>
+        <member name="P:EP.Semantix.Termin.Gender">
+            <summary>
+            Род (первого термина)
+            </summary>
+        </member>
+        <member name="T:EP.Semantix.Termin.Term">
+            <summary>
+            Элемент термина (слово или число)
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.Termin.Term.IsPatternAny">
+            <summary>
+            То есть на месте этого терма может быть всё, что угодно
+            </summary>
+        </member>
+        <member name="M:EP.Semantix.Termin.Term.Check(EP.Semantix.Token)">
+            <summary>
+            Сравнение с токеном
+            </summary>
+            <param name="t"></param>
+            <returns></returns>
+        </member>
+        <member name="P:EP.Semantix.Termin.Term.Variants">
+            <summary>
+            Варианты морфологического написания
+            </summary>
+        </member>
+        <member name="P:EP.Semantix.Termin.Term.CanonicalText">
+            <summary>
+            Каноническое изображение (первый вариант)
+            </summary>
+        </member>
+        <member name="P:EP.Semantix.Termin.Term.IsNumber">
+            <summary>
+            Признак того, что это число
+            </summary>
+        </member>
+        <member name="P:EP.Semantix.Termin.Term.IsHiphen">
+            <summary>
+            Это перенос
+            </summary>
+        </member>
+        <member name="P:EP.Semantix.Termin.Term.IsPoint">
+            <summary>
+            Это точка
+            </summary>
+        </member>
+        <member name="P:EP.Semantix.Termin.Term.Gender">
+            <summary>
+            Род
+            </summary>
+        </member>
+        <member name="T:EP.Semantix.TableHelper">
+            <summary>
+            Поддержка работы с таблицами, расположенными в текстах.
+            Начало таблицы - символ 1Eh, конец - 1Fh, ячейки оканчиваются 07h,
+            комбинация 0D 0A 07 - конец строки.
+            Данную структуру формирует функция извлечения текстов (ExtractText), так что это - для
+            обратного восстановления таблицы в случае необходимости.
+            </summary>
+        </member>
+        <member name="M:EP.Semantix.TableHelper.TryParseRows(EP.Semantix.Token,System.Int32,System.Boolean)">
+            <summary>
+            Получить список строк таблицы
+            </summary>
+            <param name="t">начальная позиция</param>
+            <param name="maxChar">максимальная позиция (0 - не ограничена)</param>
+            <param name="mustBeStartOfTable">при true первый символ должен быть 1Eh</param>
+            <returns>список строк</returns>
+        </member>
+        <member name="T:EP.Semantix.TableRowToken">
+            <summary>
+            Токен - строка таблицы из текста
+            </summary>
+        </member>
         <member name="F:EP.Semantix.TableRowToken.Cells">
             <summary>
             Ячейки строки таблицы
@@ -766,39 +810,6 @@
         <member name="F:EP.Semantix.NumberToken.Typ">
             <summary>
             Тип написания
-            </summary>
-        </member>
-        <member name="M:EP.Semantix.NumberToken.TryParse(EP.Semantix.Token)">
-            <summary>
-            Попробовать создать числительное
-            </summary>
-            <param name="token"></param>
-            <returns></returns>
-        </member>
-        <member name="M:EP.Semantix.NumberToken.TryParseRoman(EP.Semantix.Token)">
-            <summary>
-            Попробовать выделить римскую цифру
-            </summary>
-            <param name="t"></param>
-            <returns></returns>
-        </member>
-        <member name="M:EP.Semantix.NumberToken.TryParseRomanBack(EP.Semantix.Token)">
-            <summary>
-            Выделить римскую цифру с token в обратном порядке
-            </summary>
-            <param name="token"></param>
-            <returns></returns>
-        </member>
-        <member name="M:EP.Semantix.NumberToken.TryParseAge(EP.Semantix.Token)">
-            <summary>
-            Это выделение числительных типа 16-летие, 50-летний
-            </summary>
-            <param name="t"></param>
-            <returns></returns>
-        </member>
-        <member name="M:EP.Semantix.NumberToken.TryParseAnniversary(EP.Semantix.Token)">
-            <summary>
-            Выделение годовщин и летий (XX-летие) ...
             </summary>
         </member>
         <member name="T:EP.Semantix.NumberToken.SpellingType">
@@ -886,11 +897,28 @@
             </summary>
             <param name="cas"></param>
         </member>
-        <member name="M:EP.Semantix.MorphCollection.RemoveItems(EP.Text.MorphClass)">
+        <member name="M:EP.Semantix.MorphCollection.RemoveItems(EP.Text.MorphClass,System.Boolean)">
             <summary>
             Удалить элементы, не соответствующие классу
             </summary>
             <param name="cl"></param>
+        </member>
+        <member name="M:EP.Semantix.MorphCollection.RemoveItems(EP.Text.MorphBaseInfo)">
+            <summary>
+            Удалить элементы, не соответствующие параметрам
+            </summary>
+            <param name="inf"></param>
+        </member>
+        <member name="M:EP.Semantix.MorphCollection.RemoveItemsByPreposition(EP.Semantix.Token)">
+            <summary>
+            Убрать элементы, не соответствующие по падежу предлогу
+            </summary>
+            <param name="prep"></param>
+        </member>
+        <member name="M:EP.Semantix.MorphCollection.RemoveNotInDictionaryItems">
+            <summary>
+            Удалить элементы не из словаря
+            </summary>
         </member>
         <member name="M:EP.Semantix.MorphCollection.RemoveItems(EP.Semantix.MorphCollection,EP.Text.MorphClass)">
             <summary>
@@ -2187,7 +2215,12 @@
         </member>
         <member name="F:EP.Semantix.NounPhraseToken.Adjectives">
             <summary>
-            Прилагательные
+            Прилагательные (и причастия, если задан ключ ParseVerbs)
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.NounPhraseToken.Adverbs">
+            <summary>
+            Наречия (если задан ключ ParseAdverbs при выделении)
             </summary>
         </member>
         <member name="F:EP.Semantix.NounPhraseToken.InternalNoun">
@@ -2203,7 +2236,7 @@
         </member>
         <member name="F:EP.Semantix.NounPhraseToken.Preposition">
             <summary>
-            Начальный предлог предлог
+            Начальный предлог предлог (если задан ключ ParsePreposition)
             </summary>
         </member>
         <member name="T:EP.ProcessorService">
@@ -2360,24 +2393,25 @@
             Прилагательное м.б. на последнем месте (член моржовый)
             </summary>
         </member>
-        <member name="T:EP.Semantix._NounPraseHelperInt.NounPhraseItemTextVar">
+        <member name="F:EP.Semantix.NounPhraseParseAttr.ParseAdverbs">
             <summary>
-            Морфологический вариант для элемента именной группы
+            Выделять наречия
             </summary>
         </member>
-        <member name="F:EP.Semantix._NounPraseHelperInt.NounPhraseItemTextVar.NormalValue">
+        <member name="F:EP.Semantix.NounPhraseParseAttr.ParseVerbs">
             <summary>
-            Нормализованное значение
+            Выделять причастия (это прилагательные и глаголы одновременно)
             </summary>
         </member>
-        <member name="F:EP.Semantix._NounPraseHelperInt.NounPhraseItemTextVar.SingleNumberValue">
+        <member name="F:EP.Semantix.NounPhraseParseAttr.ParseNumericAsAdjective">
             <summary>
-            Нормализованное значение в единственном числе
+            Выделять ли такие констркуции "двое сотрудников", "пять компаний" числа как прилагательные.
+            Это не касается ситуаций "второй сотрудник", "пятая компания" - это всегда как прилагательные
             </summary>
         </member>
-        <member name="T:EP.Semantix._NounPraseHelperInt.NounPhraseItem">
+        <member name="F:EP.Semantix.NounPhraseParseAttr.Multilines">
             <summary>
-            Элемент именной группы
+            Группа может быть на разбита на нескольких строках (начало на одной, окончание на другой)
             </summary>
         </member>
         <member name="T:EP.Semantix.MiscHelper">

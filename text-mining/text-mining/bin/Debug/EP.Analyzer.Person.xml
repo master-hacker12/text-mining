@@ -266,11 +266,12 @@
             Тип блока письма
             </summary>
         </member>
-        <member name="M:EP.Semantix.PersonItemToken.TryParsePerson(EP.Semantix.Token)">
+        <member name="M:EP.Semantix.PersonItemToken.TryParsePerson(EP.Semantix.Token,EP.Semantix.Internal.FioTemplateType)">
             <summary>
             Это попытка привязать персону со специфического места
             </summary>
             <param name="t"></param>
+            <param name="prevPersTemplate">шаблон от предыдущей персоны (поможет принять решение в случае ошибки)</param>
             <returns></returns>
         </member>
         <member name="F:EP.Semantix.Internal.MailLine.Lev">

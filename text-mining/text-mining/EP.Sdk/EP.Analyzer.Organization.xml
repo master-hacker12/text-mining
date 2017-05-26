@@ -90,6 +90,11 @@
             Торговля, реализация
             </summary>
         </member>
+        <member name="F:EP.OrgProfile.Medicine">
+            <summary>
+            Медицина
+            </summary>
+        </member>
         <member name="F:EP.OrgProfile.Policy">
             <summary>
             Политика
@@ -258,6 +263,11 @@
         <member name="F:EP.Semantix.OrgItemNameToken.StdOrgNameNouns">
             <summary>
             Имя состоит из слов, которыми обычно называются госучреждения, министерства, департаменты и т.п.
+            </summary>
+        </member>
+        <member name="F:EP.Semantix.OrgItemNameToken.OrgStdProf">
+            <summary>
+            Стандартный профиль ...
             </summary>
         </member>
         <member name="T:EP.OrganizationReferent">

@@ -68,6 +68,14 @@
             <param name="word"></param>
             <returns></returns>
         </member>
+        <member name="M:EP.Text.Morphology.CorrectWord(System.String,EP.Text.MorphLang)">
+            <summary>
+            Попробовать откорретировать одну букву словоформы, чтобы получилось словарное слово
+            </summary>
+            <param name="word">искаженное слово</param>
+            <param name="lang">возможный язык</param>
+            <returns>откорректированное слово или null при невозможности</returns>
+        </member>
         <member name="M:EP.Text.Morphology.ConvertAdverbToAdjective(System.String,EP.Text.MorphBaseInfo)">
             <summary>
             Преобразовать наречие в прилагательное (это пока только для русского языка)
@@ -378,6 +386,11 @@
         <member name="F:EP.Text.MorphClass.Preposition">
             <summary>
             Предлог
+            </summary>
+        </member>
+        <member name="F:EP.Text.MorphClass.Conjunction">
+            <summary>
+            Союз
             </summary>
         </member>
         <member name="P:EP.Text.MorphClass.IsUndefined">

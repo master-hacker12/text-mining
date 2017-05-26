@@ -167,6 +167,11 @@
             Это для локальных изменений при слиянии
             </summary>
         </member>
+        <member name="P:EP.Text.DerivateGroup.Transitive">
+            <summary>
+            Признак транзитивности глаголов
+            </summary>
+        </member>
         <member name="T:EP.Text.DerivateWord">
             <summary>
             Слово в дериватной группе

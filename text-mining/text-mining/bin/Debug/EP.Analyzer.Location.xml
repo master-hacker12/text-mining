@@ -222,42 +222,42 @@
             ополнительная детализация места (пересечение, около ...)
             </summary>
         </member>
-        <member name="F:EP.Semantix.TerrItemToken.OntoItem">
+        <member name="F:EP.Semantix.Internal.TerrItemToken.OntoItem">
             <summary>
             Ссылка на существующий объект 
             </summary>
         </member>
-        <member name="F:EP.Semantix.TerrItemToken.TerminItem">
+        <member name="F:EP.Semantix.Internal.TerrItemToken.TerminItem">
             <summary>
             Это термин для существительного и прилагательного
             </summary>
         </member>
-        <member name="F:EP.Semantix.TerrItemToken.IsAdjective">
+        <member name="F:EP.Semantix.Internal.TerrItemToken.IsAdjective">
             <summary>
             Прилагательное (существующих объектов, для терминов или для собственного имени)
             </summary>
         </member>
-        <member name="F:EP.Semantix.TerrItemToken.AdjectiveRef">
+        <member name="F:EP.Semantix.Internal.TerrItemToken.AdjectiveRef">
             <summary>
             Это ссылка на страну для "китайская провинция"
             </summary>
         </member>
-        <member name="F:EP.Semantix.TerrItemToken.CanBeCity">
+        <member name="F:EP.Semantix.Internal.TerrItemToken.CanBeCity">
             <summary>
             Это если есть такой же город
             </summary>
         </member>
-        <member name="F:EP.Semantix.TerrItemToken.IsAdjInDictionary">
+        <member name="F:EP.Semantix.Internal.TerrItemToken.IsAdjInDictionary">
             <summary>
             Прилагательное находится в словаре
             </summary>
         </member>
-        <member name="F:EP.Semantix.TerrItemToken.IsDoubt">
+        <member name="F:EP.Semantix.Internal.TerrItemToken.IsDoubt">
             <summary>
             Сомнительность...
             </summary>
         </member>
-        <member name="M:EP.Semantix.TerrItemToken.TryParseDistrictName(EP.Semantix.Token,EP.Semantix.IntOntologyCollection)">
+        <member name="M:EP.Semantix.Internal.TerrItemToken.TryParseDistrictName(EP.Semantix.Token,EP.Semantix.IntOntologyCollection)">
             <summary>
             Это пыделение возможного имени для городского района типа Владыкино, Тёплый Стан)
             </summary>
@@ -266,7 +266,7 @@
             <param name="proc"></param>
             <returns></returns>
         </member>
-        <member name="F:EP.Semantix.TerrItemToken.m_TerrOntology">
+        <member name="F:EP.Semantix.Internal.TerrItemToken.m_TerrOntology">
             <summary>
             Словарь стран и некоторых терминов
             </summary>
@@ -331,47 +331,47 @@
             Станция метро
             </summary>
         </member>
-        <member name="F:EP.Semantix.CityItemToken.Typ">
+        <member name="F:EP.Semantix.Internal.CityItemToken.Typ">
             <summary>
             Тип элемента
             </summary>
         </member>
-        <member name="F:EP.Semantix.CityItemToken.Value">
+        <member name="F:EP.Semantix.Internal.CityItemToken.Value">
             <summary>
             Строковое значение
             </summary>
         </member>
-        <member name="F:EP.Semantix.CityItemToken.AltValue">
+        <member name="F:EP.Semantix.Internal.CityItemToken.AltValue">
             <summary>
             Альтернативное значение
             </summary>
         </member>
-        <member name="F:EP.Semantix.CityItemToken.OntoItem">
+        <member name="F:EP.Semantix.Internal.CityItemToken.OntoItem">
             <summary>
             Ссылка на онтологический элемент (существующий город)
             </summary>
         </member>
-        <member name="F:EP.Semantix.CityItemToken.Doubtful">
+        <member name="F:EP.Semantix.Internal.CityItemToken.Doubtful">
             <summary>
             Признак сомнительности
             </summary>
         </member>
-        <member name="F:EP.Semantix.CityItemToken.GeoObjectBefore">
+        <member name="F:EP.Semantix.Internal.CityItemToken.GeoObjectBefore">
             <summary>
             Есть ли перед элементом некоторый географический объект
             </summary>
         </member>
-        <member name="F:EP.Semantix.CityItemToken.GeoObjectAfter">
+        <member name="F:EP.Semantix.Internal.CityItemToken.GeoObjectAfter">
             <summary>
             Есть ли после элемента некоторый географический объект
             </summary>
         </member>
-        <member name="F:EP.Semantix.CityItemToken.HigherGeo">
+        <member name="F:EP.Semantix.Internal.CityItemToken.HigherGeo">
             <summary>
             Столица Чечни
             </summary>
         </member>
-        <member name="F:EP.Semantix.CityItemToken.OrgRef">
+        <member name="F:EP.Semantix.Internal.CityItemToken.OrgRef">
             <summary>
             Это ссылка на организацию (для: посёлок НИИ Радио)
             </summary>
@@ -438,7 +438,7 @@
             Вышестоящий объект
             </summary>
         </member>
-        <member name="M:EP.Semantix.Internal.CityAttachHelper.Try3(System.Collections.Generic.List{EP.Semantix.CityItemToken},EP.Semantix.IntOntologyItem@)">
+        <member name="M:EP.Semantix.Internal.CityAttachHelper._tryNameExist(System.Collections.Generic.List{EP.Semantix.Internal.CityItemToken},EP.Semantix.IntOntologyItem@,System.Boolean)">
             <summary>
             Это проверяем некоторые частные случаи
             </summary>

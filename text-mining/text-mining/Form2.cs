@@ -1039,9 +1039,11 @@ namespace text_mining
 
         private void button4_Click(object sender, EventArgs e)
         {
+            Cursor = Cursors.WaitCursor;
             string pathFile = "Шаблоны\\Отчет(шаблон).docx";
             if (!File.Exists(pathFile))
             {
+                Cursor = Cursors.Default;
                 MessageBox.Show("Сформировать отчет невозможно, возможно был удален шаблон", "Ошибка отчета", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -1056,6 +1058,7 @@ namespace text_mining
             }
             catch (System.Runtime.InteropServices.COMException eee)
             {
+                Cursor = Cursors.Default;
                 MessageBox.Show("Нет доступа к шаблону отчета, возможно используется другими программами", "Ошибка доступа", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -1335,6 +1338,7 @@ namespace text_mining
             app.Selection.Find.Execute(find.Text, ReplaceWith: date);
             SaveFileDialog SFD = new SaveFileDialog();
             SFD.Filter = "Документы Word (*.docx)|*.docx";
+            Cursor = Cursors.Default;
             if (SFD.ShowDialog()==DialogResult.OK)
             {
                 document.SaveAs(SFD.FileName);

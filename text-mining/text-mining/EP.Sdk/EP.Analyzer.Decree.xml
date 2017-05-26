@@ -104,9 +104,9 @@
             Госпрограммы
             </summary>
         </member>
-        <member name="F:EP.DecreeKind.Gost">
+        <member name="F:EP.DecreeKind.Standard">
             <summary>
-            Государственный стандарт
+            Стандарт (ГОСТ, ТУ, ANSI и пр.)
             </summary>
         </member>
         <member name="T:EP.Semantix.DecreeAnalyzer">
