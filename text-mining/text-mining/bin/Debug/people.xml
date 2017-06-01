@@ -78,4 +78,17 @@
     <link>Нет данных</link>
     <document>Нет данных</document>
   </Person>
+  <Person>
+    <name>ИВАН</name>
+    <surname>ИВАНОВ</surname>
+    <secname>ИВАНОВИЧ</secname>
+    <birthday>Нет данных</birthday>
+    <phone>Нет данных</phone>
+    <gender>Мужской</gender>
+    <status>директор фирмы</status>
+    <addres>Нет данных</addres>
+    <crytical>false</crytical>
+    <link>Нет данных</link>
+    <document>Нет данных</document>
+  </Person>
 </ArrayOfPerson>
