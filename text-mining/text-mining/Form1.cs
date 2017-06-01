@@ -191,5 +191,10 @@ namespace text_mining
         {
             this.Close();
         }
+
+        private void listBox1_MouseHover(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

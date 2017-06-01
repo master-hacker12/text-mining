@@ -91,4 +91,17 @@
     <link>Нет данных</link>
     <document>Нет данных</document>
   </Person>
+  <Person>
+    <name>ДАРЬЯ</name>
+    <surname>БУЛГАКОВА</surname>
+    <secname>СЕРГЕЕВНА</secname>
+    <birthday>Нет данных</birthday>
+    <phone>Нет данных</phone>
+    <gender>Женский</gender>
+    <status>лаборант кафедры кб</status>
+    <addres>Нет данных</addres>
+    <crytical>false</crytical>
+    <link>Нет данных</link>
+    <document>Нет данных</document>
+  </Person>
 </ArrayOfPerson>
