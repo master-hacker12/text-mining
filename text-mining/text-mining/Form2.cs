@@ -1142,7 +1142,7 @@ namespace text_mining
         private void button3_Click(object sender, EventArgs e)
         {
             tb = new TableForm();
-            tb.UpdateTable(persondata);
+            tb.UpdateTable(persondata, dsp);
             tb.Visible = true;
             timer2.Enabled = true;
         }
@@ -1438,7 +1438,7 @@ namespace text_mining
                 }
                 if (flag)
                 {
-                    result = "В данном документе присутствуют персональные данные, которые не следует передавать 3-м лицам. Рекомедуется присвоить гриф Для служебного пользования";
+                    result = "В исследуемом документе присутствуют персональные данные, которые не следует распространять или ознакамливать с другими лицами. Рекомедуется присвоить гриф Для служебного пользования";
                 }
                 else
                 {

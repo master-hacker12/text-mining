@@ -21,8 +21,8 @@ namespace text_mining
             InitializeComponent();
             timer1.Enabled = true;
         }
-
-        public void UpdateTable (Person[] data)
+        bool dsp;
+        public void UpdateTable (Person[] data, bool DSP)
         {
             if (table.Rows.Count > 0)
                 table.Rows.Clear();
@@ -44,7 +44,7 @@ namespace text_mining
                     table.Rows[i].DefaultCellStyle.BackColor = Color.Red;
                 }
             }
-
+            dsp = DSP;
             persona = data;
         }
 
@@ -81,8 +81,16 @@ namespace text_mining
             textBox8.Enabled = true;
             radioButton1.Enabled = true;
             radioButton2.Enabled = true;
-            radioButton3.Enabled = true;
-            radioButton4.Enabled = true;
+            if ((listBox1.Text != "Нет данных") && (listBox1.Text != null) || (dsp))
+            {
+                radioButton3.Enabled = false;
+                radioButton4.Enabled = false;
+            }
+            else
+            {
+                radioButton3.Enabled = true;
+                radioButton4.Enabled = true;
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -138,7 +146,7 @@ namespace text_mining
                 persona[pos].crytical = false;
             if (textBox8.Text != null)
                 persona[pos].link = textBox8.Text;
-            UpdateTable(persona);
+            UpdateTable(persona, dsp);
             edit = false;
             button1.Enabled = true;
             button2.Enabled = false;
