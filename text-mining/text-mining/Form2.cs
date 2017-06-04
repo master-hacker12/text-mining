@@ -16,6 +16,7 @@ using System.Xml.Serialization;
 using System.Text.RegularExpressions;
 using Microsoft.Office.Interop.Word;
 using Word = Microsoft.Office.Interop.Word;
+using System.Security.Cryptography;
 
 namespace text_mining
 {
@@ -894,24 +895,154 @@ namespace text_mining
 
         }
 
+        public static void SerializeBase(ref Person[] personal)
+        {
+            XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
+            using (FileStream fs = new FileStream("people.xml", FileMode.Create))
+            {
+                formatter.Serialize(fs, personal);
+            }
+            RijndaelManaged aes = new RijndaelManaged();
+            aes.GenerateIV();
+            aes.GenerateKey();
+
+            string[] k = new string[aes.Key.Length];
+            string[] iv = new string[aes.IV.Length];
+            for (int i = 0; i < k.Length; i++)
+            {
+                k[i] = aes.Key[i].ToString();
+            }
+            for (int i = 0; i < iv.Length; i++)
+            {
+                iv[i] = aes.IV[i].ToString();
+            }
+            EncryptFile("people.xml", "people.cry", ref aes);
+            File.WriteAllLines("gbe.cry", k);
+            File.WriteAllLines("IV.cry", iv);
+            File.SetAttributes("gbe.cry", FileAttributes.Hidden);
+            File.SetAttributes("IV.cry", FileAttributes.Hidden);
+            File.SetAttributes("people.cry", FileAttributes.Hidden);
+            File.Delete("people.xml");
+        }
+
+        public static Person[] DeserializeBase()
+        {
+            string[] k = File.ReadAllLines("gbe.cry");
+            string[] iv = File.ReadAllLines("IV.cry");
+            byte[] key = new byte[k.Length];
+            byte[] IV = new byte[iv.Length];
+
+            for (int i = 0; i < k.Length; i++)
+            {
+                key[i] = Convert.ToByte(k[i]);
+            }
+            for (int i = 0; i < iv.Length; i++)
+            {
+                IV[i] = Convert.ToByte(iv[i]);
+            }
+            RijndaelManaged aes = new RijndaelManaged();
+            aes.Key = key;
+            aes.IV = IV;
+            DecryptFile("people.cry", "people.xml", ref aes);
+            File.Delete("people.cry");
+            File.Delete("gbe.cry");
+            File.Delete("IV.cry");
+
+            XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
+            Person[] result = null;
+            try
+            {
+                using (FileStream fs = new FileStream("people.xml", FileMode.Open))
+                {
+                    result = (Person[])formatter.Deserialize(fs);
+                }
+            }
+            catch (Exception eeeee)
+            {
+                MessageBox.Show("База повреждена", "Ошибка чтения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                File.Delete("people.xml");
+                return null;
+            }
+            File.Delete("people.xml");
+            return result;
+        }
+
+
+        private static void EncryptFile(string inputFile, string outputFile, ref RijndaelManaged aes)
+        {
+            try
+            {
+
+                /* This is for demostrating purposes only. 
+                 * Ideally you will want the IV key to be different from your key and you should always generate a new one for each encryption in other to achieve maximum security*/
+
+                using (FileStream fsCrypt = new FileStream(outputFile, FileMode.Create))
+                {
+                    using (ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV))
+                    {
+                        using (CryptoStream cs = new CryptoStream(fsCrypt, encryptor, CryptoStreamMode.Write))
+                        {
+                            using (FileStream fsIn = new FileStream(inputFile, FileMode.Open))
+                            {
+                                int data;
+                                while ((data = fsIn.ReadByte()) != -1)
+                                {
+                                    cs.WriteByte((byte)data);
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+
+        private static void DecryptFile(string inputFile, string outputFile, ref RijndaelManaged aes)
+        {
+            try
+            {
+
+                /* This is for demostrating purposes only. 
+                 * Ideally you will want the IV key to be different from your key and you should always generate a new one for each encryption in other to achieve maximum security*/
+
+                using (FileStream fsCrypt = new FileStream(inputFile, FileMode.Open))
+                {
+                    using (FileStream fsOut = new FileStream(outputFile, FileMode.Create))
+                    {
+                        using (ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+                        {
+                            using (CryptoStream cs = new CryptoStream(fsCrypt, decryptor, CryptoStreamMode.Read))
+                            {
+                                int data;
+                                while ((data = cs.ReadByte()) != -1)
+                                {
+                                    fsOut.WriteByte((byte)data);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // failed to decrypt file
+            }
+        }
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
             XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
-            if (!File.Exists("people.xml"))
+            if (!File.Exists("people.cry"))
             {
-                using (FileStream fs = new FileStream("people.xml", FileMode.CreateNew))
-                {
-                    formatter.Serialize(fs, persondata);
-                }
-
+                SerializeBase(ref persondata);
             }
             else
             {
-                Person[] import = null;
-                using (FileStream fs = new FileStream("people.xml", FileMode.Open))
-                {
-                    import = (Person[])formatter.Deserialize(fs);
-                }
+                Person[] import = DeserializeBase();
                 if (persondata == null)
                     return;
                 int length = persondata.Length;

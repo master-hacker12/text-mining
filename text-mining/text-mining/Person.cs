@@ -219,13 +219,9 @@ namespace text_mining
         public static bool IsCryticalPerson(ref Person data)
         {
             XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
-            if (!File.Exists("people.xml"))
+            if (!File.Exists("people.cry"))
                 return false;
-            Person[] import = null;
-            using (FileStream fs = new FileStream("people.xml", FileMode.Open))
-            {
-                import = (Person[])formatter.Deserialize(fs);
-            }
+            Person[] import = Form2.DeserializeBase();
             try
             {
                 for (int i = 0; i < import.Length; i++)
@@ -260,6 +256,7 @@ namespace text_mining
             catch (NullReferenceException ex)
             {
                 File.Delete("people.xml");
+                File.Delete("people.cry");
             }
             return false;
         }
