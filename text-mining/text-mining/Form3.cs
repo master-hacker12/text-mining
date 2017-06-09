@@ -81,7 +81,8 @@ namespace text_mining
             textBox8.Enabled = true;
             radioButton1.Enabled = true;
             radioButton2.Enabled = true;
-            if ((listBox1.Text != "Нет данных") && (listBox1.Text != null) || (dsp))
+            listBox1.SetSelected(0, true);
+            if ((listBox1.SelectedItem.ToString() != "Нет данных") && (listBox1.Text != null) || (dsp))
             {
                 radioButton3.Enabled = false;
                 radioButton4.Enabled = false;

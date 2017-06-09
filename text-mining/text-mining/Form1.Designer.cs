@@ -131,9 +131,9 @@
             this.checkBox2.AutoSize = true;
             this.checkBox2.Location = new System.Drawing.Point(35, 56);
             this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(144, 17);
+            this.checkBox2.Size = new System.Drawing.Size(148, 17);
             this.checkBox2.TabIndex = 9;
-            this.checkBox2.Text = "Семантический анализ";
+            this.checkBox2.Text = "Синтаксический анализ";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // checkBox3
