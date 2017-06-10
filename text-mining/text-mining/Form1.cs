@@ -164,12 +164,19 @@ namespace text_mining
 
          
                 f2.Visible = true;
-            bool result = f2.ProcessAnalize(ref str, ref processor);
+            bool result = f2.ProcessAnalize(ref str, ref processor,getNameFile(listBox1.SelectedItem.ToString()));
             if (!result)
                 f2.Visible = false;
             f2 = null;
            
             
+
+        }
+
+        public string getNameFile(string path)
+        {
+            string[] result = path.Split('\\');
+            return result[result.Length-1];
 
         }
 

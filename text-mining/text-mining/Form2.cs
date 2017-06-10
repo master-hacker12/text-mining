@@ -40,6 +40,8 @@ namespace text_mining
         TableForm tb = null;
         string date;
         bool analize = false;
+        string filename = null;
+       public static Person[] baseData = null;
         bool isDsp(string document)
         {
             string[] str = document.Split('\n');
@@ -56,7 +58,7 @@ namespace text_mining
         {
             return DateTime.Now.ToLongDateString() + " " + DateTime.Now.ToLongTimeString();
         }
-        public bool ProcessAnalize(ref string txt, ref Processor processor)
+        public bool ProcessAnalize(ref string txt, ref Processor processor, string path)
         {
             dsp = false;
             if (txt != null && txt.Length > m_MaxTextLengthForShowing)
@@ -106,7 +108,7 @@ namespace text_mining
                 // рисуем дерево токенов
                 DrawTokens(result.FirstToken);
                 if (dsp)
-                    toolStripLabelMessage.Text += ". Данный документ возможно имеет гриф <Для служебного пользования> ";
+                    toolStripLabelMessage.Text += ". Настоящий документ возможно имеет гриф <Для служебного пользования> ";
 
             }
             catch (Exception ex)
@@ -128,6 +130,7 @@ namespace text_mining
             }
             label1.Text = "";
             button3.Enabled = false;
+            baseData = DeserializeBase();
             if (persondata != null)
             {
                 persondata = Person.CheckDublicate(persondata);
@@ -139,10 +142,10 @@ namespace text_mining
                     }
 
                 }
-
                 label1.Text = "Текст содержит персональные данные см. подробнее------>";
                 button3.Enabled = true;
             }
+            filename = path;
             return true;
         }
 
@@ -873,7 +876,7 @@ namespace text_mining
                         analizator = "SEMANTIC,BUSINESS,TITLEPAGE";
                     import = new Processor(analizator);
                 }
-                bool result = ProcessAnalize(ref text, ref import);
+                bool result = ProcessAnalize(ref text, ref import, null);
                 if (!result)
                 {
                     MessageBox.Show("Импорт завершился не успешно", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -927,6 +930,10 @@ namespace text_mining
 
         public static Person[] DeserializeBase()
         {
+            if (!File.Exists("people.cry"))
+            {
+                return null;
+            }
             string[] k = File.ReadAllLines("gbe.cry");
             string[] iv = File.ReadAllLines("IV.cry");
             byte[] key = new byte[k.Length];
@@ -944,7 +951,7 @@ namespace text_mining
             aes.Key = key;
             aes.IV = IV;
             DecryptFile("people.cry", "people.xml", ref aes);
-            File.Delete("people.cry");
+            //File.Delete("people.cry");
             File.Delete("gbe.cry");
             File.Delete("IV.cry");
 
@@ -1035,6 +1042,8 @@ namespace text_mining
         }
         private void Form2_FormClosing(object sender, FormClosingEventArgs e)
         {
+            
+
             XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
             if (!File.Exists("people.cry"))
             {
@@ -1042,7 +1051,7 @@ namespace text_mining
             }
             else
             {
-                Person[] import = DeserializeBase();
+                Person[] import = baseData;
                 if (persondata == null)
                     return;
                 int length = persondata.Length;
@@ -1131,10 +1140,8 @@ namespace text_mining
                 }
                 finally
                 {
-                    using (FileStream fs = new FileStream("people.xml", FileMode.CreateNew))
-                    {
-                        formatter.Serialize(fs, import);
-                    }
+                    File.Delete("people.cry");
+                    SerializeBase(ref import);
                 }
             }
         }
@@ -1228,8 +1235,13 @@ namespace text_mining
             app.Selection.Find.Execute(find.Text, ReplaceWith: Settings.yearnow);
             ResetFind(document);
 
-
-
+           
+            find.Text = "template";
+            if (filename!=null)
+            app.Selection.Find.Execute(find.Text, ReplaceWith: filename);
+            else
+                app.Selection.Find.Execute(find.Text, ReplaceWith: "Неизвестно");
+            ResetFind(document);
             find.Text = "Table1";
             app.Selection.Find.Execute(find.Text, ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
         ref missing, ref missing, ref missing, ref missing, ref missing, ref missing,
@@ -1442,7 +1454,7 @@ namespace text_mining
                 }
                 else
                 {
-                    result = "Данный документ не содержит критичных персональных данных.";
+                    result = "Настоящий документ не содержит критичных персональных данных.";
                 }
 
                 if (dsp)
@@ -1452,7 +1464,7 @@ namespace text_mining
             }
             else
             {
-                result = "Данный документ не имеет персональных данных.";
+                result = "Настоящий документ не имеет персональных данных.";
             }
             app.Selection.Find.Execute(find.Text, ReplaceWith: result);
             // find.ClearFormatting();

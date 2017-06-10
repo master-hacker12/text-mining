@@ -219,9 +219,9 @@ namespace text_mining
         public static bool IsCryticalPerson(ref Person data)
         {
             XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
-            if (!File.Exists("people.cry"))
+            if (Form2.baseData==null)
                 return false;
-            Person[] import = Form2.DeserializeBase();
+            Person[] import = Form2.baseData;
             try
             {
                 for (int i = 0; i < import.Length; i++)
