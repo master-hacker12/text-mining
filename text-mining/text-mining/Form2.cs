@@ -41,6 +41,7 @@ namespace text_mining
         string date;
         bool analize = false;
         string filename = null;
+        bool editpers = false;
        public static Person[] baseData = null;
         bool isDsp(string document)
         {
@@ -1148,6 +1149,7 @@ namespace text_mining
 
         private void button3_Click(object sender, EventArgs e)
         {
+            editpers = false;
             tb = new TableForm();
             tb.UpdateTable(persondata, dsp);
             tb.Visible = true;
@@ -1158,6 +1160,7 @@ namespace text_mining
         {
             if (!tb.Visible)
             {
+                editpers = TableForm.editdata;
                 XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
                 using (FileStream fs = new FileStream("save.xml", FileMode.Open))
                 {
@@ -1450,7 +1453,7 @@ namespace text_mining
                 }
                 if (flag)
                 {
-                    result = "В исследуемом документе присутствуют персональные данные, которые не следует распространять или ознакамливать с другими лицами. Рекомедуется присвоить гриф Для служебного пользования";
+                    result = "В исследуемом документе присутствуют персональные данные, которые не следует распространять или ознакамливать с другими лицами. Рекомедуется присвоить гриф Для служебного пользования.";
                 }
                 else
                 {
@@ -1459,8 +1462,11 @@ namespace text_mining
 
                 if (dsp)
                 {
-                    result = "Так как документ имеет гриф Для служебного пользования, все персональные данные помечены как критичные";
+                    result = "Так как документ имеет гриф Для служебного пользования, все персональные данные помечены как критичные.";
                 }
+                if (editpers)
+                result += " В процессе проведения анализа были изменены персональные данные";
+
             }
             else
             {

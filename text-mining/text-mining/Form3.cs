@@ -22,6 +22,7 @@ namespace text_mining
             timer1.Enabled = true;
         }
         bool dsp;
+        public static bool editdata = false;
         public void UpdateTable (Person[] data, bool DSP)
         {
             if (table.Rows.Count > 0)
@@ -123,30 +124,66 @@ namespace text_mining
 
          private void SaveChange ()
         {
-            if (textBox1.Text!=null)
-            persona[pos].surname = textBox1.Text;
+            if (textBox1.Text != null)
+            {
+                editdata = true;
+                persona[pos].surname = textBox1.Text;
+            }
             if (textBox2.Text != null)
+            {
                 persona[pos].name = textBox2.Text;
+                editdata = true;
+            }
             if (textBox3.Text != null)
+            {
+                editdata = true;
                 persona[pos].secname = textBox3.Text;
+            }
             if (radioButton1.Checked)
+            {
+                editdata = true;
                 persona[pos].gender = "Мужской";
+            }
             if (radioButton2.Checked)
+            {
+                editdata = true;
                 persona[pos].gender = "Женский";
+            }
             if (textBox4.Text != null)
+            {
+                editdata = true;
                 persona[pos].birthday = textBox4.Text;
+            }
             if (textBox5.Text != null)
+            {
+                editdata = true;
                 persona[pos].phone = textBox5.Text;
+            }
             if (textBox6.Text != null)
+            {
+                editdata = true;
                 persona[pos].addres = textBox6.Text;
+            }
             if (textBox7.Text != null)
+            {
+                editdata = true;
                 persona[pos].status = textBox7.Text;
+            }
             if (radioButton3.Checked)
+            {
+                editdata = true;
                 persona[pos].crytical = true;
+            }
             if (radioButton4.Checked)
+            {
+                editdata = true;
                 persona[pos].crytical = false;
+            }
             if (textBox8.Text != null)
+            {
+                editdata = true;
                 persona[pos].link = textBox8.Text;
+            }
             UpdateTable(persona, dsp);
             edit = false;
             button1.Enabled = true;
@@ -181,7 +218,7 @@ namespace text_mining
             }
             XmlSerializer formatter = new XmlSerializer(typeof(Person[]));
 
-                using (FileStream fs = new FileStream("save.xml", FileMode.CreateNew))
+                using (FileStream fs = new FileStream("save.xml", FileMode.Create))
                 {
                     formatter.Serialize(fs, persona);
                 }
