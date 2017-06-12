@@ -154,12 +154,7 @@ namespace text_mining
                 if (checkBox2.Checked && checkBox3.Checked && checkBox4.Checked)
                     type = "SEMANTIC,BUSINESS,TITLEPAGE";
                 processor = new Processor(type);
-            }
-
-                //processor = new Processor(TextType == TextTypes.TitleOfArticle ? TitlePageAnalyzer.ANALYZER_NAME : // "TITLEPAGE"
-                //    (TextType == TextTypes.BusinessObjects ? BusinessAnalyzer.ANALYZER_NAME : // "BUSINESS" 
-                //    (TextType == TextTypes.Semantic ? SemanticAnalyzer.ANALYZER_NAME : "")));
-       
+            }  
             f2 = new Form2();
 
          

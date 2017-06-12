@@ -31,7 +31,7 @@ namespace text_mining
 
 
         bool m_HideHighlighting;
-        int m_MaxTextLengthForShowing = 2000000;
+        int m_MaxTextLengthForShowing = 200000;
         int m_IgnoreTreeChanging = 0;
         bool dsp = false;
         string starttext;
@@ -1473,15 +1473,12 @@ namespace text_mining
                 result = "Настоящий документ не имеет персональных данных.";
             }
             app.Selection.Find.Execute(find.Text, ReplaceWith: result);
-            // find.ClearFormatting();
             ResetFind(document);
             find.Text = "statusdown";
             app.Selection.Find.Execute(find.Text, ReplaceWith: setting.statusdown);
-            //  find.ClearFormatting();
             ResetFind(document);
             find.Text = "fiodown";
             app.Selection.Find.Execute(find.Text, ReplaceWith: setting.fiodown);
-            //  find.ClearFormatting();
             ResetFind(document);
             find.Text = "data";
             app.Selection.Find.Execute(find.Text, ReplaceWith: date);
